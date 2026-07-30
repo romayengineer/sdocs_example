@@ -42,7 +42,52 @@
 {{ range .prerequisites }}- {{ . }}
 {{ end }}
 {{- end }}
+{{- if .introduction }}
+
+## Overview
+
+{{ .introduction }}
+{{- end }}
+{{- if .basic_usage }}
+
+## Basic Usage
+
+{{ .basic_usage }}
+{{- end }}
+{{- if .examples }}
+
+## Examples
+
+{{ .examples }}
+{{- end }}
+{{- if .best_practices }}
+
+## Best Practices
+
+{{ .best_practices }}
+{{- end }}
+{{- if .pitfalls }}
+
+## Common Pitfalls
+
+{{ .pitfalls }}
+{{- end }}
+{{- if .advanced }}
+
+## Advanced Topics
+
+{{ .advanced }}
+{{- end }}
+{{- if .summary }}
+
+## Summary
+
+{{ .summary }}
+{{- end }}
+{{- if .body }}
+
 {{ .body }}
+{{- end }}
 {{- if .related_posts }}
 
 ## Related Posts

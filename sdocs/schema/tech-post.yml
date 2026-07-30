@@ -11,7 +11,28 @@ fields:
     required: true
   - name: body
     type: string
-    required: true
+    required: false
+  - name: introduction
+    type: string
+    required: false
+  - name: basic_usage
+    type: string
+    required: false
+  - name: examples
+    type: string
+    required: false
+  - name: best_practices
+    type: string
+    required: false
+  - name: pitfalls
+    type: string
+    required: false
+  - name: advanced
+    type: string
+    required: false
+  - name: summary
+    type: string
+    required: false
   - name: tags
     type: "[]string"
     required: false
