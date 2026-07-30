@@ -1,6 +1,7 @@
-type: post
+type: tech-post
 title: Generics in Go
 date: 2026-07-30
+difficulty: advanced
 body: |
   Generics were added in Go 1.18, introducing type parameters for functions and types.
 
@@ -101,3 +102,21 @@ tags:
   - generics
   - type-parameters
   - constraints
+prerequisites:
+  - Interfaces in Go
+  - Structs and Methods in Go
+reading_time: 6
+word_count: 850
+author: Structured Docs
+language: Go
+version: Go 1.18
+license: CC-BY-4.0
+category: tutorial
+status: published
+references:
+  "Go blog: Generics": "https://go.dev/blog/intro-generics"
+  "Go 1.18 release notes": "https://go.dev/doc/go1.18"
+related_posts:
+  - Error Handling in Go
+  - Structs and Methods in Go
+last_updated: 2026-07-30

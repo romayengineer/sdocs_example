@@ -1,6 +1,7 @@
-type: post
+type: tech-post
 title: Goroutines and Channels
 date: 2026-07-30
+difficulty: intermediate
 body: |
   Goroutines are lightweight threads managed by the Go runtime. They are the foundation of concurrency in Go.
 
@@ -94,3 +95,21 @@ tags:
   - concurrency
   - goroutines
   - channels
+prerequisites: []
+reading_time: 6
+word_count: 900
+author: Structured Docs
+language: Go
+version: Go 1.21
+license: CC-BY-4.0
+series: Go Concurrency
+series_order: 1
+category: tutorial
+status: published
+references:
+  "Go concurrency patterns": "https://go.dev/blog/concurrency-patterns"
+  "Go by example: Goroutines": "https://gobyexample.com/goroutines"
+related_posts:
+  - Interfaces in Go
+  - Error Handling in Go
+last_updated: 2026-07-30

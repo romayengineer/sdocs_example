@@ -1,6 +1,32 @@
 # Structs and Methods in Go
 
-*Date: 2026-07-30*
+
+
+📌 **Status: published**
+
+
+| | |
+|---|---|
+| **Date** | 2026-07-30 |
+| **Last updated** | 2026-07-30 |
+| **Category** | tutorial |
+| **Difficulty** | beginner |
+| **Reading time** | 6 min |
+| **Word count** | ~900 |
+| **Author** | Structured Docs |
+| **Language** | Go |
+| **Version** | Go 1.21 |
+| **License** | CC-BY-4.0 |
+| **Series** | Go Fundamentals (Part 2) |
+
+
+
+
+
+
+## Prerequisites
+
+- Basic Go syntax and functions
 
 Structs are Go's way of grouping related data. Methods add behavior to structs.
 
@@ -99,5 +125,17 @@ Structs and methods form the backbone of Go's type system, offering a simple but
 
 
 
-Tags: go structs methods types 
+## Related Posts
+
+- Interfaces in Go
+- Goroutines and Channels
+
+
+**Tags:** `go` `structs` `methods` `types` 
+
+
+## References
+
+ - [Effective Go: Structs](https://go.dev/doc/effective_go#composite_literals)
+ - [Go by example: Structs](https://gobyexample.com/structs)
 

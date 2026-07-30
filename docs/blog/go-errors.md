@@ -1,6 +1,31 @@
 # Error Handling in Go
 
-*Date: 2026-07-30*
+
+
+📌 **Status: published**
+
+
+| | |
+|---|---|
+| **Date** | 2026-07-30 |
+| **Last updated** | 2026-07-30 |
+| **Category** | tutorial |
+| **Difficulty** | beginner |
+| **Reading time** | 5 min |
+| **Word count** | ~700 |
+| **Author** | Structured Docs |
+| **Language** | Go |
+| **Version** | Go 1.20 |
+| **License** | CC-BY-4.0 |
+
+
+
+
+
+
+## Prerequisites
+
+- Interfaces in Go
 
 Go treats errors as values. Instead of exceptions, functions return an `error` value that the caller checks explicitly.
 
@@ -89,5 +114,17 @@ Go's error handling forces you to think about failure modes explicitly, leading 
 
 
 
-Tags: go errors error-handling best-practices 
+## Related Posts
+
+- Generics in Go
+- Interfaces in Go
+
+
+**Tags:** `go` `errors` `error-handling` `best-practices` 
+
+
+## References
+
+ - [Go blog: Error handling](https://go.dev/blog/go1.13-errors)
+ - [Package errors docs](https://pkg.go.dev/errors)
 

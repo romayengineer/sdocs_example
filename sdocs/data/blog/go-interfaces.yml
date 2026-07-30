@@ -1,6 +1,7 @@
-type: post
+type: tech-post
 title: Interfaces in Go
 date: 2026-07-30
+difficulty: intermediate
 body: |
   Interfaces in Go define behavior through method sets. Unlike many languages, interface satisfaction is implicit — no `implements` keyword needed.
 
@@ -103,3 +104,22 @@ tags:
   - interfaces
   - types
   - design
+prerequisites:
+  - Basic Go types and functions
+reading_time: 7
+word_count: 1000
+author: Structured Docs
+language: Go
+version: Go 1.21
+license: CC-BY-4.0
+series: Go Fundamentals
+series_order: 1
+category: tutorial
+status: published
+references:
+  "Effective Go: Interfaces": "https://go.dev/doc/effective_go#interfaces"
+  "Go blog: Interfaces": "https://go.dev/blog/declaration-syntax"
+related_posts:
+  - Structs and Methods in Go
+  - Goroutines and Channels
+last_updated: 2026-07-30

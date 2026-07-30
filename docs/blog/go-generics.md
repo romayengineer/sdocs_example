@@ -1,6 +1,32 @@
 # Generics in Go
 
-*Date: 2026-07-30*
+
+
+📌 **Status: published**
+
+
+| | |
+|---|---|
+| **Date** | 2026-07-30 |
+| **Last updated** | 2026-07-30 |
+| **Category** | tutorial |
+| **Difficulty** | advanced |
+| **Reading time** | 6 min |
+| **Word count** | ~850 |
+| **Author** | Structured Docs |
+| **Language** | Go |
+| **Version** | Go 1.18 |
+| **License** | CC-BY-4.0 |
+
+
+
+
+
+
+## Prerequisites
+
+- Interfaces in Go
+- Structs and Methods in Go
 
 Generics were added in Go 1.18, introducing type parameters for functions and types.
 
@@ -99,5 +125,17 @@ Generics make Go more expressive without sacrificing its simplicity or performan
 
 
 
-Tags: go generics type-parameters constraints 
+## Related Posts
+
+- Error Handling in Go
+- Structs and Methods in Go
+
+
+**Tags:** `go` `generics` `type-parameters` `constraints` 
+
+
+## References
+
+ - [Go 1.18 release notes](https://go.dev/doc/go1.18)
+ - [Go blog: Generics](https://go.dev/blog/intro-generics)
 
