@@ -5,3 +5,10 @@ output_dir: ../
 template_order:
   - tech-post.template.md
   - post.template.md
+validate:
+  lines_between_headers:
+    h1: 2
+    h2: 2
+    h3: 1
+    h4: 1
+    default: 1
