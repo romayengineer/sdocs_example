@@ -173,6 +173,15 @@ Create `.vscode/tasks.json` for the watch task:
 }
 ```
 
+### ⚠️ DO NOT use `sd -clean` with `output_dir: ..`
+
+The `-clean` flag calls `RemoveAll` on the output directory. With `output_dir: ..` (the parent), this **deletes the entire project** — all schemas, templates, data files, and git history. Always regenerate manually:
+
+```sh
+rm -rf ../blog && sd -config structured.yml    # if output_dir is ..
+sd -clean -config structured.yml               # safe only when output_dir is a subdirectory
+```
+
 ## Common Pitfalls
 
 | Pitfall | Fix |

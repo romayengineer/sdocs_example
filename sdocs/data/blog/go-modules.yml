@@ -1,0 +1,144 @@
+type: tech-post
+title: Go Modules and Packages
+date: 2026-07-30
+difficulty: beginner
+body: |
+  Go modules are the built-in dependency management system introduced in Go 1.11 and made default in Go 1.16.
+
+  ## Initializing a Module
+
+  ```go
+  go mod init github.com/user/myproject
+  ```
+
+  This creates a `go.mod` file:
+
+  ```
+  module github.com/user/myproject
+
+  go 1.22
+  ```
+
+  ## Adding Dependencies
+
+  ```go
+  go get github.com/gorilla/mux@v1.8.1
+  ```
+
+  This updates `go.mod` and creates `go.sum` with checksums for reproducible builds.
+
+  ## go.mod Structure
+
+  ```
+  module github.com/user/myproject
+
+  go 1.22
+
+  require (
+      github.com/gorilla/mux v1.8.1
+      golang.org/x/text v0.14.0
+  )
+
+  exclude github.com/old/module v0.1.0
+
+  replace github.com/original => ./local/fork
+  ```
+
+  - `require` — direct dependencies
+  - `exclude` — versions to skip
+  - `replace` — substitute a module (useful for local development)
+
+  ## go mod tidy
+
+  ```sh
+  go mod tidy
+  ```
+
+  Cleans up dependencies — adds missing ones, removes unused ones.
+
+  ## Module Workspaces (Go 1.18+)
+
+  Workspaces let you work on multiple modules simultaneously:
+
+  ```sh
+  go work init ./module1 ./module2
+  ```
+
+  Creates a `go.work` file that overrides individual `go.mod` files during development — no need for `replace` directives.
+
+  ## Packages
+
+  A package is a directory of Go files with the same `package` declaration:
+
+  ```
+  myproject/
+  ├── go.mod
+  ├── main.go              # package main
+  ├── handler/
+  │   ├── handler.go       # package handler
+  │   └── handler_test.go  # package handler (or handler_test for external tests)
+  └── internal/
+      └── auth/
+          └── auth.go      # package auth (internal — only accessible within myproject)
+  ```
+
+  ## Import Paths
+
+  ```go
+  import (
+      "fmt"                                    // standard library
+      "github.com/user/myproject/handler"      // local package
+      "github.com/gorilla/mux"                 // external dependency
+  )
+  ```
+
+  ## Naming Conventions
+
+  - Package names are lowercase, single word preferred
+  - No underscores or mixedCaps — use `httputil` not `http_util`
+  - The package name should match the directory name
+
+  ## Internal Packages
+
+  Packages under `internal/` are only importable by code rooted at the parent:
+
+  ```
+  myproject/
+    internal/auth/   → only importable by myproject/...
+  ```
+
+  This enforces encapsulation boundaries.
+
+  ## Vendoring
+
+  Save exact copies of dependencies:
+
+  ```sh
+  go mod vendor
+  ```
+
+  Useful for CI reproducibility or air-gapped environments.
+tags:
+  - go
+  - modules
+  - packages
+  - dependencies
+prerequisites:
+  - Basic Go syntax and project setup
+reading_time: 7
+word_count: 1100
+author: Structured Docs
+language: Go
+version: Go 1.22
+license: CC-BY-4.0
+series: Go Fundamentals
+series_order: 3
+category: tutorial
+status: published
+references:
+  "Go blog: Modules": "https://go.dev/blog/using-go-modules"
+  "Go modules reference": "https://go.dev/ref/mod"
+related_posts:
+  - Structs and Methods in Go
+  - Testing in Go
+last_updated: 2026-07-30
