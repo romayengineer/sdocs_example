@@ -2,14 +2,29 @@
 
 ⭐ **Featured Post**
 
+📌 **Status: published**
+
+![Cover](https://images.unsplash.com/photo-1555066931-4365d14bab8c)
+
+
 | | |
 |---|---|
 | **Date** | 2026-07-30 |
+| **Last updated** | 2026-07-30 |
+| **Category** | tutorial |
 | **Difficulty** | intermediate |
 | **Reading time** | 8 min |
+| **Word count** | ~1200 |
 | **Author** | Structured Docs |
+| **Reviewers** | Alice, Bob,  |
 | **Language** | Go |
 | **Version** | Go 1.21 |
+| **License** | CC-BY-4.0 |
+| **Series** | Go Standard Library Deep Dive (Part 2) |
+
+*Originally published at: [https://example.com/blog/go-context](https://example.com/blog/go-context)*
+
+🔗 **Source code:** [https://github.com/example/go-context](https://github.com/example/go-context)
 
 
 ## Prerequisites
@@ -124,6 +139,12 @@ if deadline, ok := ctx.Deadline(); ok && time.Now().After(deadline) {
 
 The context package is small but essential. Mastering it means writing Go programs that are safe, composable, and responsive to cancellation.
 
+
+
+## Related Posts
+
+- Goroutines and Channels
+- Error Handling in Go
 
 
 **Tags:** `go` `context` `concurrency` `best-practices` 

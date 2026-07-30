@@ -118,10 +118,26 @@ prerequisites:
   - Goroutines and channels
   - Basic Go syntax
 reading_time: 8
+word_count: 1200
 author: Structured Docs
+reviewers:
+  - Alice
+  - Bob
+last_updated: 2026-07-30
 language: Go
 version: Go 1.21
+license: CC-BY-4.0
+series: Go Standard Library Deep Dive
+series_order: 2
+category: tutorial
+status: published
+cover_image: https://images.unsplash.com/photo-1555066931-4365d14bab8c
+canonical_url: https://example.com/blog/go-context
+github_url: https://github.com/example/go-context
 references:
   "Go blog: Context": "https://go.dev/blog/context"
   "Package context docs": "https://pkg.go.dev/context"
+related_posts:
+  - Goroutines and Channels
+  - Error Handling in Go
 featured: true

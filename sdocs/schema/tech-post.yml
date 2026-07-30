@@ -14,17 +14,61 @@ fields:
     required: true
   - name: tags
     type: "[]string"
+    required: false
   - name: prerequisites
     type: "[]string"
+    required: false
   - name: reading_time
     type: int
+    required: false
   - name: author
     type: string
+    required: false
   - name: language
     type: string
+    required: false
   - name: version
     type: string
+    required: false
   - name: references
     type: "map[string]string"
+    required: false
   - name: featured
     type: bool
+    required: false
+  - name: series
+    type: string
+    required: false
+  - name: series_order
+    type: int
+    required: false
+  - name: category
+    type: string
+    required: false
+  - name: status
+    type: string
+    required: false
+  - name: cover_image
+    type: string
+    required: false
+  - name: canonical_url
+    type: string
+    required: false
+  - name: github_url
+    type: string
+    required: false
+  - name: license
+    type: string
+    required: false
+  - name: related_posts
+    type: "[]string"
+    required: false
+  - name: word_count
+    type: int
+    required: false
+  - name: reviewers
+    type: "[]string"
+    required: false
+  - name: last_updated
+    type: string
+    required: false
