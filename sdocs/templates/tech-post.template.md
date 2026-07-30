@@ -1,17 +1,14 @@
 # {{ .title }}
-{{- if .featured }}
+{{ if .featured }}
 
 ⭐ **Featured Post**
-{{- end }}
-{{- if .status }}
+{{ end }}{{ if .status }}
 
-📌 **Status: {{ .status }}**
-{{- end }}
-{{- if .cover_image }}
+📌 **Status: {{ .status }}`
+{{ end }}{{ if .cover_image }}
 
 ![Cover]({{ .cover_image }})
-{{- end }}
-
+{{ end }}
 | | |
 |---|---|
 | **Date** | {{ .date }} |
@@ -26,83 +23,52 @@
 {{ end }}{{ if .version }}| **Version** | {{ .version }} |
 {{ end }}{{ if .license }}| **License** | {{ .license }} |
 {{ end }}{{ if .series }}| **Series** | {{ .series }}{{ if .series_order }} (Part {{ .series_order }}){{ end }} |
-{{ end }}
-{{- if .canonical_url }}
-
+{{ end }}{{ if .canonical_url }}
 *Originally published at: [{{ .canonical_url }}]({{ .canonical_url }})*
-{{- end }}
-{{- if .github_url }}
-
+{{ end }}{{ if .github_url }}
 🔗 **Source code:** [{{ .github_url }}]({{ .github_url }})
-{{- end }}
-{{- if .prerequisites }}
-
+{{ end }}{{ if .prerequisites }}
 ## Prerequisites
 
 {{ range .prerequisites }}- {{ . }}
-{{ end }}
-{{- end }}
-{{- if .introduction }}
-
+{{ end }}{{ end }}{{ if .introduction }}
 ## Overview
 
-{{ .introduction }}
-{{- end }}
-{{- if .basic_usage }}
-
+{{ .introduction -}}
+{{ end }}{{ if .basic_usage }}
 ## Basic Usage
 
-{{ .basic_usage }}
-{{- end }}
-{{- if .examples }}
-
+{{ .basic_usage -}}
+{{ end }}{{ if .examples }}
 ## Examples
 
-{{ .examples }}
-{{- end }}
-{{- if .best_practices }}
-
+{{ .examples -}}
+{{ end }}{{ if .best_practices }}
 ## Best Practices
 
-{{ .best_practices }}
-{{- end }}
-{{- if .pitfalls }}
-
+{{ .best_practices -}}
+{{ end }}{{ if .pitfalls }}
 ## Common Pitfalls
 
-{{ .pitfalls }}
-{{- end }}
-{{- if .advanced }}
-
+{{ .pitfalls -}}
+{{ end }}{{ if .advanced }}
 ## Advanced Topics
 
-{{ .advanced }}
-{{- end }}
-{{- if .summary }}
-
+{{ .advanced -}}
+{{ end }}{{ if .summary }}
 ## Summary
 
-{{ .summary }}
-{{- end }}
-{{- if .body }}
-
-{{ .body }}
-{{- end }}
-{{- if .related_posts }}
-
+{{ .summary -}}
+{{ end }}{{ if .body }}
+{{ .body -}}
+{{ end }}{{ if .related_posts }}
 ## Related Posts
 
 {{ range .related_posts }}- {{ . }}
-{{ end }}
-{{- end }}
-{{- if .tags }}
-
+{{ end }}{{ end }}{{ if .tags }}
 **Tags:** {{ range .tags }}`{{ . }}` {{ end }}
-{{- end }}
-{{- if .references }}
-
+{{ end }}{{ if .references }}
 ## References
 
 {{ range $label, $url := .references }} - [{{ $label }}]({{ $url }})
-{{ end }}
-{{- end }}
+{{ end }}{{ end }}
