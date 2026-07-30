@@ -11,3 +11,5 @@ validate:
     h3: 1
     h4: 1
     default: 1
+  file_name:
+    style: kebab
