@@ -1,0 +1,145 @@
+# File I/O in Go
+
+
+
+📌 **Status: published**
+
+
+| | |
+|---|---|
+| **Date** | 2026-07-30 |
+| **Last updated** | 2026-07-30 |
+| **Category** | tutorial |
+| **Difficulty** | intermediate |
+| **Reading time** | 6 min |
+| **Word count** | ~800 |
+| **Author** | Structured Docs |
+| **Language** | Go |
+| **Version** | Go 1.21 |
+| **License** | CC-BY-4.0 |
+
+
+
+
+
+
+## Prerequisites
+
+- Error Handling in Go
+- Interfaces in Go
+
+Go's `io` and `os` packages provide a clean interface for reading and writing data, whether from files, network connections, or in-memory buffers.
+
+## The io.Reader and io.Writer Interfaces
+
+The entire I/O system is built on two interfaces:
+
+```go
+type Reader interface {
+    Read(p []byte) (n int, err error)
+}
+type Writer interface {
+    Write(p []byte) (n int, err error)
+}
+```
+
+Any type that implements these interfaces can be used with the standard I/O utilities.
+
+## Reading Files
+
+```go
+// Entire file
+data, err := os.ReadFile("data.txt")
+fmt.Println(string(data))
+
+// Line by line
+file, err := os.Open("data.txt")
+defer file.Close()
+scanner := bufio.NewScanner(file)
+for scanner.Scan() {
+    fmt.Println(scanner.Text())
+}
+```
+
+## Writing Files
+
+```go
+// Write entire file
+err := os.WriteFile("output.txt", []byte("Hello"), 0644)
+
+// Buffered writing
+file, err := os.Create("output.txt")
+defer file.Close()
+writer := bufio.NewWriter(file)
+writer.WriteString("line 1\n")
+writer.WriteString("line 2\n")
+writer.Flush() // ensure data is written to disk
+```
+
+## Working with io.Reader/io.Writer
+
+The power of the interface is composability:
+
+```go
+// Copy from reader to writer
+io.Copy(os.Stdout, strings.NewReader("Hello\n"))
+
+// TeeReader: read and write simultaneously
+var buf bytes.Buffer
+reader := io.TeeReader(strings.NewReader("data"), &buf)
+io.ReadAll(reader)
+fmt.Println(buf.String()) // "data"
+```
+
+## File System Operations
+
+```go
+os.Stat("file.txt")              // file info
+os.Rename("old.txt", "new.txt")  // rename/move
+os.Remove("file.txt")            // delete
+os.MkdirAll("a/b/c", 0755)      // create directories
+os.ReadDir(".")                  // list directory
+```
+
+## Temporary Files
+
+```go
+tmpFile, _ := os.CreateTemp("", "prefix-*.txt")
+defer os.Remove(tmpFile.Name())
+tmpFile.WriteString("temporary data")
+tmpFile.Close()
+
+tmpDir, _ := os.MkdirTemp("", "mydir-*")
+defer os.RemoveAll(tmpDir)
+```
+
+## The io/fs Interface (Go 1.16)
+
+The `io/fs` package abstracts file systems:
+
+```go
+type FS interface {
+    Open(name string) (File, error)
+}
+```
+
+This allows the same code to work with `os.DirFS`, `embed.FS`, `testing/fstest.MapFS`, or custom implementations.
+
+Go's I/O interfaces make it easy to write composable, testable code that works across files, networks, and in-memory sources.
+
+
+
+## Related Posts
+
+- Embedding Files in Go
+- JSON in Go
+
+
+**Tags:** `go` `io` `filesystem` `reader` `writer` 
+
+
+## References
+
+ - [Go io package docs](https://pkg.go.dev/io)
+ - [Go os package docs](https://pkg.go.dev/os)
+

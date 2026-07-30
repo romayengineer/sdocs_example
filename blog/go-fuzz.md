@@ -1,0 +1,143 @@
+# Fuzz Testing in Go
+
+
+
+📌 **Status: published**
+
+
+| | |
+|---|---|
+| **Date** | 2026-07-30 |
+| **Last updated** | 2026-07-30 |
+| **Category** | tutorial |
+| **Difficulty** | advanced |
+| **Reading time** | 6 min |
+| **Word count** | ~850 |
+| **Author** | Structured Docs |
+| **Language** | Go |
+| **Version** | Go 1.18+ |
+| **License** | CC-BY-4.0 |
+
+
+
+
+
+
+## Prerequisites
+
+- Testing in Go
+- Error Handling in Go
+
+Fuzz testing (or fuzzing) automatically generates random inputs to find bugs, crashes, and edge cases. Go 1.18 added native fuzzing support to the `testing` package.
+
+## Writing a Fuzz Target
+
+Define a `FuzzXxx(f *testing.F)` function in a `_test.go` file:
+
+```go
+func Reverse(s string) string {
+    runes := []rune(s)
+    for i, j := 0, len(runes)-1; i < j; i, j = i+1, j-1 {
+        runes[i], runes[j] = runes[j], runes[i]
+    }
+    return string(runes)
+}
+
+func FuzzReverse(f *testing.F) {
+    // Seed corpus (initial inputs)
+    f.Add("hello")
+    f.Add("世界")
+
+    f.Fuzz(func(t *testing.T, s string) {
+        reversed := Reverse(s)
+        doubleReversed := Reverse(reversed)
+        if s != doubleReversed {
+            t.Errorf("Reverse(Reverse(%q)) = %q", s, doubleReversed)
+        }
+        // UTF-8 is valid
+        if !utf8.ValidString(reversed) {
+            t.Errorf("Reverse produced invalid UTF-8: %q", reversed)
+        }
+    })
+}
+```
+
+## Running Fuzz Tests
+
+```sh
+# Run with fuzzing (indefinitely or until crash)
+go test -fuzz=FuzzReverse
+
+# Run a specific number of iterations
+go test -fuzz=FuzzReverse -fuzztime=30s
+
+# Run only the seed corpus (no fuzzing)
+go test -run=FuzzReverse
+```
+
+## Reading Crash Reports
+
+When fuzzing finds a bug, it writes the failing input to `testdata/fuzz/FuzzXxx/`:
+
+```
+testdata/fuzz/FuzzReverse/
+├── 00a1b2c3d4e5f6   # crash input file
+```
+
+The input file format:
+
+```go
+go test fuzz v1
+string("\xff")  // the input that caused the crash
+```
+
+## Regression Testing
+
+Once a crash is found, add it to the seed corpus. The test runs against all seed inputs every time:
+
+```go
+f.Add("\xff") // add discovered crash input
+```
+
+## Fuzzing Structs and Complex Types
+
+Fuzzing supports: `string`, `[]byte`, `int`, `int8/16/32/64`, `uint`, `uint8/16/32/64`, `float32`, `float64`, `bool`.
+
+For complex types, encode them as `[]byte` and decode in the fuzz function.
+
+## Best Practices
+
+- **Test invariants** — properties that must always hold (e.g., decode(encode(x)) == x)
+- **Keep fuzz targets fast** — avoid I/O, logging, or sleeping
+- **Use meaningful seed corpora** — known edge cases guide the fuzzer
+- **Run regularly** — integrate into CI with a time budget (e.g., 10 minutes per package)
+- **Combine with `-race`** — catch data races alongside logic bugs
+
+```sh
+go test -fuzz=FuzzReverse -fuzztime=5m -race
+```
+
+## Limitations
+
+- Fuzzing cannot prove correctness — only find bugs
+- Coverage-guided, but may miss deeply nested conditions
+- No structured fuzzing for complex types without manual encoding
+
+Fuzz testing has found hundreds of bugs in the Go standard library and ecosystem. Adding fuzz targets to critical parsing or encoding functions is a high-ROI investment in reliability.
+
+
+
+## Related Posts
+
+- Testing in Go
+- Error Handling in Go
+
+
+**Tags:** `go` `fuzz` `testing` `security` 
+
+
+## References
+
+ - [Go blog: Fuzzing is Beta](https://go.dev/blog/fuzz-beta)
+ - [Go fuzz testing docs](https://go.dev/doc/fuzz)
+

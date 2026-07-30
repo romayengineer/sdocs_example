@@ -1,0 +1,148 @@
+type: tech-post
+title: Benchmarking and Profiling in Go
+date: 2026-07-30
+difficulty: intermediate
+body: |
+  Go includes built-in support for benchmarking, profiling, and testing through the `testing` package and the `go test` command.
+
+  ## Writing Benchmarks
+
+  Benchmark functions are placed in `_test.go` files and follow the `BenchmarkXxx(b *testing.B)` signature:
+
+  ```go
+  // sum.go
+  func Sum(nums []int) int {
+      var total int
+      for _, n := range nums {
+          total += n
+      }
+      return total
+  }
+
+  // sum_test.go
+  func BenchmarkSum(b *testing.B) {
+      nums := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+      for i := 0; i < b.N; i++ {
+          Sum(nums)
+      }
+  }
+  ```
+
+  ## Running Benchmarks
+
+  ```sh
+  go test -bench=. -benchmem
+  ```
+
+  Output:
+  ```
+  BenchmarkSum-8    1000000000    0.42 ns/op    0 B/op    0 allocs/op
+  ```
+
+  The `b.N` is automatically adjusted by the framework to get a stable measurement.
+
+  ## Sub-benchmarks
+
+  ```go
+  func BenchmarkSum(b *testing.B) {
+      sizes := []int{10, 100, 1000}
+      for _, n := range sizes {
+          b.Run(fmt.Sprintf("n=%d", n), func(b *testing.B) {
+              nums := make([]int, n)
+              for i := 0; i < b.N; i++ {
+                  Sum(nums)
+              }
+          })
+      }
+  }
+  ```
+
+  ## Comparing Implementations
+
+  ```go
+  func BenchmarkConcat(b *testing.B) {
+      b.Run("strings.Builder", func(b *testing.B) {
+          for i := 0; i < b.N; i++ {
+              var sb strings.Builder
+              for j := 0; j < 100; j++ {
+                  sb.WriteString("a")
+              }
+              _ = sb.String()
+          }
+      })
+      b.Run("+= operator", func(b *testing.B) {
+          for i := 0; i < b.N; i++ {
+              s := ""
+              for j := 0; j < 100; j++ {
+                  s += "a"
+              }
+              _ = s
+          }
+      })
+  }
+  ```
+
+  ## Profiling
+
+  ```sh
+  go test -bench=. -cpuprofile=cpu.prof -memprofile=mem.prof
+  go tool pprof cpu.prof
+  ```
+
+  In the pprof interactive shell:
+  ```
+  top      # top consuming functions
+  web      # open flame graph (requires graphviz)
+  list Sum # show line-by-line breakdown
+  ```
+
+  ## Allocs and Escape Analysis
+
+  ```sh
+  go test -bench=. -benchmem -gcflags="-m -m" 2>&1 | grep "escapes"
+  ```
+
+  ## Benchmark Tips
+
+  - Disable CPU scaling: `sudo cpupower frequency-set --governor performance`
+  - Don't let the compiler optimize away the result — assign to a package-level variable
+  - Use `benchstat` to compare benchmark runs statistically
+  - Set `-benchtime=10x` for quick checks, `-benchtime=5s` for stable results
+
+  ```go
+  var Result int // package-level sink
+
+  func BenchmarkSum(b *testing.B) {
+      nums := []int{1, 2, 3}
+      var r int
+      for i := 0; i < b.N; i++ {
+          r = Sum(nums)
+      }
+      Result = r // prevent dead code elimination
+  }
+  ```
+
+  Go's built-in benchmarking and profiling tools make performance analysis a first-class part of the development workflow — no external tools required.
+tags:
+  - go
+  - benchmarks
+  - profiling
+  - performance
+prerequisites:
+  - Testing in Go
+  - Slices and Arrays in Go
+reading_time: 7
+word_count: 950
+author: Structured Docs
+language: Go
+version: Go 1.21
+license: CC-BY-4.0
+category: tutorial
+status: published
+references:
+  "Go testing docs": "https://pkg.go.dev/testing"
+  "Go blog: Profiling Go programs": "https://go.dev/blog/pprof"
+related_posts:
+  - Testing in Go
+  - Race Detector in Go
+last_updated: 2026-07-30

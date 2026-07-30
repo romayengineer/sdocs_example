@@ -1,0 +1,160 @@
+# Working with Time in Go
+
+
+
+📌 **Status: published**
+
+
+| | |
+|---|---|
+| **Date** | 2026-07-30 |
+| **Last updated** | 2026-07-30 |
+| **Category** | tutorial |
+| **Difficulty** | beginner |
+| **Reading time** | 5 min |
+| **Word count** | ~720 |
+| **Author** | Structured Docs |
+| **Language** | Go |
+| **Version** | Go 1.21 |
+| **License** | CC-BY-4.0 |
+
+
+
+
+
+
+## Prerequisites
+
+- Basic Go syntax
+
+Go's `time` package provides a comprehensive API for working with dates, times, durations, and scheduling.
+
+## Time and Duration Types
+
+```go
+now := time.Now()
+fmt.Println(now) // 2026-07-30 12:00:00 +0000 UTC
+```
+
+## Creating Time Values
+
+```go
+// Specific date
+t := time.Date(2026, time.July, 30, 12, 0, 0, 0, time.UTC)
+
+// Unix timestamp
+t := time.Unix(1750000000, 0)
+
+// Parsing
+t, _ := time.Parse(time.RFC3339, "2026-07-30T12:00:00Z")
+```
+
+## Formatting
+
+Go uses a unique reference time: `Mon Jan 2 15:04:05 MST 2006`
+
+```go
+t := time.Now()
+fmt.Println(t.Format("2006-01-02"))           // 2026-07-30
+fmt.Println(t.Format("Jan 2, 2006 3:04 PM")) // Jul 30, 2026 12:00 PM
+fmt.Println(t.Format(time.RFC822))           // 30 Jul 26 12:00 UTC
+```
+
+## Duration
+
+```go
+d := 5 * time.Second + 250 * time.Millisecond
+fmt.Println(d)            // 5.25s
+fmt.Println(d.Seconds())  // 5.25
+fmt.Println(d.Round(time.Second)) // 5s
+
+// Sleep
+time.Sleep(100 * time.Millisecond)
+```
+
+## Time Arithmetic
+
+```go
+t := time.Now()
+tomorrow := t.Add(24 * time.Hour)
+later := t.Add(2 * time.Hour + 30 * time.Minute)
+
+// Difference
+diff := later.Sub(t)
+fmt.Println(diff.Minutes()) // 150
+```
+
+## Comparing Times
+
+```go
+a := time.Date(2026, 7, 30, 0, 0, 0, 0, time.UTC)
+b := time.Date(2026, 7, 31, 0, 0, 0, 0, time.UTC)
+
+fmt.Println(a.Before(b)) // true
+fmt.Println(a.After(b))  // false
+fmt.Println(a.Equal(b))  // false
+```
+
+## Time Zones
+
+```go
+loc, _ := time.LoadLocation("America/New_York")
+t := time.Now().In(loc)
+fmt.Println(t)
+
+// List all zones
+for _, tz := range timezoneNames {
+    loc, _ := time.LoadLocation(tz)
+    fmt.Println(tz, time.Now().In(loc))
+}
+```
+
+## Timers and Tickers
+
+```go
+// Timer (fires once)
+timer := time.NewTimer(2 * time.Second)
+<-timer.C
+fmt.Println("2 seconds later")
+
+// Ticker (fires repeatedly)
+ticker := time.NewTicker(1 * time.Second)
+for i := 0; i < 5; i++ {
+    <-ticker.C
+    fmt.Println("tick")
+}
+ticker.Stop()
+```
+
+## Context Timeouts
+
+```go
+ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+defer cancel()
+// Use ctx for HTTP calls, DB queries, etc.
+```
+
+## Common Pitfalls
+
+- **MST vs UTC**: Always be explicit about time zones — use `time.UTC` or `time.LoadLocation`
+- **Monotonic clock**: `time.Now()` includes monotonic readings for duration measurement; strip with `t.Round(0)` for serialization
+- **Parse format vs reference time**: Forgot the reference time? `Format` and `Parse` use `2006-01-02`, not `YYYY-MM-DD`
+
+The `time` package is one of Go's best-designed standard libraries — expressive, correct, and hard to misuse when you know the reference time convention.
+
+
+
+## Related Posts
+
+- Context in Go
+- Building HTTP Servers and Clients in Go
+
+
+**Tags:** `go` `time` `dates` `scheduling` 
+
+
+## References
+
+ - [Go by example: Time](https://gobyexample.com/time)
+ - [Go time package docs](https://pkg.go.dev/time)
+

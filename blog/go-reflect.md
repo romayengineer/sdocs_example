@@ -1,0 +1,141 @@
+# Reflection in Go
+
+
+
+📌 **Status: published**
+
+
+| | |
+|---|---|
+| **Date** | 2026-07-30 |
+| **Last updated** | 2026-07-30 |
+| **Category** | tutorial |
+| **Difficulty** | advanced |
+| **Reading time** | 7 min |
+| **Word count** | ~950 |
+| **Author** | Structured Docs |
+| **Language** | Go |
+| **Version** | Go 1.21 |
+| **License** | CC-BY-4.0 |
+
+
+
+
+
+
+## Prerequisites
+
+- Interfaces in Go
+- Structs and Methods in Go
+
+Reflection is the ability for a program to inspect and modify its own structure at runtime. Go's `reflect` package provides this capability.
+
+## Type and Value
+
+Every reflection operation begins with `reflect.TypeOf` and `reflect.ValueOf`:
+
+```go
+var x float64 = 3.14
+t := reflect.TypeOf(x)
+v := reflect.ValueOf(x)
+
+fmt.Println(t)           // float64
+fmt.Println(v)           // 3.14
+fmt.Println(v.Float())   // 3.14
+fmt.Println(t.Kind())    // float64
+```
+
+## Inspecting Structs
+
+Reflection is most commonly used to work with struct fields and tags:
+
+```go
+type User struct {
+    Name  string `json:"name" validate:"required"`
+    Email string `json:"email" validate:"required,email"`
+}
+
+u := User{Name: "Alice"}
+t := reflect.TypeOf(u)
+
+for i := 0; i < t.NumField(); i++ {
+    field := t.Field(i)
+    fmt.Printf("%s: json=%s validate=%s\n",
+        field.Name,
+        field.Tag.Get("json"),
+        field.Tag.Get("validate"))
+}
+```
+
+## Modifying Values
+
+To modify a value via reflection, you need a pointer:
+
+```go
+var x float64 = 3.14
+v := reflect.ValueOf(&x).Elem() // Elem() to get the pointed-to value
+v.SetFloat(2.71)
+fmt.Println(x) // 2.71
+```
+
+## Calling Methods by Name
+
+```go
+type Calculator struct{}
+
+func (Calculator) Add(a, b int) int { return a + b }
+
+c := Calculator{}
+v := reflect.ValueOf(c)
+method := v.MethodByName("Add")
+result := method.Call([]reflect.Value{
+    reflect.ValueOf(3),
+    reflect.ValueOf(4),
+})
+fmt.Println(result[0].Int()) // 7
+```
+
+## Creating Values Dynamically
+
+```go
+t := reflect.TypeOf((*int)(nil)).Elem()
+v := reflect.New(t) // *int pointing to zero value
+v.Elem().SetInt(42)
+fmt.Println(v.Elem().Int()) // 42
+```
+
+## Performance Considerations
+
+Reflection is significantly slower than direct code — typically 10-100x slower for method calls and field access. Libraries like `encoding/json`, `fmt`, and ORMs use reflection, but it's often cached after initial setup.
+
+## When to Use
+
+- Serialization frameworks (JSON, YAML, XML)
+- Validation libraries
+- Testing tools that inspect or compare values
+- Building generic utilities when generics aren't sufficient
+
+## When NOT to Use
+
+- In hot paths where performance matters
+- When generics or interfaces solve the problem
+- When you can write concrete code — reflection sacrifices compile-time type safety
+
+"Clear is better than clever." Reflection is powerful but should be used sparingly and with care.
+
+
+
+## Related Posts
+
+- JSON in Go
+- Interfaces in Go
+
+
+**Tags:** `go` `reflect` `runtime` `metaprogramming` 
+
+
+## References
+
+ - [Go blog: The Laws of Reflection](https://go.dev/blog/laws-of-reflection)
+ - [Go reflect docs](https://pkg.go.dev/reflect)
+
