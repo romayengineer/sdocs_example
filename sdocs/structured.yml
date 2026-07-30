@@ -13,3 +13,4 @@ validate:
     default: 1
   file_name:
     style: kebab
+    allow_leading_digit: false
