@@ -1,0 +1,30 @@
+description: "A blog post specialized for tech topics with structured metadata"
+fields:
+  - name: title
+    type: string
+    required: true
+  - name: date
+    type: string
+    required: true
+  - name: difficulty
+    type: string
+    required: true
+  - name: body
+    type: string
+    required: true
+  - name: tags
+    type: "[]string"
+  - name: prerequisites
+    type: "[]string"
+  - name: reading_time
+    type: int
+  - name: author
+    type: string
+  - name: language
+    type: string
+  - name: version
+    type: string
+  - name: references
+    type: "map[string]string"
+  - name: featured
+    type: bool

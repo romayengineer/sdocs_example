@@ -3,4 +3,5 @@ data_dir: data
 template_dir: templates
 output_dir: ../docs
 template_order:
+  - tech-post.template.md
   - post.template.md
