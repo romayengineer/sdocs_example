@@ -1,9 +1,6 @@
 # Embedding Files in Go
 
-
-
 📌 **Status: published**
-
 
 | | |
 |---|---|
@@ -17,10 +14,6 @@
 | **Language** | Go |
 | **Version** | Go 1.16+ |
 | **License** | CC-BY-4.0 |
-
-
-
-
 
 
 ## Prerequisites
@@ -121,7 +114,6 @@ func main() {
 Embedding produces a single self-contained binary — no file dependencies at runtime, simpler deployment, and consistent behavior across environments.
 
 
-
 ## Related Posts
 
 - File I/O in Go
@@ -129,7 +121,6 @@ Embedding produces a single self-contained binary — no file dependencies at ru
 
 
 **Tags:** `go` `embed` `files` `binary` 
-
 
 ## References
 

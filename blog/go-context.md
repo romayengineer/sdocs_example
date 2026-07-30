@@ -6,7 +6,6 @@
 
 ![Cover](https://images.unsplash.com/photo-1555066931-4365d14bab8c)
 
-
 | | |
 |---|---|
 | **Date** | 2026-07-30 |
@@ -22,10 +21,10 @@
 | **License** | CC-BY-4.0 |
 | **Series** | Go Standard Library Deep Dive (Part 2) |
 
+
 *Originally published at: [https://example.com/blog/go-context](https://example.com/blog/go-context)*
 
 🔗 **Source code:** [https://github.com/example/go-context](https://github.com/example/go-context)
-
 
 ## Prerequisites
 
@@ -140,7 +139,6 @@ if deadline, ok := ctx.Deadline(); ok && time.Now().After(deadline) {
 The context package is small but essential. Mastering it means writing Go programs that are safe, composable, and responsive to cancellation.
 
 
-
 ## Related Posts
 
 - Goroutines and Channels
@@ -148,7 +146,6 @@ The context package is small but essential. Mastering it means writing Go progra
 
 
 **Tags:** `go` `context` `concurrency` `best-practices` 
-
 
 ## References
 

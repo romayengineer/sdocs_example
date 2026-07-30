@@ -1,9 +1,6 @@
 # Go Modules and Packages
 
-
-
 📌 **Status: published**
-
 
 | | |
 |---|---|
@@ -18,10 +15,6 @@
 | **Version** | Go 1.22 |
 | **License** | CC-BY-4.0 |
 | **Series** | Go Fundamentals (Part 3) |
-
-
-
-
 
 
 ## Prerequisites
@@ -145,7 +138,6 @@ go mod vendor
 Useful for CI reproducibility or air-gapped environments.
 
 
-
 ## Related Posts
 
 - Structs and Methods in Go
@@ -153,7 +145,6 @@ Useful for CI reproducibility or air-gapped environments.
 
 
 **Tags:** `go` `modules` `packages` `dependencies` 
-
 
 ## References
 

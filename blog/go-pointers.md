@@ -1,9 +1,6 @@
 # Pointers in Go
 
-
-
 📌 **Status: published**
-
 
 | | |
 |---|---|
@@ -17,10 +14,6 @@
 | **Language** | Go |
 | **Version** | Go 1.21 |
 | **License** | CC-BY-4.0 |
-
-
-
-
 
 
 ## Prerequisites
@@ -111,7 +104,6 @@ This is determined by escape analysis, not by the programmer.
 Go's pointers are simple and safe — no pointer arithmetic, no dangling references, and a garbage collector handles cleanup.
 
 
-
 ## Related Posts
 
 - Structs and Methods in Go
@@ -119,7 +111,6 @@ Go's pointers are simple and safe — no pointer arithmetic, no dangling referen
 
 
 **Tags:** `go` `pointers` `memory` 
-
 
 ## References
 

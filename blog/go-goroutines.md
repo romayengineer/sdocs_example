@@ -1,9 +1,6 @@
 # Goroutines and Channels
 
-
-
 📌 **Status: published**
-
 
 | | |
 |---|---|
@@ -18,11 +15,6 @@
 | **Version** | Go 1.21 |
 | **License** | CC-BY-4.0 |
 | **Series** | Go Concurrency (Part 1) |
-
-
-
-
-
 
 Goroutines are lightweight threads managed by the Go runtime. They are the foundation of concurrency in Go.
 
@@ -113,7 +105,6 @@ for n := range sq(gen(2, 3, 4)) {
 Goroutines are cheap (a few KB each), making it practical to start thousands of them. With channels, Go offers a safe, composable concurrency model built on the mantra: *"Do not communicate by sharing memory; instead, share memory by communicating."*
 
 
-
 ## Related Posts
 
 - Interfaces in Go
@@ -121,7 +112,6 @@ Goroutines are cheap (a few KB each), making it practical to start thousands of 
 
 
 **Tags:** `go` `concurrency` `goroutines` `channels` 
-
 
 ## References
 

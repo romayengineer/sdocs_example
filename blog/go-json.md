@@ -1,9 +1,6 @@
 # JSON in Go
 
-
-
 📌 **Status: published**
-
 
 | | |
 |---|---|
@@ -17,10 +14,6 @@
 | **Language** | Go |
 | **Version** | Go 1.21 |
 | **License** | CC-BY-4.0 |
-
-
-
-
 
 
 ## Prerequisites
@@ -128,7 +121,6 @@ func (c *Color) UnmarshalJSON(data []byte) error {
 `encoding/json` is the most commonly used package in Go after `fmt`. For performance-critical applications, alternatives like `json-iterator/go` or `segmentio/encoding/json` offer significant speedups.
 
 
-
 ## Related Posts
 
 - Building HTTP Servers and Clients in Go
@@ -136,7 +128,6 @@ func (c *Color) UnmarshalJSON(data []byte) error {
 
 
 **Tags:** `go` `json` `serialization` `encoding` 
-
 
 ## References
 

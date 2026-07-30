@@ -1,9 +1,6 @@
 # Panic and Recover in Go
 
-
-
 📌 **Status: published**
-
 
 | | |
 |---|---|
@@ -17,10 +14,6 @@
 | **Language** | Go |
 | **Version** | Go 1.21 |
 | **License** | CC-BY-4.0 |
-
-
-
-
 
 
 ## Prerequisites
@@ -139,7 +132,6 @@ func (s *Server) handle(conn net.Conn) {
 The standard library uses panic internally for things like `json.Marshal` with cyclic data, but these are always caught internally. Your application code should rarely call `panic` directly.
 
 
-
 ## Related Posts
 
 - Error Handling in Go
@@ -147,7 +139,6 @@ The standard library uses panic internally for things like `json.Marshal` with c
 
 
 **Tags:** `go` `panic` `recover` `error-handling` 
-
 
 ## References
 

@@ -1,12 +1,17 @@
 # {{ .title }}
+{{- if .featured }}
 
-{{ if .featured }}⭐ **Featured Post**{{ end }}{{ if .status }}
+⭐ **Featured Post**
+{{- end }}
+{{- if .status }}
 
-📌 **Status: {{ .status }}**{{ end }}
+📌 **Status: {{ .status }}**
+{{- end }}
+{{- if .cover_image }}
 
-{{ if .cover_image }}![Cover]({{ .cover_image }})
+![Cover]({{ .cover_image }})
+{{- end }}
 
-{{ end }}
 | | |
 |---|---|
 | **Date** | {{ .date }} |
@@ -22,27 +27,37 @@
 {{ end }}{{ if .license }}| **License** | {{ .license }} |
 {{ end }}{{ if .series }}| **Series** | {{ .series }}{{ if .series_order }} (Part {{ .series_order }}){{ end }} |
 {{ end }}
-{{ if .canonical_url }}*Originally published at: [{{ .canonical_url }}]({{ .canonical_url }})*{{ end }}
+{{- if .canonical_url }}
 
-{{ if .github_url }}🔗 **Source code:** [{{ .github_url }}]({{ .github_url }}){{ end }}
+*Originally published at: [{{ .canonical_url }}]({{ .canonical_url }})*
+{{- end }}
+{{- if .github_url }}
 
-{{ if .prerequisites }}
+🔗 **Source code:** [{{ .github_url }}]({{ .github_url }})
+{{- end }}
+{{- if .prerequisites }}
+
 ## Prerequisites
 
 {{ range .prerequisites }}- {{ . }}
-{{ end }}{{ end }}
+{{ end }}
+{{- end }}
 {{ .body }}
+{{- if .related_posts }}
 
-{{ if .related_posts }}
 ## Related Posts
 
 {{ range .related_posts }}- {{ . }}
-{{ end }}{{ end }}
-{{ if .tags }}
-**Tags:** {{ range .tags }}`{{ . }}` {{ end }}
 {{ end }}
-{{ if .references }}
+{{- end }}
+{{- if .tags }}
+
+**Tags:** {{ range .tags }}`{{ . }}` {{ end }}
+{{- end }}
+{{- if .references }}
+
 ## References
 
 {{ range $label, $url := .references }} - [{{ $label }}]({{ $url }})
-{{ end }}{{ end }}
+{{ end }}
+{{- end }}

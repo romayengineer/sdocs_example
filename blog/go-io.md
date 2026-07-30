@@ -1,9 +1,6 @@
 # File I/O in Go
 
-
-
 📌 **Status: published**
-
 
 | | |
 |---|---|
@@ -17,10 +14,6 @@
 | **Language** | Go |
 | **Version** | Go 1.21 |
 | **License** | CC-BY-4.0 |
-
-
-
-
 
 
 ## Prerequisites
@@ -128,7 +121,6 @@ This allows the same code to work with `os.DirFS`, `embed.FS`, `testing/fstest.M
 Go's I/O interfaces make it easy to write composable, testable code that works across files, networks, and in-memory sources.
 
 
-
 ## Related Posts
 
 - Embedding Files in Go
@@ -136,7 +128,6 @@ Go's I/O interfaces make it easy to write composable, testable code that works a
 
 
 **Tags:** `go` `io` `filesystem` `reader` `writer` 
-
 
 ## References
 

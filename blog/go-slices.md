@@ -1,9 +1,6 @@
 # Slices and Arrays in Go
 
-
-
 📌 **Status: published**
-
 
 | | |
 |---|---|
@@ -17,10 +14,6 @@
 | **Language** | Go |
 | **Version** | Go 1.21 |
 | **License** | CC-BY-4.0 |
-
-
-
-
 
 
 ## Prerequisites
@@ -110,7 +103,6 @@ s = append(s, 3) // cap=4 (doubled)
 Slices are the idiomatic choice in Go — arrays are rarely used directly.
 
 
-
 ## Related Posts
 
 - Maps in Go
@@ -118,7 +110,6 @@ Slices are the idiomatic choice in Go — arrays are rarely used directly.
 
 
 **Tags:** `go` `slices` `arrays` `data-structures` 
-
 
 ## References
 

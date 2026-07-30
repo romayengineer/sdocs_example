@@ -1,9 +1,6 @@
 # Working with Time in Go
 
-
-
 📌 **Status: published**
-
 
 | | |
 |---|---|
@@ -17,10 +14,6 @@
 | **Language** | Go |
 | **Version** | Go 1.21 |
 | **License** | CC-BY-4.0 |
-
-
-
-
 
 
 ## Prerequisites
@@ -143,7 +136,6 @@ defer cancel()
 The `time` package is one of Go's best-designed standard libraries — expressive, correct, and hard to misuse when you know the reference time convention.
 
 
-
 ## Related Posts
 
 - Context in Go
@@ -151,7 +143,6 @@ The `time` package is one of Go's best-designed standard libraries — expressiv
 
 
 **Tags:** `go` `time` `dates` `scheduling` 
-
 
 ## References
 

@@ -1,9 +1,6 @@
 # Building HTTP Servers and Clients in Go
 
-
-
 📌 **Status: published**
-
 
 | | |
 |---|---|
@@ -17,10 +14,6 @@
 | **Language** | Go |
 | **Version** | Go 1.22 |
 | **License** | CC-BY-4.0 |
-
-
-
-
 
 
 ## Prerequisites
@@ -144,7 +137,6 @@ srv.Shutdown(ctx)
 Go's `net/http` is production-ready and used by major projects. For complex routing, packages like `gorilla/mux` or `chi` add path parameters and middleware chaining on top of the standard `http.Handler`.
 
 
-
 ## Related Posts
 
 - JSON in Go
@@ -152,7 +144,6 @@ Go's `net/http` is production-ready and used by major projects. For complex rout
 
 
 **Tags:** `go` `http` `server` `client` `web` 
-
 
 ## References
 

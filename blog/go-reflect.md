@@ -1,9 +1,6 @@
 # Reflection in Go
 
-
-
 📌 **Status: published**
-
 
 | | |
 |---|---|
@@ -17,10 +14,6 @@
 | **Language** | Go |
 | **Version** | Go 1.21 |
 | **License** | CC-BY-4.0 |
-
-
-
-
 
 
 ## Prerequisites
@@ -124,7 +117,6 @@ Reflection is significantly slower than direct code — typically 10-100x slower
 "Clear is better than clever." Reflection is powerful but should be used sparingly and with care.
 
 
-
 ## Related Posts
 
 - JSON in Go
@@ -132,7 +124,6 @@ Reflection is significantly slower than direct code — typically 10-100x slower
 
 
 **Tags:** `go` `reflect` `runtime` `metaprogramming` 
-
 
 ## References
 

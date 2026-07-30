@@ -1,9 +1,6 @@
 # Benchmarking and Profiling in Go
 
-
-
 📌 **Status: published**
-
 
 | | |
 |---|---|
@@ -17,10 +14,6 @@
 | **Language** | Go |
 | **Version** | Go 1.21 |
 | **License** | CC-BY-4.0 |
-
-
-
-
 
 
 ## Prerequisites
@@ -150,7 +143,6 @@ func BenchmarkSum(b *testing.B) {
 Go's built-in benchmarking and profiling tools make performance analysis a first-class part of the development workflow — no external tools required.
 
 
-
 ## Related Posts
 
 - Testing in Go
@@ -158,7 +150,6 @@ Go's built-in benchmarking and profiling tools make performance analysis a first
 
 
 **Tags:** `go` `benchmarks` `profiling` `performance` 
-
 
 ## References
 

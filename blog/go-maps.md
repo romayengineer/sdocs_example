@@ -1,9 +1,6 @@
 # Maps in Go
 
-
-
 📌 **Status: published**
-
 
 | | |
 |---|---|
@@ -17,10 +14,6 @@
 | **Language** | Go |
 | **Version** | Go 1.21 |
 | **License** | CC-BY-4.0 |
-
-
-
-
 
 
 ## Prerequisites
@@ -106,7 +99,6 @@ Maps are implemented as hash tables. Key types must be comparable (using `==`). 
 Maps are efficient, flexible, and widely used across Go programs for lookups, caches, and grouping data.
 
 
-
 ## Related Posts
 
 - Slices and Arrays in Go
@@ -114,7 +106,6 @@ Maps are efficient, flexible, and widely used across Go programs for lookups, ca
 
 
 **Tags:** `go` `maps` `data-structures` 
-
 
 ## References
 

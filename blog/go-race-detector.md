@@ -1,9 +1,6 @@
 # The Race Detector in Go
 
-
-
 📌 **Status: published**
-
 
 | | |
 |---|---|
@@ -17,10 +14,6 @@
 | **Language** | Go |
 | **Version** | Go 1.21 |
 | **License** | CC-BY-4.0 |
-
-
-
-
 
 
 ## Prerequisites
@@ -174,7 +167,6 @@ The `-count=1` flag disables test caching to ensure fresh runs.
 The race detector is one of Go's killer features. Running it regularly catches real bugs that are notoriously difficult to find through testing alone.
 
 
-
 ## Related Posts
 
 - Goroutines and Channels
@@ -182,7 +174,6 @@ The race detector is one of Go's killer features. Running it regularly catches r
 
 
 **Tags:** `go` `race-detector` `concurrency` `debugging` 
-
 
 ## References
 

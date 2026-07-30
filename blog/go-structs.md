@@ -1,9 +1,6 @@
 # Structs and Methods in Go
 
-
-
 📌 **Status: published**
-
 
 | | |
 |---|---|
@@ -18,10 +15,6 @@
 | **Version** | Go 1.21 |
 | **License** | CC-BY-4.0 |
 | **Series** | Go Fundamentals (Part 2) |
-
-
-
-
 
 
 ## Prerequisites
@@ -124,7 +117,6 @@ fmt.Println(field.Tag.Get("json")) // "host"
 Structs and methods form the backbone of Go's type system, offering a simple but powerful model for organizing data and behavior.
 
 
-
 ## Related Posts
 
 - Interfaces in Go
@@ -132,7 +124,6 @@ Structs and methods form the backbone of Go's type system, offering a simple but
 
 
 **Tags:** `go` `structs` `methods` `types` 
-
 
 ## References
 

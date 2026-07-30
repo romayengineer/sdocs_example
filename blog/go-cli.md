@@ -1,9 +1,6 @@
 # Building CLI Applications in Go
 
-
-
 📌 **Status: published**
-
 
 | | |
 |---|---|
@@ -17,10 +14,6 @@
 | **Language** | Go |
 | **Version** | Go 1.21 |
 | **License** | CC-BY-4.0 |
-
-
-
-
 
 
 ## Prerequisites
@@ -146,7 +139,6 @@ for i := 0; i < 100; i++ {
 Go's compiled binaries, fast startup, and cross-platform support make it the language of choice for modern CLI tools.
 
 
-
 ## Related Posts
 
 - Modules and Packages in Go
@@ -154,7 +146,6 @@ Go's compiled binaries, fast startup, and cross-platform support make it the lan
 
 
 **Tags:** `go` `cli` `command-line` `tools` 
-
 
 ## References
 

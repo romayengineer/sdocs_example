@@ -1,9 +1,6 @@
 # Generics in Go
 
-
-
 📌 **Status: published**
-
 
 | | |
 |---|---|
@@ -17,10 +14,6 @@
 | **Language** | Go |
 | **Version** | Go 1.18 |
 | **License** | CC-BY-4.0 |
-
-
-
-
 
 
 ## Prerequisites
@@ -124,7 +117,6 @@ func (s *Stack[T]) Pop() (T, bool) {
 Generics make Go more expressive without sacrificing its simplicity or performance.
 
 
-
 ## Related Posts
 
 - Error Handling in Go
@@ -132,7 +124,6 @@ Generics make Go more expressive without sacrificing its simplicity or performan
 
 
 **Tags:** `go` `generics` `type-parameters` `constraints` 
-
 
 ## References
 

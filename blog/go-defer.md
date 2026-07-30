@@ -1,9 +1,6 @@
 # Defer, Panic, and Recover
 
-
-
 📌 **Status: published**
-
 
 | | |
 |---|---|
@@ -17,10 +14,6 @@
 | **Language** | Go |
 | **Version** | Go 1.22 |
 | **License** | CC-BY-4.0 |
-
-
-
-
 
 
 ## Prerequisites
@@ -166,7 +159,6 @@ This pattern is useful for error wrapping or cleanup.
 - Never `panic` in library code unless you document it explicitly
 
 
-
 ## Related Posts
 
 - Error Handling in Go
@@ -174,7 +166,6 @@ This pattern is useful for error wrapping or cleanup.
 
 
 **Tags:** `go` `defer` `panic` `recover` `cleanup` 
-
 
 ## References
 

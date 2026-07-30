@@ -1,9 +1,6 @@
 # Testing in Go
 
-
-
 📌 **Status: published**
-
 
 | | |
 |---|---|
@@ -18,10 +15,6 @@
 | **Version** | Go 1.22 |
 | **License** | CC-BY-4.0 |
 | **Series** | Go Fundamentals (Part 4) |
-
-
-
-
 
 
 ## Prerequisites
@@ -151,7 +144,6 @@ go test -count=1
 - Keep tests deterministic and fast
 
 
-
 ## Related Posts
 
 - Go Modules and Packages
@@ -159,7 +151,6 @@ go test -count=1
 
 
 **Tags:** `go` `testing` `fuzzing` `quality` 
-
 
 ## References
 

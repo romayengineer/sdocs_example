@@ -1,9 +1,6 @@
 # The sync Package
 
-
-
 📌 **Status: published**
-
 
 | | |
 |---|---|
@@ -18,10 +15,6 @@
 | **Version** | Go 1.22 |
 | **License** | CC-BY-4.0 |
 | **Series** | Go Concurrency (Part 2) |
-
-
-
-
 
 
 ## Prerequisites
@@ -187,7 +180,6 @@ mu.Unlock()
 `Cond` is rarely needed — channels usually cover the same patterns more clearly.
 
 
-
 ## Related Posts
 
 - Goroutines and Channels
@@ -195,7 +187,6 @@ mu.Unlock()
 
 
 **Tags:** `go` `concurrency` `sync` `synchronization` 
-
 
 ## References
 

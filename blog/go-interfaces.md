@@ -1,9 +1,6 @@
 # Interfaces in Go
 
-
-
 📌 **Status: published**
-
 
 | | |
 |---|---|
@@ -18,10 +15,6 @@
 | **Version** | Go 1.21 |
 | **License** | CC-BY-4.0 |
 | **Series** | Go Fundamentals (Part 1) |
-
-
-
-
 
 
 ## Prerequisites
@@ -126,7 +119,6 @@ type ReadWriter interface {
 Go's interface system encourages small, composable abstractions. The rule of thumb: *accept interfaces, return concrete types.*
 
 
-
 ## Related Posts
 
 - Structs and Methods in Go
@@ -134,7 +126,6 @@ Go's interface system encourages small, composable abstractions. The rule of thu
 
 
 **Tags:** `go` `interfaces` `types` `design` 
-
 
 ## References
 

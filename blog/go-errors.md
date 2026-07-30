@@ -1,9 +1,6 @@
 # Error Handling in Go
 
-
-
 📌 **Status: published**
-
 
 | | |
 |---|---|
@@ -17,10 +14,6 @@
 | **Language** | Go |
 | **Version** | Go 1.20 |
 | **License** | CC-BY-4.0 |
-
-
-
-
 
 
 ## Prerequisites
@@ -113,7 +106,6 @@ joined := errors.Join(err1, err2)
 Go's error handling forces you to think about failure modes explicitly, leading to more robust software.
 
 
-
 ## Related Posts
 
 - Generics in Go
@@ -121,7 +113,6 @@ Go's error handling forces you to think about failure modes explicitly, leading 
 
 
 **Tags:** `go` `errors` `error-handling` `best-practices` 
-
 
 ## References
 

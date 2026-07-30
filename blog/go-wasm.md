@@ -1,9 +1,6 @@
 # WebAssembly with Go
 
-
-
 📌 **Status: published**
-
 
 | | |
 |---|---|
@@ -17,10 +14,6 @@
 | **Language** | Go |
 | **Version** | Go 1.21 |
 | **License** | CC-BY-4.0 |
-
-
-
-
 
 
 ## Prerequisites
@@ -140,7 +133,6 @@ Then call from JS: `add(3, 4)` returns `7`.
 Wasm support in Go is mature but niche. For most web development, JavaScript/TypeScript remains the practical choice. Go+Wasm excels for specific use cases where code reuse or performance matters.
 
 
-
 ## Related Posts
 
 - Building HTTP Servers and Clients in Go
@@ -148,7 +140,6 @@ Wasm support in Go is mature but niche. For most web development, JavaScript/Typ
 
 
 **Tags:** `go` `wasm` `webassembly` `browser` 
-
 
 ## References
 
