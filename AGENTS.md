@@ -81,6 +81,49 @@ Only use:
 - Actions: `if`, `range`, `with`
 - Variables: `{{ $var := .field }}`, `{{ range $k, $v := .map }}`
 
+### Whitespace Control
+
+Go's `text/template` outputs all literal whitespace outside actions. When `{{ if .field }}` is false, the newlines around the skipped body remain, producing blank lines in the output. Use `{{-` (trims leading whitespace) and `-}}` (trims trailing whitespace) to prevent this.
+
+Three patterns cover every case:
+
+#### Section-level conditionals (badges, section headers)
+
+```gotemplate
+{{- if .field }}
+
+Content
+{{- end }}
+```
+
+- `{{- if` consumes the preceding newline
+- `\n\n` at body start provides the ONE blank line before the section
+- `{{- end }}` consumes the body's trailing newline
+- When false → entirely absent, no blank lines
+
+#### Table rows (must stay contiguous)
+
+```gotemplate
+{{ if .field }}| **Row** | {{ .field }} |
+{{ end }}
+```
+
+- No trimming — the `\n` inside the if-body is output only when true
+- When false → row is skipped, next row follows on the next line
+- Table stays contiguous with no gaps
+
+#### Range loops (item lists)
+
+```gotemplate
+{{ range .items }}- {{ . }}
+{{ end }}
+```
+
+- Use `{{ end }}` (NOT `{{- end }}`) to preserve the `\n` between items
+- `{{- end }}` would consume the newline and merge all items together
+
+See `sdocs/templates/tech-post.template.md` for the canonical implementation of all three patterns.
+
 **Workarounds for common cases:**
 
 | Goal | What to do instead |
@@ -192,5 +235,5 @@ sd -clean -config structured.yml               # safe only when output_dir is a 
 | `missing required field` for optional field | Add `required: false` to the schema field definition |
 | Wrong template is used for a data file | Reorder `template_order` — more specific templates first |
 | `sd` command not found | Use full path `~/go/bin/sd` or install with `go install` |
-| Generated `.md` has extra blank lines | This is normal Go template whitespace behavior — use `{{- ` or ` -}}` trimming if needed |
+| Generated `.md` has extra blank lines | See [Whitespace Control](#whitespace-control) — use `{{-` / `-}}` trimming |
 | Data file not in output | Check that `type` matches a schema filename exactly (case-sensitive) |
