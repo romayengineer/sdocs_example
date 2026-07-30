@@ -2,6 +2,7 @@ schema_dir: schema
 data_dir: data
 template_dir: templates
 output_dir: ../
+readme_path: README.md
 template_order:
   - tech-post.template.md
   - post.template.md
