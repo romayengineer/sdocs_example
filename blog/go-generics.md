@@ -21,9 +21,12 @@
 - Interfaces in Go
 - Structs and Methods in Go
 
+
+## Overview
+
 Generics were added in Go 1.18, introducing type parameters for functions and types.
 
-## Basic Syntax
+## Basic Usage
 
 ```go
 func Reverse[T any](s []T) []T {
@@ -40,7 +43,22 @@ ints := Reverse([]int{1, 2, 3})
 strs := Reverse([]string{"a", "b", "c"})
 ```
 
-## Type Constraints
+
+## Best Practices
+
+- Functions that operate on slices, maps, or channels of any type
+- Data structures (stacks, trees, graphs) that hold any type
+- Eliminating duplicated code for different types
+
+
+## Common Pitfalls
+
+- When `any` and type assertions suffice
+- For simple functions where readability suffers
+- In API surfaces meant for wide consumption (adds complexity)
+
+
+## Advanced Topics
 
 Constraints limit what types a type parameter can accept:
 
@@ -78,8 +96,6 @@ The `~` allows types with the same underlying type:
 type MyInt int // also satisfies Number
 ```
 
-## Generic Types
-
 Types can also be parameterized:
 
 ```go
@@ -102,20 +118,10 @@ func (s *Stack[T]) Pop() (T, bool) {
 }
 ```
 
-## When to Use Generics
 
-- Functions that operate on slices, maps, or channels of any type
-- Data structures (stacks, trees, graphs) that hold any type
-- Eliminating duplicated code for different types
-
-## When NOT to Use
-
-- When `any` and type assertions suffice
-- For simple functions where readability suffers
-- In API surfaces meant for wide consumption (adds complexity)
+## Summary
 
 Generics make Go more expressive without sacrificing its simplicity or performance.
-
 
 ## Related Posts
 

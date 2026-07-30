@@ -2,103 +2,87 @@ type: tech-post
 title: Interfaces in Go
 date: 2026-07-30
 difficulty: intermediate
-body: |
-  Interfaces in Go define behavior through method sets. Unlike many languages, interface satisfaction is implicit — no `implements` keyword needed.
+introduction: Interfaces in Go define behavior through method sets. Unlike many languages, interface satisfaction is implicit — no `implements` keyword needed.
+basic_usage: |
+    ```go
+    type Stringer interface {
+        String() string
+    }
+    ```
 
-  ## Defining an Interface
+    Any type that has the required methods automatically satisfies the interface:
 
-  ```go
-  type Stringer interface {
-      String() string
-  }
-  ```
+    ```go
+    type Book struct {
+        Title  string
+        Author string
+    }
 
-  ## Implicit Satisfaction
+    func (b Book) String() string {
+        return fmt.Sprintf("%s by %s", b.Title, b.Author)
+    }
 
-  Any type that has the required methods automatically satisfies the interface:
+    func print(s Stringer) {
+        fmt.Println(s.String())
+    }
+    ```
 
-  ```go
-  type Book struct {
-      Title  string
-      Author string
-  }
+    `interface{}` (or `any` in Go 1.18+) accepts values of any type:
 
-  func (b Book) String() string {
-      return fmt.Sprintf("%s by %s", b.Title, b.Author)
-  }
+    ```go
+    var x any = 42
+    x = "hello"
+    x = Book{"The Go Programming Language", "Donovan & Kernighan"}
+    ```
+examples: |
+    Extract the concrete value from an interface:
 
-  func print(s Stringer) {
-      fmt.Println(s.String())
-  }
-  ```
+    ```go
+    var i any = "hello"
+    s, ok := i.(string)
+    if ok {
+        fmt.Println(s) // "hello"
+    }
+    ```
 
-  ## The Empty Interface
+    Handle multiple concrete types cleanly:
 
-  `interface{}` (or `any` in Go 1.18+) accepts values of any type:
+    ```go
+    func describe(i any) {
+        switch v := i.(type) {
+        case int:
+            fmt.Printf("integer: %d\n", v)
+        case string:
+            fmt.Printf("string: %q\n", v)
+        default:
+            fmt.Printf("unknown type: %T\n", v)
+        }
+    }
+    ```
 
-  ```go
-  var x any = 42
-  x = "hello"
-  x = Book{"The Go Programming Language", "Donovan & Kernighan"}
-  ```
+    The stdlib is full of small, focused interfaces:
 
-  ## Type Assertions
+    ```go
+    type Reader interface {
+        Read(p []byte) (n int, err error)
+    }
 
-  Extract the concrete value from an interface:
+    type Writer interface {
+        Write(p []byte) (n int, err error)
+    }
+    ```
 
-  ```go
-  var i any = "hello"
-  s, ok := i.(string)
-  if ok {
-      fmt.Println(s) // "hello"
-  }
-  ```
+    Any type with a `Read([]byte) (int, error)` method is an `io.Reader` — `os.File`, `strings.Reader`, `bytes.Buffer`, and more.
+advanced: |
+    Interfaces can embed other interfaces:
 
-  ## Type Switches
-
-  Handle multiple concrete types cleanly:
-
-  ```go
-  func describe(i any) {
-      switch v := i.(type) {
-      case int:
-          fmt.Printf("integer: %d\n", v)
-      case string:
-          fmt.Printf("string: %q\n", v)
-      default:
-          fmt.Printf("unknown type: %T\n", v)
-      }
-  }
-  ```
-
-  ## Standard Library Examples
-
-  The stdlib is full of small, focused interfaces:
-
-  ```go
-  type Reader interface {
-      Read(p []byte) (n int, err error)
-  }
-
-  type Writer interface {
-      Write(p []byte) (n int, err error)
-  }
-  ```
-
-  Any type with a `Read([]byte) (int, error)` method is an `io.Reader` — `os.File`, `strings.Reader`, `bytes.Buffer`, and more.
-
-  ## Embedding Interfaces
-
-  Interfaces can embed other interfaces:
-
-  ```go
-  type ReadWriter interface {
-      Reader
-      Writer
-  }
-  ```
-
-  Go's interface system encourages small, composable abstractions. The rule of thumb: *accept interfaces, return concrete types.*
+    ```go
+    type ReadWriter interface {
+        Reader
+        Writer
+    }
+    ```
+summary: "Go's interface system encourages small, composable abstractions. The rule of thumb: *accept interfaces, return concrete types.*"
 tags:
   - go
   - interfaces

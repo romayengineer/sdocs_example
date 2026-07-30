@@ -2,121 +2,115 @@ type: tech-post
 title: Working with Time in Go
 date: 2026-07-30
 difficulty: beginner
-body: |
-  Go's `time` package provides a comprehensive API for working with dates, times, durations, and scheduling.
+introduction: Go's `time` package provides a comprehensive API for working with dates, times, durations, and scheduling.
+basic_usage: |
+    ```go
+    now := time.Now()
+    fmt.Println(now) // 2026-07-30 12:00:00 +0000 UTC
+    ```
 
-  ## Time and Duration Types
+    ### Creating Time Values
 
-  ```go
-  now := time.Now()
-  fmt.Println(now) // 2026-07-30 12:00:00 +0000 UTC
-  ```
+    ```go
+    // Specific date
+    t := time.Date(2026, time.July, 30, 12, 0, 0, 0, time.UTC)
 
-  ## Creating Time Values
+    // Unix timestamp
+    t := time.Unix(1750000000, 0)
 
-  ```go
-  // Specific date
-  t := time.Date(2026, time.July, 30, 12, 0, 0, 0, time.UTC)
+    // Parsing
+    t, _ := time.Parse(time.RFC3339, "2026-07-30T12:00:00Z")
+    ```
 
-  // Unix timestamp
-  t := time.Unix(1750000000, 0)
+    ### Formatting
 
-  // Parsing
-  t, _ := time.Parse(time.RFC3339, "2026-07-30T12:00:00Z")
-  ```
+    Go uses a unique reference time: `Mon Jan 2 15:04:05 MST 2006`
 
-  ## Formatting
+    ```go
+    t := time.Now()
+    fmt.Println(t.Format("2006-01-02"))           // 2026-07-30
+    fmt.Println(t.Format("Jan 2, 2006 3:04 PM")) // Jul 30, 2026 12:00 PM
+    fmt.Println(t.Format(time.RFC822))           // 30 Jul 26 12:00 UTC
+    ```
 
-  Go uses a unique reference time: `Mon Jan 2 15:04:05 MST 2006`
+    ### Duration
 
-  ```go
-  t := time.Now()
-  fmt.Println(t.Format("2006-01-02"))           // 2026-07-30
-  fmt.Println(t.Format("Jan 2, 2006 3:04 PM")) // Jul 30, 2026 12:00 PM
-  fmt.Println(t.Format(time.RFC822))           // 30 Jul 26 12:00 UTC
-  ```
+    ```go
+    d := 5 * time.Second + 250 * time.Millisecond
+    fmt.Println(d)            // 5.25s
+    fmt.Println(d.Seconds())  // 5.25
+    fmt.Println(d.Round(time.Second)) // 5s
 
-  ## Duration
+    // Sleep
+    time.Sleep(100 * time.Millisecond)
+    ```
 
-  ```go
-  d := 5 * time.Second + 250 * time.Millisecond
-  fmt.Println(d)            // 5.25s
-  fmt.Println(d.Seconds())  // 5.25
-  fmt.Println(d.Round(time.Second)) // 5s
+    ### Time Arithmetic
 
-  // Sleep
-  time.Sleep(100 * time.Millisecond)
-  ```
+    ```go
+    t := time.Now()
+    tomorrow := t.Add(24 * time.Hour)
+    later := t.Add(2 * time.Hour + 30 * time.Minute)
 
-  ## Time Arithmetic
+    // Difference
+    diff := later.Sub(t)
+    fmt.Println(diff.Minutes()) // 150
+    ```
 
-  ```go
-  t := time.Now()
-  tomorrow := t.Add(24 * time.Hour)
-  later := t.Add(2 * time.Hour + 30 * time.Minute)
+    ### Comparing Times
 
-  // Difference
-  diff := later.Sub(t)
-  fmt.Println(diff.Minutes()) // 150
-  ```
+    ```go
+    a := time.Date(2026, 7, 30, 0, 0, 0, 0, time.UTC)
+    b := time.Date(2026, 7, 31, 0, 0, 0, 0, time.UTC)
 
-  ## Comparing Times
+    fmt.Println(a.Before(b)) // true
+    fmt.Println(a.After(b))  // false
+    fmt.Println(a.Equal(b))  // false
+    ```
+advanced: |
+    ### Time Zones
 
-  ```go
-  a := time.Date(2026, 7, 30, 0, 0, 0, 0, time.UTC)
-  b := time.Date(2026, 7, 31, 0, 0, 0, 0, time.UTC)
+    ```go
+    loc, _ := time.LoadLocation("America/New_York")
+    t := time.Now().In(loc)
+    fmt.Println(t)
 
-  fmt.Println(a.Before(b)) // true
-  fmt.Println(a.After(b))  // false
-  fmt.Println(a.Equal(b))  // false
-  ```
+    // List all zones
+    for _, tz := range timezoneNames {
+        loc, _ := time.LoadLocation(tz)
+        fmt.Println(tz, time.Now().In(loc))
+    }
+    ```
 
-  ## Time Zones
+    ### Timers and Tickers
 
-  ```go
-  loc, _ := time.LoadLocation("America/New_York")
-  t := time.Now().In(loc)
-  fmt.Println(t)
+    ```go
+    // Timer (fires once)
+    timer := time.NewTimer(2 * time.Second)
+    <-timer.C
+    fmt.Println("2 seconds later")
 
-  // List all zones
-  for _, tz := range timezoneNames {
-      loc, _ := time.LoadLocation(tz)
-      fmt.Println(tz, time.Now().In(loc))
-  }
-  ```
+    // Ticker (fires repeatedly)
+    ticker := time.NewTicker(1 * time.Second)
+    for i := 0; i < 5; i++ {
+        <-ticker.C
+        fmt.Println("tick")
+    }
+    ticker.Stop()
+    ```
 
-  ## Timers and Tickers
+    ### Context Timeouts
 
-  ```go
-  // Timer (fires once)
-  timer := time.NewTimer(2 * time.Second)
-  <-timer.C
-  fmt.Println("2 seconds later")
-
-  // Ticker (fires repeatedly)
-  ticker := time.NewTicker(1 * time.Second)
-  for i := 0; i < 5; i++ {
-      <-ticker.C
-      fmt.Println("tick")
-  }
-  ticker.Stop()
-  ```
-
-  ## Context Timeouts
-
-  ```go
-  ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-  defer cancel()
-  // Use ctx for HTTP calls, DB queries, etc.
-  ```
-
-  ## Common Pitfalls
-
-  - **MST vs UTC**: Always be explicit about time zones — use `time.UTC` or `time.LoadLocation`
-  - **Monotonic clock**: `time.Now()` includes monotonic readings for duration measurement; strip with `t.Round(0)` for serialization
-  - **Parse format vs reference time**: Forgot the reference time? `Format` and `Parse` use `2006-01-02`, not `YYYY-MM-DD`
-
-  The `time` package is one of Go's best-designed standard libraries — expressive, correct, and hard to misuse when you know the reference time convention.
+    ```go
+    ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+    defer cancel()
+    // Use ctx for HTTP calls, DB queries, etc.
+    ```
+pitfalls: |
+    - **MST vs UTC**: Always be explicit about time zones — use `time.UTC` or `time.LoadLocation`
+    - **Monotonic clock**: `time.Now()` includes monotonic readings for duration measurement; strip with `t.Round(0)` for serialization
+    - **Parse format vs reference time**: Forgot the reference time? `Format` and `Parse` use `2006-01-02`, not `YYYY-MM-DD`
+summary: The `time` package is one of Go's best-designed standard libraries — expressive, correct, and hard to misuse when you know the reference time convention.
 tags:
   - go
   - time

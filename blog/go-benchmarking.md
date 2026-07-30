@@ -21,9 +21,14 @@
 - Testing in Go
 - Slices and Arrays in Go
 
+
+## Overview
+
 Go includes built-in support for benchmarking, profiling, and testing through the `testing` package and the `go test` command.
 
-## Writing Benchmarks
+## Basic Usage
+
+### Writing Benchmarks
 
 Benchmark functions are placed in `_test.go` files and follow the `BenchmarkXxx(b *testing.B)` signature:
 
@@ -46,7 +51,7 @@ func BenchmarkSum(b *testing.B) {
 }
 ```
 
-## Running Benchmarks
+### Running Benchmarks
 
 ```sh
 go test -bench=. -benchmem
@@ -59,7 +64,7 @@ BenchmarkSum-8    1000000000    0.42 ns/op    0 B/op    0 allocs/op
 
 The `b.N` is automatically adjusted by the framework to get a stable measurement.
 
-## Sub-benchmarks
+### Sub-benchmarks
 
 ```go
 func BenchmarkSum(b *testing.B) {
@@ -75,7 +80,7 @@ func BenchmarkSum(b *testing.B) {
 }
 ```
 
-## Comparing Implementations
+### Comparing Implementations
 
 ```go
 func BenchmarkConcat(b *testing.B) {
@@ -100,27 +105,8 @@ func BenchmarkConcat(b *testing.B) {
 }
 ```
 
-## Profiling
 
-```sh
-go test -bench=. -cpuprofile=cpu.prof -memprofile=mem.prof
-go tool pprof cpu.prof
-```
-
-In the pprof interactive shell:
-```
-top      # top consuming functions
-web      # open flame graph (requires graphviz)
-list Sum # show line-by-line breakdown
-```
-
-## Allocs and Escape Analysis
-
-```sh
-go test -bench=. -benchmem -gcflags="-m -m" 2>&1 | grep "escapes"
-```
-
-## Benchmark Tips
+## Best Practices
 
 - Disable CPU scaling: `sudo cpupower frequency-set --governor performance`
 - Don't let the compiler optimize away the result — assign to a package-level variable
@@ -140,8 +126,33 @@ func BenchmarkSum(b *testing.B) {
 }
 ```
 
-Go's built-in benchmarking and profiling tools make performance analysis a first-class part of the development workflow — no external tools required.
 
+## Advanced Topics
+
+### Profiling
+
+```sh
+go test -bench=. -cpuprofile=cpu.prof -memprofile=mem.prof
+go tool pprof cpu.prof
+```
+
+In the pprof interactive shell:
+```
+top      # top consuming functions
+web      # open flame graph (requires graphviz)
+list Sum # show line-by-line breakdown
+```
+
+### Allocs and Escape Analysis
+
+```sh
+go test -bench=. -benchmem -gcflags="-m -m" 2>&1 | grep "escapes"
+```
+
+
+## Summary
+
+Go's built-in benchmarking and profiling tools make performance analysis a first-class part of the development workflow — no external tools required.
 
 ## Related Posts
 

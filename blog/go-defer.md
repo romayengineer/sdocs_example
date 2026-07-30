@@ -20,9 +20,12 @@
 
 - Basic Go functions and control flow
 
+
+## Overview
+
 `defer`, `panic`, and `recover` form Go's mechanism for cleanup and exceptional control flow.
 
-## Defer
+## Basic Usage
 
 `defer` schedules a function call to run when the enclosing function returns:
 
@@ -39,7 +42,7 @@ func readFile(path string) ([]byte, error) {
 
 `f.Close()` runs when `readFile` returns, regardless of the return path.
 
-## Defer Semantics
+### Defer Semantics
 
 - Arguments are **evaluated immediately**, not at defer time:
 
@@ -58,7 +61,7 @@ defer fmt.Println("first")  // prints second
 defer fmt.Println("second") // prints first
 ```
 
-## Common Use Cases
+### Common Use Cases
 
 - Closing files, connections, or other resources
 - Unlocking mutexes:
@@ -91,7 +94,17 @@ func timed() {
 
 - Recovering from panics (see below)
 
-## Panic
+
+## Best Practices
+
+- Always pair `Lock`/`Unlock`, `Open`/`Close` with `defer`
+- Keep deferred functions small and simple
+- Don't `defer` inside loops — resources accumulate until the function returns
+- Use `recover` sparingly, mainly to prevent server crashes in HTTP handlers
+- Never `panic` in library code unless you document it explicitly
+
+
+## Advanced Topics
 
 `panic` stops the normal flow and begins unwinding the stack:
 
@@ -114,8 +127,6 @@ As the stack unwinds, deferred functions execute. If no `recover` catches the pa
 - Expected errors (use `error` return values instead)
 - In library code intended for general consumption
 
-## Recover
-
 `recover` regains control of a panicking goroutine:
 
 ```go
@@ -132,7 +143,7 @@ func safeCall(fn func()) (err error) {
 
 `recover` only works inside a deferred function. It returns the panic value, or `nil` if no panic is in progress.
 
-## Named Return Values and Defer
+### Named Return Values and Defer
 
 Deferred functions can read and modify named return values:
 
@@ -149,14 +160,6 @@ func get() (result string, err error) {
 ```
 
 This pattern is useful for error wrapping or cleanup.
-
-## Best Practices
-
-- Always pair `Lock`/`Unlock`, `Open`/`Close` with `defer`
-- Keep deferred functions small and simple
-- Don't `defer` inside loops — resources accumulate until the function returns
-- Use `recover` sparingly, mainly to prevent server crashes in HTTP handlers
-- Never `panic` in library code unless you document it explicitly
 
 
 ## Related Posts

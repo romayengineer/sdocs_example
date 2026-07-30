@@ -22,9 +22,12 @@
 - Go Modules and Packages
 - Basic Go syntax
 
+
+## Overview
+
 Go has a built-in testing framework in the standard library — no external dependencies needed.
 
-## Basic Test
+## Basic Usage
 
 ```go
 // math.go
@@ -54,7 +57,7 @@ go test -v        # verbose
 go test ./...     # all packages
 ```
 
-## Table-Driven Tests
+### Table-Driven Tests
 
 The idiomatic Go testing pattern:
 
@@ -83,7 +86,7 @@ func TestAdd(t *testing.T) {
 
 `t.Run` creates sub-tests with their own `*testing.T`, improving error reporting and allowing selective execution.
 
-## Test Helpers
+### Test Helpers
 
 Mark helpers with `t.Helper()` so failures point to the caller, not the helper:
 
@@ -96,7 +99,7 @@ func assertEqual(t *testing.T, got, want int) {
 }
 ```
 
-## Coverage
+### Coverage
 
 ```sh
 go test -cover
@@ -104,7 +107,7 @@ go test -coverprofile=coverage.out
 go tool cover -html=coverage.out    # visualize in browser
 ```
 
-## Fuzzing (Go 1.18+)
+### Fuzzing (Go 1.18+)
 
 Automatically generates random inputs to find edge cases:
 
@@ -126,13 +129,14 @@ Run with:
 go test -fuzz=FuzzAdd
 ```
 
-## Test Caching
+### Test Caching
 
 Go caches test results when neither code nor tests changed. Skip with:
 
 ```sh
 go test -count=1
 ```
+
 
 ## Best Practices
 

@@ -21,9 +21,10 @@
 - Goroutines and Channels
 - Sync Package in Go
 
-Go's built-in race detector helps find data races — concurrent access to shared memory where at least one access is a write.
 
-## What is a Data Race?
+## Overview
+
+Go's built-in race detector helps find data races — concurrent access to shared memory where at least one access is a write.
 
 A data race occurs when two goroutines access the same variable concurrently and at least one is a write:
 
@@ -46,7 +47,10 @@ func main() {
 }
 ```
 
-## Enabling the Race Detector
+
+## Basic Usage
+
+### Enabling the Race Detector
 
 ```sh
 go test -race ./...
@@ -54,7 +58,7 @@ go run -race main.go
 go build -race -o myapp .
 ```
 
-## Example Output
+### Example Output
 
 ```
 ==================
@@ -76,9 +80,9 @@ Goroutine 7 (finished) created at:
 ==================
 ```
 
-## Fixing Races
+### Fixing Races
 
-### Mutex
+#### Mutex
 
 ```go
 var (
@@ -91,14 +95,14 @@ counter++
 mu.Unlock()
 ```
 
-### Atomic Operations
+#### Atomic Operations
 
 ```go
 var counter atomic.Int64
 counter.Add(1)
 ```
 
-### Channels
+#### Channels
 
 ```go
 ch := make(chan int)
@@ -108,9 +112,12 @@ go func() {
 val := <-ch
 ```
 
-## Common Race Patterns
 
-### Map access without sync
+## Examples
+
+### Common Race Patterns
+
+#### Map access without sync
 
 ```go
 var m = make(map[string]int)
@@ -122,7 +129,7 @@ go func() { _ = m["key"] }()
 
 Fix: use `sync.RWMutex` or `sync.Map`.
 
-### Slice access
+#### Slice access
 
 ```go
 var results []int
@@ -139,14 +146,26 @@ wg.Wait()
 
 Fix: preallocate or use channel.
 
-## Performance Impact
+
+## Common Pitfalls
+
+- Deadlocks
+- Livelocks
+- Incorrect synchronization (e.g., wrong mutex usage that happens to work)
+- Races in cgo or assembly code
+- Races on non-standard memory (mmap, shared memory)
+
+
+## Advanced Topics
+
+### Performance Impact
 
 The race detector adds significant overhead:
 - Memory usage: 5-10x
 - Execution time: 2-20x slower
 - Always test with `-race` in CI, never in production
 
-## CI Integration
+### CI Integration
 
 ```yaml
 test:
@@ -156,16 +175,10 @@ test:
 
 The `-count=1` flag disables test caching to ensure fresh runs.
 
-## What the Race Detector CANNOT Find
 
-- Deadlocks
-- Livelocks
-- Incorrect synchronization (e.g., wrong mutex usage that happens to work)
-- Races in cgo or assembly code
-- Races on non-standard memory (mmap, shared memory)
+## Summary
 
 The race detector is one of Go's killer features. Running it regularly catches real bugs that are notoriously difficult to find through testing alone.
-
 
 ## Related Posts
 

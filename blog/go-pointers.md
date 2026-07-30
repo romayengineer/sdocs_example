@@ -21,9 +21,12 @@
 - Structs and Methods in Go
 - Basic Go syntax
 
+
+## Overview
+
 Go has pointers but no pointer arithmetic. A pointer holds the memory address of a value.
 
-## Basic Syntax
+## Basic Usage
 
 ```go
 var x int = 42
@@ -34,8 +37,6 @@ fmt.Println(*p) // 42 (dereference)
 fmt.Println(x)  // 21
 ```
 
-## Zero Value
-
 The zero value of a pointer is `nil`:
 
 ```go
@@ -44,8 +45,6 @@ if p != nil {
     fmt.Println(*p)
 }
 ```
-
-## Pointers and Functions
 
 Pointers allow functions to modify their arguments:
 
@@ -58,8 +57,6 @@ x := 1
 increment(&x)
 fmt.Println(x) // 2
 ```
-
-## Pointer to Struct
 
 Struct pointers are commonly used to avoid copying:
 
@@ -75,7 +72,25 @@ u.Name = "Bob" // implicit dereference
 
 The dot notation works automatically with pointers to structs (no `->` needed).
 
-## Stack vs Heap
+
+## Best Practices
+
+- Modifying a receiver in a method
+- Avoiding large struct copies
+- Indicating optional fields (nil means absent)
+- Sharing state (use channels for concurrency)
+
+
+## Common Pitfalls
+
+- For small values (int, bool) — pass by value is fine
+- When a nil receiver is not meaningful
+- In maps and slices — they already reference underlying data
+
+Go's pointers are simple and safe — no pointer arithmetic, no dangling references, and a garbage collector handles cleanup.
+
+
+## Advanced Topics
 
 Go's compiler decides where a variable lives. If a variable escapes the function (e.g., returned), it's allocated on the heap:
 
@@ -87,21 +102,6 @@ func newUser() *User {
 ```
 
 This is determined by escape analysis, not by the programmer.
-
-## When to Use Pointers
-
-- Modifying a receiver in a method
-- Avoiding large struct copies
-- Indicating optional fields (nil means absent)
-- Sharing state (use channels for concurrency)
-
-## When NOT to Use
-
-- For small values (int, bool) — pass by value is fine
-- When a nil receiver is not meaningful
-- In maps and slices — they already reference underlying data
-
-Go's pointers are simple and safe — no pointer arithmetic, no dangling references, and a garbage collector handles cleanup.
 
 
 ## Related Posts

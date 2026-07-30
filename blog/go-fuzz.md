@@ -21,9 +21,14 @@
 - Testing in Go
 - Error Handling in Go
 
+
+## Overview
+
 Fuzz testing (or fuzzing) automatically generates random inputs to find bugs, crashes, and edge cases. Go 1.18 added native fuzzing support to the `testing` package.
 
-## Writing a Fuzz Target
+## Basic Usage
+
+### Writing a Fuzz Target
 
 Define a `FuzzXxx(f *testing.F)` function in a `_test.go` file:
 
@@ -55,7 +60,7 @@ func FuzzReverse(f *testing.F) {
 }
 ```
 
-## Running Fuzz Tests
+### Running Fuzz Tests
 
 ```sh
 # Run with fuzzing (indefinitely or until crash)
@@ -68,7 +73,7 @@ go test -fuzz=FuzzReverse -fuzztime=30s
 go test -run=FuzzReverse
 ```
 
-## Reading Crash Reports
+### Reading Crash Reports
 
 When fuzzing finds a bug, it writes the failing input to `testdata/fuzz/FuzzXxx/`:
 
@@ -84,7 +89,7 @@ go test fuzz v1
 string("\xff")  // the input that caused the crash
 ```
 
-## Regression Testing
+### Regression Testing
 
 Once a crash is found, add it to the seed corpus. The test runs against all seed inputs every time:
 
@@ -92,11 +97,12 @@ Once a crash is found, add it to the seed corpus. The test runs against all seed
 f.Add("\xff") // add discovered crash input
 ```
 
-## Fuzzing Structs and Complex Types
+### Fuzzing Structs and Complex Types
 
 Fuzzing supports: `string`, `[]byte`, `int`, `int8/16/32/64`, `uint`, `uint8/16/32/64`, `float32`, `float64`, `bool`.
 
 For complex types, encode them as `[]byte` and decode in the fuzz function.
+
 
 ## Best Practices
 
@@ -110,14 +116,17 @@ For complex types, encode them as `[]byte` and decode in the fuzz function.
 go test -fuzz=FuzzReverse -fuzztime=5m -race
 ```
 
-## Limitations
+
+## Common Pitfalls
 
 - Fuzzing cannot prove correctness — only find bugs
 - Coverage-guided, but may miss deeply nested conditions
 - No structured fuzzing for complex types without manual encoding
 
-Fuzz testing has found hundreds of bugs in the Go standard library and ecosystem. Adding fuzz targets to critical parsing or encoding functions is a high-ROI investment in reliability.
 
+## Summary
+
+Fuzz testing has found hundreds of bugs in the Go standard library and ecosystem. Adding fuzz targets to critical parsing or encoding functions is a high-ROI investment in reliability.
 
 ## Related Posts
 

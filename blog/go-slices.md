@@ -20,7 +20,12 @@
 
 - Basic Go syntax
 
+
+## Overview
+
 Arrays and slices are fundamental data structures in Go. Arrays have a fixed size, while slices are dynamically-sized views into arrays.
+
+## Basic Usage
 
 ## Arrays
 
@@ -93,6 +98,7 @@ s = append(s, 1) // cap=2
 s = append(s, 2) // cap=2
 s = append(s, 3) // cap=4 (doubled)
 ```
+
 
 ## Common Pitfalls
 

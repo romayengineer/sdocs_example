@@ -16,9 +16,12 @@
 | **License** | CC-BY-4.0 |
 | **Series** | Go Concurrency (Part 1) |
 
+
+## Overview
+
 Goroutines are lightweight threads managed by the Go runtime. They are the foundation of concurrency in Go.
 
-## Starting a Goroutine
+## Basic Usage
 
 Prefix any function call with the `go` keyword:
 
@@ -28,7 +31,8 @@ go myFunction()
 
 A goroutine runs concurrently with the caller. The program does not wait for it unless synchronized.
 
-## Channels
+
+## Examples
 
 Channels are the primary way goroutines communicate:
 
@@ -54,20 +58,8 @@ ch <- "b"
 fmt.Println(<-ch) // "a"
 ```
 
-## The `select` Statement
 
-`select` waits on multiple channel operations:
-
-```go
-select {
-case msg := <-ch1:
-    fmt.Println(msg)
-case <-time.After(1 * time.Second):
-    fmt.Println("timeout")
-}
-```
-
-## Pipeline Pattern
+## Best Practices
 
 A common pattern is connecting goroutines with channels:
 
@@ -96,14 +88,31 @@ func sq(in <-chan int) <-chan int {
 ```
 
 Usage:
+
 ```go
 for n := range sq(gen(2, 3, 4)) {
     fmt.Println(n) // 4, 9, 16
 }
 ```
 
-Goroutines are cheap (a few KB each), making it practical to start thousands of them. With channels, Go offers a safe, composable concurrency model built on the mantra: *"Do not communicate by sharing memory; instead, share memory by communicating."*
 
+## Advanced Topics
+
+`select` waits on multiple channel operations:
+
+```go
+select {
+case msg := <-ch1:
+    fmt.Println(msg)
+case <-time.After(1 * time.Second):
+    fmt.Println("timeout")
+}
+```
+
+
+## Summary
+
+Goroutines are cheap (a few KB each), making it practical to start thousands of them. With channels, Go offers a safe, composable concurrency model built on the mantra: *"Do not communicate by sharing memory; instead, share memory by communicating."*
 
 ## Related Posts
 

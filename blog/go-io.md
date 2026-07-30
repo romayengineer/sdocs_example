@@ -21,9 +21,12 @@
 - Error Handling in Go
 - Interfaces in Go
 
+
+## Overview
+
 Go's `io` and `os` packages provide a clean interface for reading and writing data, whether from files, network connections, or in-memory buffers.
 
-## The io.Reader and io.Writer Interfaces
+## Basic Usage
 
 The entire I/O system is built on two interfaces:
 
@@ -38,7 +41,7 @@ type Writer interface {
 
 Any type that implements these interfaces can be used with the standard I/O utilities.
 
-## Reading Files
+### Reading Files
 
 ```go
 // Entire file
@@ -54,7 +57,7 @@ for scanner.Scan() {
 }
 ```
 
-## Writing Files
+### Writing Files
 
 ```go
 // Write entire file
@@ -69,7 +72,10 @@ writer.WriteString("line 2\n")
 writer.Flush() // ensure data is written to disk
 ```
 
-## Working with io.Reader/io.Writer
+
+## Examples
+
+### Working with io.Reader/io.Writer
 
 The power of the interface is composability:
 
@@ -84,7 +90,7 @@ io.ReadAll(reader)
 fmt.Println(buf.String()) // "data"
 ```
 
-## File System Operations
+### File System Operations
 
 ```go
 os.Stat("file.txt")              // file info
@@ -94,7 +100,7 @@ os.MkdirAll("a/b/c", 0755)      // create directories
 os.ReadDir(".")                  // list directory
 ```
 
-## Temporary Files
+### Temporary Files
 
 ```go
 tmpFile, _ := os.CreateTemp("", "prefix-*.txt")
@@ -106,9 +112,10 @@ tmpDir, _ := os.MkdirTemp("", "mydir-*")
 defer os.RemoveAll(tmpDir)
 ```
 
-## The io/fs Interface (Go 1.16)
 
-The `io/fs` package abstracts file systems:
+## Advanced Topics
+
+The `io/fs` package (Go 1.16) abstracts file systems:
 
 ```go
 type FS interface {
@@ -118,8 +125,10 @@ type FS interface {
 
 This allows the same code to work with `os.DirFS`, `embed.FS`, `testing/fstest.MapFS`, or custom implementations.
 
-Go's I/O interfaces make it easy to write composable, testable code that works across files, networks, and in-memory sources.
 
+## Summary
+
+Go's I/O interfaces make it easy to write composable, testable code that works across files, networks, and in-memory sources.
 
 ## Related Posts
 

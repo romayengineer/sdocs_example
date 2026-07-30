@@ -2,127 +2,122 @@ type: tech-post
 title: Testing in Go
 date: 2026-07-30
 difficulty: intermediate
-body: |
-  Go has a built-in testing framework in the standard library — no external dependencies needed.
+introduction: Go has a built-in testing framework in the standard library — no external dependencies needed.
+basic_usage: |
+    ```go
+    // math.go
+    func Add(a, b int) int {
+        return a + b
+    }
 
-  ## Basic Test
+    // math_test.go
+    package main
 
-  ```go
-  // math.go
-  func Add(a, b int) int {
-      return a + b
-  }
+    import "testing"
 
-  // math_test.go
-  package main
+    func TestAdd(t *testing.T) {
+        got := Add(2, 3)
+        want := 5
+        if got != want {
+            t.Errorf("Add(2, 3) = %d; want %d", got, want)
+        }
+    }
+    ```
 
-  import "testing"
+    Run tests:
 
-  func TestAdd(t *testing.T) {
-      got := Add(2, 3)
-      want := 5
-      if got != want {
-          t.Errorf("Add(2, 3) = %d; want %d", got, want)
-      }
-  }
-  ```
+    ```sh
+    go test
+    go test -v        # verbose
+    go test ./...     # all packages
+    ```
 
-  Run tests:
+    ### Table-Driven Tests
 
-  ```sh
-  go test
-  go test -v        # verbose
-  go test ./...     # all packages
-  ```
+    The idiomatic Go testing pattern:
 
-  ## Table-Driven Tests
+    ```go
+    func TestAdd(t *testing.T) {
+        tests := []struct {
+            name string
+            a, b int
+            want int
+        }{
+            {"positive", 2, 3, 5},
+            {"negative", -1, 1, 0},
+            {"zero", 0, 0, 0},
+        }
 
-  The idiomatic Go testing pattern:
+        for _, tt := range tests {
+            t.Run(tt.name, func(t *testing.T) {
+                got := Add(tt.a, tt.b)
+                if got != tt.want {
+                    t.Errorf("got %d, want %d", got, tt.want)
+                }
+            })
+        }
+    }
+    ```
 
-  ```go
-  func TestAdd(t *testing.T) {
-      tests := []struct {
-          name string
-          a, b int
-          want int
-      }{
-          {"positive", 2, 3, 5},
-          {"negative", -1, 1, 0},
-          {"zero", 0, 0, 0},
-      }
+    `t.Run` creates sub-tests with their own `*testing.T`, improving error reporting and allowing selective execution.
 
-      for _, tt := range tests {
-          t.Run(tt.name, func(t *testing.T) {
-              got := Add(tt.a, tt.b)
-              if got != tt.want {
-                  t.Errorf("got %d, want %d", got, tt.want)
-              }
-          })
-      }
-  }
-  ```
+    ### Test Helpers
 
-  `t.Run` creates sub-tests with their own `*testing.T`, improving error reporting and allowing selective execution.
+    Mark helpers with `t.Helper()` so failures point to the caller, not the helper:
 
-  ## Test Helpers
+    ```go
+    func assertEqual(t *testing.T, got, want int) {
+        t.Helper()
+        if got != want {
+            t.Errorf("got %d, want %d", got, want)
+        }
+    }
+    ```
 
-  Mark helpers with `t.Helper()` so failures point to the caller, not the helper:
+    ### Coverage
 
-  ```go
-  func assertEqual(t *testing.T, got, want int) {
-      t.Helper()
-      if got != want {
-          t.Errorf("got %d, want %d", got, want)
-      }
-  }
-  ```
+    ```sh
+    go test -cover
+    go test -coverprofile=coverage.out
+    go tool cover -html=coverage.out    # visualize in browser
+    ```
 
-  ## Coverage
+    ### Fuzzing (Go 1.18+)
 
-  ```sh
-  go test -cover
-  go test -coverprofile=coverage.out
-  go tool cover -html=coverage.out    # visualize in browser
-  ```
+    Automatically generates random inputs to find edge cases:
 
-  ## Fuzzing (Go 1.18+)
+    ```go
+    func FuzzAdd(f *testing.F) {
+        f.Add(2, 3)           // seed corpus
+        f.Fuzz(func(t *testing.T, a, b int) {
+            result := Add(a, b)
+            if result != a+b {
+                t.Errorf("unexpected result")
+            }
+        })
+    }
+    ```
 
-  Automatically generates random inputs to find edge cases:
+    Run with:
 
-  ```go
-  func FuzzAdd(f *testing.F) {
-      f.Add(2, 3)           // seed corpus
-      f.Fuzz(func(t *testing.T, a, b int) {
-          result := Add(a, b)
-          if result != a+b {
-              t.Errorf("unexpected result")
-          }
-      })
-  }
-  ```
+    ```sh
+    go test -fuzz=FuzzAdd
+    ```
 
-  Run with:
+    ### Test Caching
 
-  ```sh
-  go test -fuzz=FuzzAdd
-  ```
+    Go caches test results when neither code nor tests changed. Skip with:
 
-  ## Test Caching
-
-  Go caches test results when neither code nor tests changed. Skip with:
-
-  ```sh
-  go test -count=1
-  ```
-
-  ## Best Practices
-
-  - One test file per package: `*_test.go`
-  - Use table-driven tests as the default pattern
-  - Use `t.Errorf` for non-fatal failures, `t.Fatalf` when continued testing makes no sense
-  - External test packages (`package main_test`) avoid import cycles and test the public API
-  - Run `go test -race` to detect data races
-  - Keep tests deterministic and fast
+    ```sh
+    go test -count=1
+    ```
+best_practices: |
+    - One test file per package: `*_test.go`
+    - Use table-driven tests as the default pattern
+    - Use `t.Errorf` for non-fatal failures, `t.Fatalf` when continued testing makes no sense
+    - External test packages (`package main_test`) avoid import cycles and test the public API
+    - Run `go test -race` to detect data races
+    - Keep tests deterministic and fast
 tags:
   - go
   - testing

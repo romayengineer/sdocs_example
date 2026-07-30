@@ -31,9 +31,10 @@
 - Goroutines and channels
 - Basic Go syntax
 
-The `context` package is Go's standard mechanism for carrying deadlines, cancellation signals, and request-scoped values across API boundaries and goroutines.
 
-## Why Context?
+## Overview
+
+The `context` package is Go's standard mechanism for carrying deadlines, cancellation signals, and request-scoped values across API boundaries and goroutines.
 
 In any nontrivial Go program — especially HTTP servers, RPC handlers, and CLI tools — you need a way to:
 
@@ -43,7 +44,8 @@ In any nontrivial Go program — especially HTTP servers, RPC handlers, and CLI 
 
 Context makes all of this explicit and composable.
 
-## Creating Contexts
+
+## Basic Usage
 
 The root of any context chain is `context.Background()`:
 
@@ -53,7 +55,10 @@ ctx := context.Background()
 
 For test or ad-hoc use, there is `context.TODO()` — same thing, but signals intent.
 
-## WithCancel
+
+## Examples
+
+### WithCancel
 
 Returns a derived context and a cancel function:
 
@@ -73,7 +78,7 @@ go func() {
 cancel() // signals the goroutine to stop
 ```
 
-## WithTimeout and WithDeadline
+### WithTimeout and WithDeadline
 
 Automatically cancel after a duration or at a specific time:
 
@@ -86,7 +91,7 @@ defer cancel()
 // ctx, cancel = context.WithDeadline(context.Background(), time.Now().Add(100*time.Millisecond))
 ```
 
-## WithValue
+### WithValue
 
 Pass request-scoped data through the context chain:
 
@@ -105,11 +110,23 @@ func TraceIDFromContext(ctx context.Context) (string, bool) {
 
 Use unexported struct keys to avoid collisions between packages.
 
-## Checking Cancellation
+
+## Best Practices
+
+- Context is the first parameter of any function that may need cancellation
+- Never store a context in a struct — pass it explicitly
+- Always call the cancel function returned by `WithCancel` / `WithTimeout`
+- Use context values only for request-scoped data, not optional parameters
+- `context.Background()` is the root — use it in `main()` and top-level handlers
+
+
+## Advanced Topics
+
+### Checking Cancellation
 
 Two patterns for respecting context cancellation:
 
-### Channel-based (preferred)
+#### Channel-based (preferred)
 
 ```go
 select {
@@ -120,7 +137,7 @@ case result := <-ch:
 }
 ```
 
-### Deadline check
+#### Deadline check
 
 ```go
 if deadline, ok := ctx.Deadline(); ok && time.Now().After(deadline) {
@@ -128,16 +145,10 @@ if deadline, ok := ctx.Deadline(); ok && time.Now().After(deadline) {
 }
 ```
 
-## Best Practices
 
-- Context is the first parameter of any function that may need cancellation
-- Never store a context in a struct — pass it explicitly
-- Always call the cancel function returned by `WithCancel` / `WithTimeout`
-- Use context values only for request-scoped data, not optional parameters
-- `context.Background()` is the root — use it in `main()` and top-level handlers
+## Summary
 
 The context package is small but essential. Mastering it means writing Go programs that are safe, composable, and responsive to cancellation.
-
 
 ## Related Posts
 

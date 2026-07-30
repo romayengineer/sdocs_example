@@ -21,9 +21,12 @@
 - Interfaces in Go
 - Error Handling in Go
 
+
+## Overview
+
 Go's standard library `net/http` provides a powerful HTTP client and server with no external dependencies.
 
-## HTTP Server
+## Basic Usage
 
 ### Basic Handler
 
@@ -79,7 +82,8 @@ func userHandler(w http.ResponseWriter, r *http.Request) {
 }
 ```
 
-## Middleware Pattern
+
+## Examples
 
 ```go
 func loggingMiddleware(next http.Handler) http.Handler {
@@ -93,7 +97,10 @@ func loggingMiddleware(next http.Handler) http.Handler {
 handler = loggingMiddleware(handler)
 ```
 
-## HTTP Client
+
+## Advanced Topics
+
+### HTTP Client
 
 ```go
 resp, err := http.Get("https://api.example.com/data")
@@ -122,7 +129,7 @@ req.Header.Set("Authorization", "Bearer "+token)
 resp, err := client.Do(req)
 ```
 
-## Graceful Shutdown
+### Graceful Shutdown
 
 ```go
 srv := &http.Server{Addr: ":8080"}
@@ -134,8 +141,10 @@ defer cancel()
 srv.Shutdown(ctx)
 ```
 
-Go's `net/http` is production-ready and used by major projects. For complex routing, packages like `gorilla/mux` or `chi` add path parameters and middleware chaining on top of the standard `http.Handler`.
 
+## Summary
+
+Go's `net/http` is production-ready and used by major projects. For complex routing, packages like `gorilla/mux` or `chi` add path parameters and middleware chaining on top of the standard `http.Handler`.
 
 ## Related Posts
 

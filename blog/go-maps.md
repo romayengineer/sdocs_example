@@ -21,9 +21,12 @@
 - Basic Go syntax
 - Slices in Go
 
+
+## Overview
+
 Maps are Go's built-in associative data type, mapping keys to values.
 
-## Declaration and Initialization
+## Basic Usage
 
 ```go
 // Nil map (cannot write to it)
@@ -39,7 +42,8 @@ m := map[string]int{
 }
 ```
 
-## Basic Operations
+
+## Examples
 
 ```go
 m["alice"] = 31
@@ -55,8 +59,6 @@ if !ok {
 delete(m, "bob")
 ```
 
-## Iteration
-
 Map iteration order is random in Go:
 
 ```go
@@ -69,8 +71,6 @@ for k := range m {
     fmt.Println(k)
 }
 ```
-
-## Maps of Slices and Maps
 
 ```go
 // Map of slices
@@ -85,9 +85,6 @@ scores := map[string]map[string]int{
 }
 ```
 
-## Performance and Hashing
-
-Maps are implemented as hash tables. Key types must be comparable (using `==`). Slices, maps, and functions cannot be used as keys.
 
 ## Common Pitfalls
 
@@ -96,8 +93,15 @@ Maps are implemented as hash tables. Key types must be comparable (using `==`). 
 - Maps are reference types — assigning or passing a map shares the underlying data
 - Not safe for concurrent use without synchronization
 
-Maps are efficient, flexible, and widely used across Go programs for lookups, caches, and grouping data.
 
+## Advanced Topics
+
+Maps are implemented as hash tables. Key types must be comparable (using `==`). Slices, maps, and functions cannot be used as keys.
+
+
+## Summary
+
+Maps are efficient, flexible, and widely used across Go programs for lookups, caches, and grouping data.
 
 ## Related Posts
 

@@ -2,163 +2,161 @@ type: tech-post
 title: The sync Package
 date: 2026-07-30
 difficulty: intermediate
-body: |
-  While channels are Go's high-level concurrency primitive, the `sync` package provides lower-level synchronization tools.
+introduction: While channels are Go's high-level concurrency primitive, the `sync` package provides lower-level synchronization tools.
+basic_usage: |
+    ### Mutex
 
-  ## Mutex
+    Protects shared state from concurrent access:
 
-  Protects shared state from concurrent access:
+    ```go
+    var mu sync.Mutex
+    var counter int
 
-  ```go
-  var mu sync.Mutex
-  var counter int
+    func increment() {
+        mu.Lock()
+        counter++
+        mu.Unlock()
+    }
+    ```
 
-  func increment() {
-      mu.Lock()
-      counter++
-      mu.Unlock()
-  }
-  ```
+    Always use `defer` for `Unlock` in non-trivial functions:
 
-  Always use `defer` for `Unlock` in non-trivial functions:
+    ```go
+    func safeWrite(data map[string]int, key string, val int) {
+        mu.Lock()
+        defer mu.Unlock()
+        data[key] = val
+    }
+    ```
 
-  ```go
-  func safeWrite(data map[string]int, key string, val int) {
-      mu.Lock()
-      defer mu.Unlock()
-      data[key] = val
-  }
-  ```
+    ### RWMutex
 
-  ## RWMutex
+    Allows multiple concurrent readers but exclusive writers:
 
-  Allows multiple concurrent readers but exclusive writers:
+    ```go
+    var mu sync.RWMutex
 
-  ```go
-  var mu sync.RWMutex
+    func read(key string) int {
+        mu.RLock()
+        defer mu.RUnlock()
+        return cache[key]
+    }
 
-  func read(key string) int {
-      mu.RLock()
-      defer mu.RUnlock()
-      return cache[key]
-  }
+    func write(key string, val int) {
+        mu.Lock()
+        defer mu.Unlock()
+        cache[key] = val
+    }
+    ```
 
-  func write(key string, val int) {
-      mu.Lock()
-      defer mu.Unlock()
-      cache[key] = val
-  }
-  ```
+    Use `RLock`/`RUnlock` for read-only operations to avoid contention.
 
-  Use `RLock`/`RUnlock` for read-only operations to avoid contention.
+    ### WaitGroup
 
-  ## WaitGroup
+    Waits for a collection of goroutines to finish:
 
-  Waits for a collection of goroutines to finish:
+    ```go
+    var wg sync.WaitGroup
 
-  ```go
-  var wg sync.WaitGroup
+    for i := 0; i < 10; i++ {
+        wg.Add(1)
+        go func(id int) {
+            defer wg.Done()
+            doWork(id)
+        }(i)
+    }
 
-  for i := 0; i < 10; i++ {
-      wg.Add(1)
-      go func(id int) {
-          defer wg.Done()
-          doWork(id)
-      }(i)
-  }
+    wg.Wait() // blocks until all 10 finish
+    ```
 
-  wg.Wait() // blocks until all 10 finish
-  ```
+    `wg.Add` should be called outside the goroutine to avoid race conditions with `Wait`.
 
-  `wg.Add` should be called outside the goroutine to avoid race conditions with `Wait`.
+    ### Once
 
-  ## Once
+    Ensures a function is executed only once, regardless of how many goroutines call it:
 
-  Ensures a function is executed only once, regardless of how many goroutines call it:
+    ```go
+    var once sync.Once
+    var config *Config
 
-  ```go
-  var once sync.Once
-  var config *Config
+    func getConfig() *Config {
+        once.Do(func() {
+            config = loadConfig() // runs exactly once
+        })
+        return config
+    }
+    ```
 
-  func getConfig() *Config {
-      once.Do(func() {
-          config = loadConfig() // runs exactly once
-      })
-      return config
-  }
-  ```
+    Perfect for lazy initialization and singleton patterns.
+advanced: |
+    ### Pool
 
-  Perfect for lazy initialization and singleton patterns.
+    A scalable pool of reusable objects, useful for reducing allocations:
 
-  ## Pool
+    ```go
+    var bufPool = sync.Pool{
+        New: func() any {
+            return new(bytes.Buffer)
+        },
+    }
 
-  A scalable pool of reusable objects, useful for reducing allocations:
+    func handle() {
+        buf := bufPool.Get().(*bytes.Buffer)
+        defer bufPool.Put(buf)
+        buf.Reset()
+        // use buf...
+    }
+    ```
 
-  ```go
-  var bufPool = sync.Pool{
-      New: func() any {
-          return new(bytes.Buffer)
-      },
-  }
+    Objects in the pool may be garbage collected. Pool is best for temporary, expensive-to-allocate objects.
 
-  func handle() {
-      buf := bufPool.Get().(*bytes.Buffer)
-      defer bufPool.Put(buf)
-      buf.Reset()
-      // use buf...
-  }
-  ```
+    ### Map (sync.Map)
 
-  Objects in the pool may be garbage collected. Pool is best for temporary, expensive-to-allocate objects.
+    A concurrent-safe map optimized for:
 
-  ## Map (sync.Map)
+    - Write-once, read-many workloads
+    - Contended keys in different goroutines
 
-  A concurrent-safe map optimized for:
+    ```go
+    var m sync.Map
 
-  - Write-once, read-many workloads
-  - Contended keys in different goroutines
+    m.Store("key", "value")
+    val, ok := m.Load("key")
+    m.LoadOrStore("key", "default")
+    m.Delete("key")
+    m.Range(func(k, v any) bool {
+        fmt.Println(k, v)
+        return true // continue iteration
+    })
+    ```
 
-  ```go
-  var m sync.Map
+    For most use cases, a regular `map` with `sync.Mutex` is simpler and faster. Use `sync.Map` only when profiling shows contention.
 
-  m.Store("key", "value")
-  val, ok := m.Load("key")
-  m.LoadOrStore("key", "default")
-  m.Delete("key")
-  m.Range(func(k, v any) bool {
-      fmt.Println(k, v)
-      return true // continue iteration
-  })
-  ```
+    ### Cond
 
-  For most use cases, a regular `map` with `sync.Mutex` is simpler and faster. Use `sync.Map` only when profiling shows contention.
+    A condition variable for goroutines waiting on an event:
 
-  ## Cond
+    ```go
+    var mu sync.Mutex
+    cond := sync.NewCond(&mu)
+    ready := false
 
-  A condition variable for goroutines waiting on an event:
+    // waiter
+    go func() {
+        mu.Lock()
+        for !ready {
+            cond.Wait()
+        }
+        mu.Unlock()
+    }()
 
-  ```go
-  var mu sync.Mutex
-  cond := sync.NewCond(&mu)
-  ready := false
-
-  // waiter
-  go func() {
-      mu.Lock()
-      for !ready {
-          cond.Wait()
-      }
-      mu.Unlock()
-  }()
-
-  // signaller
-  mu.Lock()
-  ready = true
-  cond.Broadcast() // or cond.Signal() for one
-  mu.Unlock()
-  ```
-
-  `Cond` is rarely needed — channels usually cover the same patterns more clearly.
+    // signaller
+    mu.Lock()
+    ready = true
+    cond.Broadcast() // or cond.Signal() for one
+    mu.Unlock()
+    ```
+summary: "`Cond` is rarely needed — channels usually cover the same patterns more clearly."
 tags:
   - go
   - concurrency

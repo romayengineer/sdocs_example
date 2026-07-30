@@ -21,9 +21,12 @@
 
 - Basic Go syntax and functions
 
+
+## Overview
+
 Structs are Go's way of grouping related data. Methods add behavior to structs.
 
-## Defining a Struct
+## Basic Usage
 
 ```go
 type User struct {
@@ -33,7 +36,7 @@ type User struct {
 }
 ```
 
-## Construction
+### Construction
 
 ```go
 // By position (not recommended — fragile)
@@ -50,7 +53,7 @@ u2 := User{
 u3 := User{}
 ```
 
-## Methods
+### Methods
 
 Methods are functions with a **receiver**:
 
@@ -66,7 +69,7 @@ func (u *User) Birthday() {
 }
 ```
 
-## Value vs Pointer Receiver
+### Value vs Pointer Receiver
 
 | Value receiver | Pointer receiver |
 |---|---|
@@ -76,7 +79,8 @@ func (u *User) Birthday() {
 
 Rule of thumb: be consistent. If any method needs a pointer receiver, use pointer receivers for all methods on that type.
 
-## Struct Embedding
+
+## Advanced Topics
 
 Go has composition over inheritance through embedding:
 
@@ -95,8 +99,6 @@ fmt.Println(a.Name)  // promoted from User
 fmt.Println(a.Greet()) // promoted method
 ```
 
-## Tags and Reflection
-
 Struct tags provide metadata often used by libraries:
 
 ```go
@@ -114,8 +116,10 @@ field, _ := t.FieldByName("Host")
 fmt.Println(field.Tag.Get("json")) // "host"
 ```
 
-Structs and methods form the backbone of Go's type system, offering a simple but powerful model for organizing data and behavior.
 
+## Summary
+
+Structs and methods form the backbone of Go's type system, offering a simple but powerful model for organizing data and behavior.
 
 ## Related Posts
 

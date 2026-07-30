@@ -2,101 +2,93 @@ type: tech-post
 title: Structs and Methods in Go
 date: 2026-07-30
 difficulty: beginner
-body: |
-  Structs are Go's way of grouping related data. Methods add behavior to structs.
+introduction: Structs are Go's way of grouping related data. Methods add behavior to structs.
+basic_usage: |
+    ```go
+    type User struct {
+        Name  string
+        Email string
+        Age   int
+    }
+    ```
 
-  ## Defining a Struct
+    ### Construction
 
-  ```go
-  type User struct {
-      Name  string
-      Email string
-      Age   int
-  }
-  ```
+    ```go
+    // By position (not recommended — fragile)
+    u1 := User{"Alice", "alice@example.com", 30}
 
-  ## Construction
+    // By field name (preferred)
+    u2 := User{
+        Name:  "Bob",
+        Email: "bob@example.com",
+        Age:   25,
+    }
 
-  ```go
-  // By position (not recommended — fragile)
-  u1 := User{"Alice", "alice@example.com", 30}
+    // Zero-value initialization
+    u3 := User{}
+    ```
 
-  // By field name (preferred)
-  u2 := User{
-      Name:  "Bob",
-      Email: "bob@example.com",
-      Age:   25,
-  }
+    ### Methods
 
-  // Zero-value initialization
-  u3 := User{}
-  ```
+    Methods are functions with a **receiver**:
 
-  ## Methods
+    ```go
+    // Value receiver — operates on a copy
+    func (u User) Greet() string {
+        return fmt.Sprintf("Hi, I'm %s", u.Name)
+    }
 
-  Methods are functions with a **receiver**:
+    // Pointer receiver — can modify the original
+    func (u *User) Birthday() {
+        u.Age++
+    }
+    ```
 
-  ```go
-  // Value receiver — operates on a copy
-  func (u User) Greet() string {
-      return fmt.Sprintf("Hi, I'm %s", u.Name)
-  }
+    ### Value vs Pointer Receiver
 
-  // Pointer receiver — can modify the original
-  func (u *User) Birthday() {
-      u.Age++
-  }
-  ```
+    | Value receiver | Pointer receiver |
+    |---|---|
+    | Cannot modify original | Can modify the struct |
+    | Works on a copy | Works on the original |
+    | Good for read-only methods | Good for mutating methods |
 
-  ## Value vs Pointer Receiver
+    Rule of thumb: be consistent. If any method needs a pointer receiver, use pointer receivers for all methods on that type.
+advanced: |
+    Go has composition over inheritance through embedding:
 
-  | Value receiver | Pointer receiver |
-  |---|---|
-  | Cannot modify original | Can modify the struct |
-  | Works on a copy | Works on the original |
-  | Good for read-only methods | Good for mutating methods |
+    ```go
+    type Admin struct {
+        User           // embedded — fields and methods promoted
+        Permissions []string
+    }
 
-  Rule of thumb: be consistent. If any method needs a pointer receiver, use pointer receivers for all methods on that type.
+    a := Admin{
+        User: User{Name: "Carol", Email: "carol@example.com", Age: 28},
+        Permissions: []string{"read", "write", "delete"},
+    }
 
-  ## Struct Embedding
+    fmt.Println(a.Name)  // promoted from User
+    fmt.Println(a.Greet()) // promoted method
+    ```
 
-  Go has composition over inheritance through embedding:
+    Struct tags provide metadata often used by libraries:
 
-  ```go
-  type Admin struct {
-      User           // embedded — fields and methods promoted
-      Permissions []string
-  }
+    ```go
+    type Config struct {
+        Host string `json:"host" yaml:"host"`
+        Port int    `json:"port" yaml:"port"`
+    }
+    ```
 
-  a := Admin{
-      User: User{Name: "Carol", Email: "carol@example.com", Age: 28},
-      Permissions: []string{"read", "write", "delete"},
-  }
+    Tags are accessed via `reflect`:
 
-  fmt.Println(a.Name)  // promoted from User
-  fmt.Println(a.Greet()) // promoted method
-  ```
-
-  ## Tags and Reflection
-
-  Struct tags provide metadata often used by libraries:
-
-  ```go
-  type Config struct {
-      Host string `json:"host" yaml:"host"`
-      Port int    `json:"port" yaml:"port"`
-  }
-  ```
-
-  Tags are accessed via `reflect`:
-
-  ```go
-  t := reflect.TypeOf(Config{})
-  field, _ := t.FieldByName("Host")
-  fmt.Println(field.Tag.Get("json")) // "host"
-  ```
-
-  Structs and methods form the backbone of Go's type system, offering a simple but powerful model for organizing data and behavior.
+    ```go
+    t := reflect.TypeOf(Config{})
+    field, _ := t.FieldByName("Host")
+    fmt.Println(field.Tag.Get("json")) // "host"
+    ```
+summary: Structs and methods form the backbone of Go's type system, offering a simple but powerful model for organizing data and behavior.
 tags:
   - go
   - structs

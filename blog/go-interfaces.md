@@ -21,17 +21,18 @@
 
 - Basic Go types and functions
 
+
+## Overview
+
 Interfaces in Go define behavior through method sets. Unlike many languages, interface satisfaction is implicit — no `implements` keyword needed.
 
-## Defining an Interface
+## Basic Usage
 
 ```go
 type Stringer interface {
     String() string
 }
 ```
-
-## Implicit Satisfaction
 
 Any type that has the required methods automatically satisfies the interface:
 
@@ -50,8 +51,6 @@ func print(s Stringer) {
 }
 ```
 
-## The Empty Interface
-
 `interface{}` (or `any` in Go 1.18+) accepts values of any type:
 
 ```go
@@ -60,7 +59,8 @@ x = "hello"
 x = Book{"The Go Programming Language", "Donovan & Kernighan"}
 ```
 
-## Type Assertions
+
+## Examples
 
 Extract the concrete value from an interface:
 
@@ -71,8 +71,6 @@ if ok {
     fmt.Println(s) // "hello"
 }
 ```
-
-## Type Switches
 
 Handle multiple concrete types cleanly:
 
@@ -89,8 +87,6 @@ func describe(i any) {
 }
 ```
 
-## Standard Library Examples
-
 The stdlib is full of small, focused interfaces:
 
 ```go
@@ -105,7 +101,8 @@ type Writer interface {
 
 Any type with a `Read([]byte) (int, error)` method is an `io.Reader` — `os.File`, `strings.Reader`, `bytes.Buffer`, and more.
 
-## Embedding Interfaces
+
+## Advanced Topics
 
 Interfaces can embed other interfaces:
 
@@ -116,8 +113,10 @@ type ReadWriter interface {
 }
 ```
 
-Go's interface system encourages small, composable abstractions. The rule of thumb: *accept interfaces, return concrete types.*
 
+## Summary
+
+Go's interface system encourages small, composable abstractions. The rule of thumb: *accept interfaces, return concrete types.*
 
 ## Related Posts
 

@@ -21,9 +21,14 @@
 - Basic Go syntax
 - Building HTTP Servers and Clients in Go
 
+
+## Overview
+
 Go can compile to WebAssembly (Wasm), allowing Go programs to run in the browser at near-native speed.
 
-## Hello World in Wasm
+## Basic Usage
+
+### Hello World in Wasm
 
 ```go
 package main
@@ -39,7 +44,7 @@ func main() {
 }
 ```
 
-## Compiling
+### Compiling
 
 ```sh
 GOOS=js GOARCH=wasm go build -o main.wasm main.go
@@ -51,7 +56,7 @@ Copy the JavaScript glue from the Go installation:
 cp "$(go env GOROOT)/misc/wasm/wasm_exec.js" .
 ```
 
-## Serving the Page
+### Serving the Page
 
 ```html
 <script src="wasm_exec.js"></script>
@@ -65,7 +70,7 @@ cp "$(go env GOROOT)/misc/wasm/wasm_exec.js" .
 </script>
 ```
 
-## Interacting with the DOM
+### Interacting with the DOM
 
 ```go
 func setButton() {
@@ -80,7 +85,7 @@ func setButton() {
 }
 ```
 
-## Calling JavaScript from Go
+### Calling JavaScript from Go
 
 ```go
 // Call JS functions
@@ -91,7 +96,26 @@ fmt.Println(result.Get("key").String())
 js.Global().Get("Math").Call("random")
 ```
 
-## Exposing Go Functions to JavaScript
+
+## Best Practices
+
+- Porting existing Go libraries to the browser
+- CPU-intensive computation (image processing, parsing, game logic)
+- Sharing code between backend (Go) and frontend (Wasm)
+- When you prefer Go's type safety and tooling over JavaScript
+
+
+## Common Pitfalls
+
+- No `os` package (no file system, network in browser)
+- No `net/http` server (client works with browser's fetch API)
+- Single-threaded (no goroutine parallelism, though concurrency works)
+- `syscall/js` is verbose and not idiomatic Go
+
+
+## Advanced Topics
+
+### Exposing Go Functions to JavaScript
 
 ```go
 func main() {
@@ -109,29 +133,17 @@ func main() {
 
 Then call from JS: `add(3, 4)` returns `7`.
 
-## Performance Considerations
+### Performance Considerations
 
 - Wasm files are large (~2MB minimum) — use `-ldflags="-s -w"` to strip debug info
 - Go's full runtime (GC, scheduler) is included — not ideal for tiny scripts
 - `tinygo` produces much smaller Wasm binaries for simple programs
 - No direct DOM access — all DOM manipulation goes through `syscall/js` which is slow
 
-## Limitations
 
-- No `os` package (no file system, network in browser)
-- No `net/http` server (client works with browser's fetch API)
-- Single-threaded (no goroutine parallelism, though concurrency works)
-- `syscall/js` is verbose and not idiomatic Go
-
-## When to Use Go+Wasm
-
-- Porting existing Go libraries to the browser
-- CPU-intensive computation (image processing, parsing, game logic)
-- Sharing code between backend (Go) and frontend (Wasm)
-- When you prefer Go's type safety and tooling over JavaScript
+## Summary
 
 Wasm support in Go is mature but niche. For most web development, JavaScript/TypeScript remains the practical choice. Go+Wasm excels for specific use cases where code reuse or performance matters.
-
 
 ## Related Posts
 

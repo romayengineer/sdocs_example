@@ -2,122 +2,119 @@ type: tech-post
 title: Go Modules and Packages
 date: 2026-07-30
 difficulty: beginner
-body: |
-  Go modules are the built-in dependency management system introduced in Go 1.11 and made default in Go 1.16.
+introduction: Go modules are the built-in dependency management system introduced in Go 1.11 and made default in Go 1.16.
+basic_usage: |
+    ```sh
+    go mod init github.com/user/myproject
+    ```
 
-  ## Initializing a Module
+    This creates a `go.mod` file:
 
-  ```go
-  go mod init github.com/user/myproject
-  ```
+    ```
+    module github.com/user/myproject
 
-  This creates a `go.mod` file:
+    go 1.22
+    ```
 
-  ```
-  module github.com/user/myproject
+    ### Adding Dependencies
 
-  go 1.22
-  ```
+    ```sh
+    go get github.com/gorilla/mux@v1.8.1
+    ```
 
-  ## Adding Dependencies
+    This updates `go.mod` and creates `go.sum` with checksums for reproducible builds.
 
-  ```go
-  go get github.com/gorilla/mux@v1.8.1
-  ```
+    ### go.mod Structure
 
-  This updates `go.mod` and creates `go.sum` with checksums for reproducible builds.
+    ```
+    module github.com/user/myproject
 
-  ## go.mod Structure
+    go 1.22
 
-  ```
-  module github.com/user/myproject
+    require (
+        github.com/gorilla/mux v1.8.1
+        golang.org/x/text v0.14.0
+    )
 
-  go 1.22
+    exclude github.com/old/module v0.1.0
 
-  require (
-      github.com/gorilla/mux v1.8.1
-      golang.org/x/text v0.14.0
-  )
+    replace github.com/original => ./local/fork
+    ```
 
-  exclude github.com/old/module v0.1.0
+    - `require` — direct dependencies
+    - `exclude` — versions to skip
+    - `replace` — substitute a module (useful for local development)
 
-  replace github.com/original => ./local/fork
-  ```
+    ### go mod tidy
 
-  - `require` — direct dependencies
-  - `exclude` — versions to skip
-  - `replace` — substitute a module (useful for local development)
+    ```sh
+    go mod tidy
+    ```
 
-  ## go mod tidy
+    Cleans up dependencies — adds missing ones, removes unused ones.
 
-  ```sh
-  go mod tidy
-  ```
+    ### Packages
 
-  Cleans up dependencies — adds missing ones, removes unused ones.
+    A package is a directory of Go files with the same `package` declaration:
 
-  ## Module Workspaces (Go 1.18+)
+    ```
+    myproject/
+    ├── go.mod
+    ├── main.go              # package main
+    ├── handler/
+    │   ├── handler.go       # package handler
+    │   └── handler_test.go  # package handler (or handler_test for external tests)
+    └── internal/
+        └── auth/
+            └── auth.go      # package auth (internal — only accessible within myproject)
+    ```
 
-  Workspaces let you work on multiple modules simultaneously:
+    ### Import Paths
 
-  ```sh
-  go work init ./module1 ./module2
-  ```
+    ```go
+    import (
+        "fmt"                                    // standard library
+        "github.com/user/myproject/handler"      // local package
+        "github.com/gorilla/mux"                 // external dependency
+    )
+    ```
 
-  Creates a `go.work` file that overrides individual `go.mod` files during development — no need for `replace` directives.
+    ### Naming Conventions
 
-  ## Packages
+    - Package names are lowercase, single word preferred
+    - No underscores or mixedCaps — use `httputil` not `http_util`
+    - The package name should match the directory name
+advanced: |
+    ### Module Workspaces (Go 1.18+)
 
-  A package is a directory of Go files with the same `package` declaration:
+    Workspaces let you work on multiple modules simultaneously:
 
-  ```
-  myproject/
-  ├── go.mod
-  ├── main.go              # package main
-  ├── handler/
-  │   ├── handler.go       # package handler
-  │   └── handler_test.go  # package handler (or handler_test for external tests)
-  └── internal/
-      └── auth/
-          └── auth.go      # package auth (internal — only accessible within myproject)
-  ```
+    ```sh
+    go work init ./module1 ./module2
+    ```
 
-  ## Import Paths
+    Creates a `go.work` file that overrides individual `go.mod` files during development — no need for `replace` directives.
 
-  ```go
-  import (
-      "fmt"                                    // standard library
-      "github.com/user/myproject/handler"      // local package
-      "github.com/gorilla/mux"                 // external dependency
-  )
-  ```
+    ### Internal Packages
 
-  ## Naming Conventions
+    Packages under `internal/` are only importable by code rooted at the parent:
 
-  - Package names are lowercase, single word preferred
-  - No underscores or mixedCaps — use `httputil` not `http_util`
-  - The package name should match the directory name
+    ```
+    myproject/
+      internal/auth/   → only importable by myproject/...
+    ```
 
-  ## Internal Packages
+    This enforces encapsulation boundaries.
 
-  Packages under `internal/` are only importable by code rooted at the parent:
+    ### Vendoring
 
-  ```
-  myproject/
-    internal/auth/   → only importable by myproject/...
-  ```
+    Save exact copies of dependencies:
 
-  This enforces encapsulation boundaries.
+    ```sh
+    go mod vendor
+    ```
 
-  ## Vendoring
-
-  Save exact copies of dependencies:
-
-  ```sh
-  go mod vendor
-  ```
-
-  Useful for CI reproducibility or air-gapped environments.
+    Useful for CI reproducibility or air-gapped environments.
 tags:
   - go
   - modules

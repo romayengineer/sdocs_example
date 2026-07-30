@@ -21,9 +21,12 @@
 - Basic Go syntax
 - File I/O in Go
 
+
+## Overview
+
 The `embed` package (introduced in Go 1.16) allows embedding files and directories into the Go binary at compile time.
 
-## Basic Embedding
+## Basic Usage
 
 Use the `//go:embed` directive to embed files:
 
@@ -41,14 +44,14 @@ func main() {
 }
 ```
 
-## Embedding into []byte
+### Embedding into []byte
 
 ```go
 //go:embed logo.png
 var logo []byte
 ```
 
-## Embedding Multiple Files
+### Embedding Multiple Files
 
 ```go
 import "embed"
@@ -62,7 +65,7 @@ func main() {
 }
 ```
 
-## Embedding a Directory Tree
+### Embedding a Directory Tree
 
 ```go
 //go:embed static
@@ -75,7 +78,7 @@ for _, e := range entries {
 }
 ```
 
-## Path Patterns
+### Path Patterns
 
 ```go
 //go:embed all:data       // recursively, including files starting with .
@@ -85,14 +88,15 @@ for _, e := range entries {
 
 Patterns cannot use `..` or absolute paths. They are relative to the source file's directory.
 
-## Use Cases
+### Use Cases
 
 - **Web servers**: embed HTML templates, CSS, JS, images
 - **CLI tools**: embed default configs, help text, migration files
 - **Static analysis**: embed rulesets, pattern files
 - **Testing**: embed test fixtures
 
-## Practical Example
+
+## Examples
 
 ```go
 //go:embed templates
@@ -111,8 +115,10 @@ func main() {
 }
 ```
 
-Embedding produces a single self-contained binary — no file dependencies at runtime, simpler deployment, and consistent behavior across environments.
 
+## Summary
+
+Embedding produces a single self-contained binary — no file dependencies at runtime, simpler deployment, and consistent behavior across environments.
 
 ## Related Posts
 

@@ -20,16 +20,19 @@
 
 - Basic Go syntax
 
+
+## Overview
+
 Go's `time` package provides a comprehensive API for working with dates, times, durations, and scheduling.
 
-## Time and Duration Types
+## Basic Usage
 
 ```go
 now := time.Now()
 fmt.Println(now) // 2026-07-30 12:00:00 +0000 UTC
 ```
 
-## Creating Time Values
+### Creating Time Values
 
 ```go
 // Specific date
@@ -42,7 +45,7 @@ t := time.Unix(1750000000, 0)
 t, _ := time.Parse(time.RFC3339, "2026-07-30T12:00:00Z")
 ```
 
-## Formatting
+### Formatting
 
 Go uses a unique reference time: `Mon Jan 2 15:04:05 MST 2006`
 
@@ -53,7 +56,7 @@ fmt.Println(t.Format("Jan 2, 2006 3:04 PM")) // Jul 30, 2026 12:00 PM
 fmt.Println(t.Format(time.RFC822))           // 30 Jul 26 12:00 UTC
 ```
 
-## Duration
+### Duration
 
 ```go
 d := 5 * time.Second + 250 * time.Millisecond
@@ -65,7 +68,7 @@ fmt.Println(d.Round(time.Second)) // 5s
 time.Sleep(100 * time.Millisecond)
 ```
 
-## Time Arithmetic
+### Time Arithmetic
 
 ```go
 t := time.Now()
@@ -77,7 +80,7 @@ diff := later.Sub(t)
 fmt.Println(diff.Minutes()) // 150
 ```
 
-## Comparing Times
+### Comparing Times
 
 ```go
 a := time.Date(2026, 7, 30, 0, 0, 0, 0, time.UTC)
@@ -88,7 +91,17 @@ fmt.Println(a.After(b))  // false
 fmt.Println(a.Equal(b))  // false
 ```
 
-## Time Zones
+
+## Common Pitfalls
+
+- **MST vs UTC**: Always be explicit about time zones — use `time.UTC` or `time.LoadLocation`
+- **Monotonic clock**: `time.Now()` includes monotonic readings for duration measurement; strip with `t.Round(0)` for serialization
+- **Parse format vs reference time**: Forgot the reference time? `Format` and `Parse` use `2006-01-02`, not `YYYY-MM-DD`
+
+
+## Advanced Topics
+
+### Time Zones
 
 ```go
 loc, _ := time.LoadLocation("America/New_York")
@@ -102,7 +115,7 @@ for _, tz := range timezoneNames {
 }
 ```
 
-## Timers and Tickers
+### Timers and Tickers
 
 ```go
 // Timer (fires once)
@@ -119,7 +132,7 @@ for i := 0; i < 5; i++ {
 ticker.Stop()
 ```
 
-## Context Timeouts
+### Context Timeouts
 
 ```go
 ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
@@ -127,14 +140,10 @@ defer cancel()
 // Use ctx for HTTP calls, DB queries, etc.
 ```
 
-## Common Pitfalls
 
-- **MST vs UTC**: Always be explicit about time zones — use `time.UTC` or `time.LoadLocation`
-- **Monotonic clock**: `time.Now()` includes monotonic readings for duration measurement; strip with `t.Round(0)` for serialization
-- **Parse format vs reference time**: Forgot the reference time? `Format` and `Parse` use `2006-01-02`, not `YYYY-MM-DD`
+## Summary
 
 The `time` package is one of Go's best-designed standard libraries — expressive, correct, and hard to misuse when you know the reference time convention.
-
 
 ## Related Posts
 

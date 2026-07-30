@@ -2,123 +2,120 @@ type: tech-post
 title: Building CLI Applications in Go
 date: 2026-07-30
 difficulty: intermediate
-body: |
-  Go is an excellent language for building command-line tools. The standard library's `flag` package handles basic CLI needs, while third-party libraries offer more advanced features.
+introduction: Go is an excellent language for building command-line tools. The standard library's `flag` package handles basic CLI needs, while third-party libraries offer more advanced features.
+basic_usage: |
+    ### Using the flag Package
 
-  ## Using the flag Package
+    ```go
+    import "flag"
 
-  ```go
-  import "flag"
+    func main() {
+        name := flag.String("name", "world", "a name to greet")
+        count := flag.Int("count", 1, "number of times to greet")
+        verbose := flag.Bool("verbose", false, "enable verbose output")
+        flag.Parse()
 
-  func main() {
-      name := flag.String("name", "world", "a name to greet")
-      count := flag.Int("count", 1, "number of times to greet")
-      verbose := flag.Bool("verbose", false, "enable verbose output")
-      flag.Parse()
+        for i := 0; i < *count; i++ {
+            if *verbose {
+                fmt.Printf("[%d/%d] ", i+1, *count)
+            }
+            fmt.Printf("Hello, %s!\n", *name)
+        }
+    }
+    ```
 
-      for i := 0; i < *count; i++ {
-          if *verbose {
-              fmt.Printf("[%d/%d] ", i+1, *count)
-          }
-          fmt.Printf("Hello, %s!\n", *name)
-      }
-  }
-  ```
+    Run with:
 
-  Run with:
-  ```sh
-  go run main.go -name Alice -count 3 -verbose
-  ```
+    ```sh
+    go run main.go -name Alice -count 3 -verbose
+    ```
 
-  ## Subcommands
+    ### Subcommands
 
-  Use `flag.FlagSet` for subcommands like `git commit -m "msg"`:
+    Use `flag.FlagSet` for subcommands like `git commit -m "msg"`:
 
-  ```go
-  func main() {
-      if len(os.Args) < 2 {
-          fmt.Println("usage: app <command>")
-          return
-      }
+    ```go
+    func main() {
+        if len(os.Args) < 2 {
+            fmt.Println("usage: app <command>")
+            return
+        }
 
-      switch os.Args[1] {
-      case "greet":
-          greetCmd := flag.NewFlagSet("greet", flag.ExitOnError)
-          name := greetCmd.String("name", "world", "")
-          greetCmd.Parse(os.Args[2:])
-          fmt.Printf("Hello, %s!\n", *name)
+        switch os.Args[1] {
+        case "greet":
+            greetCmd := flag.NewFlagSet("greet", flag.ExitOnError)
+            name := greetCmd.String("name", "world", "")
+            greetCmd.Parse(os.Args[2:])
+            fmt.Printf("Hello, %s!\n", *name)
 
-      case "version":
-          fmt.Println("v1.0.0")
-      }
-  }
-  ```
+        case "version":
+            fmt.Println("v1.0.0")
+        }
+    }
+    ```
 
-  ## Environment Variables
+    ### Environment Variables
 
-  ```go
-  func getConfig() {
-      port := os.Getenv("PORT")
-      if port == "" {
-          port = "8080"
-      }
+    ```go
+    func getConfig() {
+        port := os.Getenv("PORT")
+        if port == "" {
+            port = "8080"
+        }
 
-      dbURL := os.Getenv("DATABASE_URL")
-      if dbURL == "" {
-          log.Fatal("DATABASE_URL is required")
-      }
-  }
-  ```
+        dbURL := os.Getenv("DATABASE_URL")
+        if dbURL == "" {
+            log.Fatal("DATABASE_URL is required")
+        }
+    }
+    ```
+advanced: |
+    ### Organizing Commands with Third-Party Libraries
 
-  ## Organizing Commands with Third-Party Libraries
+    Cobra, the most popular CLI framework used by Kubernetes, Hugo, and GitHub CLI:
 
-  Cobra, the most popular CLI framework used by Kubernetes, Hugo, and GitHub CLI:
+    ```go
+    var rootCmd = &cobra.Command{
+        Use:   "myapp",
+        Short: "MyApp is a CLI tool",
+        Run: func(cmd *cobra.Command, args []string) {
+            fmt.Println("Hello from myapp")
+        },
+    }
 
-  ```go
-  var rootCmd = &cobra.Command{
-      Use:   "myapp",
-      Short: "MyApp is a CLI tool",
-      Run: func(cmd *cobra.Command, args []string) {
-          fmt.Println("Hello from myapp")
-      },
-  }
+    var greetCmd = &cobra.Command{
+        Use:   "greet [name]",
+        Short: "Greet someone",
+        Args:  cobra.MinimumNArgs(1),
+        Run: func(cmd *cobra.Command, args []string) {
+            fmt.Printf("Hello, %s!\n", args[0])
+        },
+    }
 
-  var greetCmd = &cobra.Command{
-      Use:   "greet [name]",
-      Short: "Greet someone",
-      Args:  cobra.MinimumNArgs(1),
-      Run: func(cmd *cobra.Command, args []string) {
-          fmt.Printf("Hello, %s!\n", args[0])
-      },
-  }
+    func main() {
+        rootCmd.AddCommand(greetCmd)
+        rootCmd.Execute()
+    }
+    ```
 
-  func main() {
-      rootCmd.AddCommand(greetCmd)
-      rootCmd.Execute()
-  }
-  ```
+    ### Progress Bars
 
-  ## Progress Bars
+    For long-running operations:
 
-  For long-running operations:
-
-  ```go
-  bar := progressbar.New(100)
-  for i := 0; i < 100; i++ {
-      bar.Add(1)
-      time.Sleep(50 * time.Millisecond)
-  }
-  ```
-
-  ## Tips for Good CLI Design
-
-  - **Use `os.Exit` appropriately** — exit code 0 for success, non-zero for errors
-  - **Write to stderr for errors** — `os.Stderr` or `log` package
-  - **Support `-h`/`--help`** — the `flag` package does this automatically
-  - **Support `--version`** — use `ldflags` to inject version at build time: `go build -ldflags="-X main.version=$(git describe)"`
-  - **Color output sparingly** — use `autocorrection` or check for terminal capability
-
-  Go's compiled binaries, fast startup, and cross-platform support make it the language of choice for modern CLI tools.
+    ```go
+    bar := progressbar.New(100)
+    for i := 0; i < 100; i++ {
+        bar.Add(1)
+        time.Sleep(50 * time.Millisecond)
+    }
+    ```
+best_practices: |
+    - **Use `os.Exit` appropriately** — exit code 0 for success, non-zero for errors
+    - **Write to stderr for errors** — `os.Stderr` or `log` package
+    - **Support `-h`/`--help`** — the `flag` package does this automatically
+    - **Support `--version`** — use `ldflags` to inject version at build time: `go build -ldflags="-X main.version=$(git describe)"`
+    - **Color output sparingly** — use `autocorrection` or check for terminal capability
+summary: Go's compiled binaries, fast startup, and cross-platform support make it the language of choice for modern CLI tools.
 tags:
   - go
   - cli

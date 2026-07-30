@@ -21,9 +21,14 @@
 - Modules and Packages in Go
 - Error Handling in Go
 
+
+## Overview
+
 Go is an excellent language for building command-line tools. The standard library's `flag` package handles basic CLI needs, while third-party libraries offer more advanced features.
 
-## Using the flag Package
+## Basic Usage
+
+### Using the flag Package
 
 ```go
 import "flag"
@@ -44,11 +49,12 @@ func main() {
 ```
 
 Run with:
+
 ```sh
 go run main.go -name Alice -count 3 -verbose
 ```
 
-## Subcommands
+### Subcommands
 
 Use `flag.FlagSet` for subcommands like `git commit -m "msg"`:
 
@@ -72,7 +78,7 @@ func main() {
 }
 ```
 
-## Environment Variables
+### Environment Variables
 
 ```go
 func getConfig() {
@@ -88,7 +94,19 @@ func getConfig() {
 }
 ```
 
-## Organizing Commands with Third-Party Libraries
+
+## Best Practices
+
+- **Use `os.Exit` appropriately** — exit code 0 for success, non-zero for errors
+- **Write to stderr for errors** — `os.Stderr` or `log` package
+- **Support `-h`/`--help`** — the `flag` package does this automatically
+- **Support `--version`** — use `ldflags` to inject version at build time: `go build -ldflags="-X main.version=$(git describe)"`
+- **Color output sparingly** — use `autocorrection` or check for terminal capability
+
+
+## Advanced Topics
+
+### Organizing Commands with Third-Party Libraries
 
 Cobra, the most popular CLI framework used by Kubernetes, Hugo, and GitHub CLI:
 
@@ -116,7 +134,7 @@ func main() {
 }
 ```
 
-## Progress Bars
+### Progress Bars
 
 For long-running operations:
 
@@ -128,16 +146,10 @@ for i := 0; i < 100; i++ {
 }
 ```
 
-## Tips for Good CLI Design
 
-- **Use `os.Exit` appropriately** — exit code 0 for success, non-zero for errors
-- **Write to stderr for errors** — `os.Stderr` or `log` package
-- **Support `-h`/`--help`** — the `flag` package does this automatically
-- **Support `--version`** — use `ldflags` to inject version at build time: `go build -ldflags="-X main.version=$(git describe)"`
-- **Color output sparingly** — use `autocorrection` or check for terminal capability
+## Summary
 
 Go's compiled binaries, fast startup, and cross-platform support make it the language of choice for modern CLI tools.
-
 
 ## Related Posts
 

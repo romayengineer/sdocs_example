@@ -20,9 +20,12 @@
 
 - Interfaces in Go
 
+
+## Overview
+
 Go treats errors as values. Instead of exceptions, functions return an `error` value that the caller checks explicitly.
 
-## The Error Interface
+## Basic Usage
 
 ```go
 type error interface {
@@ -43,8 +46,6 @@ func (e ValidationError) Error() string {
 }
 ```
 
-## Sentinel Errors
-
 Predeclared errors used with `==`:
 
 ```go
@@ -56,8 +57,6 @@ func Find(id int) (Item, error) {
 }
 ```
 
-## Wrapping Errors
-
 Go 1.13 introduced error wrapping with `%w`:
 
 ```go
@@ -65,8 +64,6 @@ if err := doSomething(); err != nil {
     return fmt.Errorf("doSomething failed: %w", err)
 }
 ```
-
-## errors.Is and errors.As
 
 Replace `==` with `errors.Is` for wrapped errors:
 
@@ -85,8 +82,6 @@ if errors.As(err, &ve) {
 }
 ```
 
-## errors.Join
-
 Go 1.20 introduced joining multiple errors:
 
 ```go
@@ -94,6 +89,7 @@ err1 := errors.New("first")
 err2 := errors.New("second")
 joined := errors.Join(err1, err2)
 ```
+
 
 ## Best Practices
 

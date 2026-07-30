@@ -2,88 +2,73 @@ type: tech-post
 title: Pointers in Go
 date: 2026-07-30
 difficulty: intermediate
-body: |
-  Go has pointers but no pointer arithmetic. A pointer holds the memory address of a value.
+introduction: Go has pointers but no pointer arithmetic. A pointer holds the memory address of a value.
+basic_usage: |
+    ```go
+    var x int = 42
+    var p *int = &x  // p points to x
 
-  ## Basic Syntax
+    fmt.Println(*p) // 42 (dereference)
+    *p = 21         // modify x through p
+    fmt.Println(x)  // 21
+    ```
 
-  ```go
-  var x int = 42
-  var p *int = &x  // p points to x
+    The zero value of a pointer is `nil`:
 
-  fmt.Println(*p) // 42 (dereference)
-  *p = 21         // modify x through p
-  fmt.Println(x)  // 21
-  ```
+    ```go
+    var p *int // nil
+    if p != nil {
+        fmt.Println(*p)
+    }
+    ```
 
-  ## Zero Value
+    Pointers allow functions to modify their arguments:
 
-  The zero value of a pointer is `nil`:
+    ```go
+    func increment(n *int) {
+        *n++
+    }
 
-  ```go
-  var p *int // nil
-  if p != nil {
-      fmt.Println(*p)
-  }
-  ```
+    x := 1
+    increment(&x)
+    fmt.Println(x) // 2
+    ```
 
-  ## Pointers and Functions
+    Struct pointers are commonly used to avoid copying:
 
-  Pointers allow functions to modify their arguments:
+    ```go
+    type User struct {
+        Name string
+        Age  int
+    }
 
-  ```go
-  func increment(n *int) {
-      *n++
-  }
+    u := &User{Name: "Alice", Age: 30}
+    u.Name = "Bob" // implicit dereference
+    ```
 
-  x := 1
-  increment(&x)
-  fmt.Println(x) // 2
-  ```
+    The dot notation works automatically with pointers to structs (no `->` needed).
+advanced: |
+    Go's compiler decides where a variable lives. If a variable escapes the function (e.g., returned), it's allocated on the heap:
 
-  ## Pointer to Struct
+    ```go
+    func newUser() *User {
+        u := User{Name: "Alice"} // escapes to heap
+        return &u
+    }
+    ```
 
-  Struct pointers are commonly used to avoid copying:
+    This is determined by escape analysis, not by the programmer.
+best_practices: |
+    - Modifying a receiver in a method
+    - Avoiding large struct copies
+    - Indicating optional fields (nil means absent)
+    - Sharing state (use channels for concurrency)
+pitfalls: |
+    - For small values (int, bool) — pass by value is fine
+    - When a nil receiver is not meaningful
+    - In maps and slices — they already reference underlying data
 
-  ```go
-  type User struct {
-      Name string
-      Age  int
-  }
-
-  u := &User{Name: "Alice", Age: 30}
-  u.Name = "Bob" // implicit dereference
-  ```
-
-  The dot notation works automatically with pointers to structs (no `->` needed).
-
-  ## Stack vs Heap
-
-  Go's compiler decides where a variable lives. If a variable escapes the function (e.g., returned), it's allocated on the heap:
-
-  ```go
-  func newUser() *User {
-      u := User{Name: "Alice"} // escapes to heap
-      return &u
-  }
-  ```
-
-  This is determined by escape analysis, not by the programmer.
-
-  ## When to Use Pointers
-
-  - Modifying a receiver in a method
-  - Avoiding large struct copies
-  - Indicating optional fields (nil means absent)
-  - Sharing state (use channels for concurrency)
-
-  ## When NOT to Use
-
-  - For small values (int, bool) — pass by value is fine
-  - When a nil receiver is not meaningful
-  - In maps and slices — they already reference underlying data
-
-  Go's pointers are simple and safe — no pointer arithmetic, no dangling references, and a garbage collector handles cleanup.
+    Go's pointers are simple and safe — no pointer arithmetic, no dangling references, and a garbage collector handles cleanup.
 tags:
   - go
   - pointers

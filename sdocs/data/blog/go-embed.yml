@@ -2,98 +2,92 @@ type: tech-post
 title: Embedding Files in Go
 date: 2026-07-30
 difficulty: intermediate
-body: |
-  The `embed` package (introduced in Go 1.16) allows embedding files and directories into the Go binary at compile time.
+introduction: The `embed` package (introduced in Go 1.16) allows embedding files and directories into the Go binary at compile time.
+basic_usage: |
+    Use the `//go:embed` directive to embed files:
 
-  ## Basic Embedding
+    ```go
+    import (
+        _ "embed"
+        "fmt"
+    )
 
-  Use the `//go:embed` directive to embed files:
+    //go:embed hello.txt
+    var hello string
 
-  ```go
-  import (
-      _ "embed"
-      "fmt"
-  )
+    func main() {
+        fmt.Println(hello)
+    }
+    ```
 
-  //go:embed hello.txt
-  var hello string
+    ### Embedding into []byte
 
-  func main() {
-      fmt.Println(hello)
-  }
-  ```
+    ```go
+    //go:embed logo.png
+    var logo []byte
+    ```
 
-  ## Embedding into []byte
+    ### Embedding Multiple Files
 
-  ```go
-  //go:embed logo.png
-  var logo []byte
-  ```
+    ```go
+    import "embed"
 
-  ## Embedding Multiple Files
+    //go:embed templates/*
+    var templateFS embed.FS
 
-  ```go
-  import "embed"
+    func main() {
+        data, _ := templateFS.ReadFile("templates/index.html")
+        fmt.Println(string(data))
+    }
+    ```
 
-  //go:embed templates/*
-  var templateFS embed.FS
+    ### Embedding a Directory Tree
 
-  func main() {
-      data, _ := templateFS.ReadFile("templates/index.html")
-      fmt.Println(string(data))
-  }
-  ```
+    ```go
+    //go:embed static
+    var staticFS embed.FS
 
-  ## Embedding a Directory Tree
+    // Access files
+    entries, _ := staticFS.ReadDir("static")
+    for _, e := range entries {
+        fmt.Println(e.Name())
+    }
+    ```
 
-  ```go
-  //go:embed static
-  var staticFS embed.FS
+    ### Path Patterns
 
-  // Access files
-  entries, _ := staticFS.ReadDir("static")
-  for _, e := range entries {
-      fmt.Println(e.Name())
-  }
-  ```
+    ```go
+    //go:embed all:data       // recursively, including files starting with .
+    //go:embed *.txt          // all .txt files in current directory
+    //go:embed file1 file2    // specific files
+    ```
 
-  ## Path Patterns
+    Patterns cannot use `..` or absolute paths. They are relative to the source file's directory.
 
-  ```go
-  //go:embed all:data       // recursively, including files starting with .
-  //go:embed *.txt          // all .txt files in current directory
-  //go:embed file1 file2    // specific files
-  ```
+    ### Use Cases
 
-  Patterns cannot use `..` or absolute paths. They are relative to the source file's directory.
+    - **Web servers**: embed HTML templates, CSS, JS, images
+    - **CLI tools**: embed default configs, help text, migration files
+    - **Static analysis**: embed rulesets, pattern files
+    - **Testing**: embed test fixtures
+examples: |
+    ```go
+    //go:embed templates
+    var tmplFS embed.FS
 
-  ## Use Cases
+    func main() {
+        tmpl := template.Must(template.ParseFS(tmplFS, "templates/*.html"))
 
-  - **Web servers**: embed HTML templates, CSS, JS, images
-  - **CLI tools**: embed default configs, help text, migration files
-  - **Static analysis**: embed rulesets, pattern files
-  - **Testing**: embed test fixtures
+        http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+            tmpl.ExecuteTemplate(w, "index.html", nil)
+        })
 
-  ## Practical Example
-
-  ```go
-  //go:embed templates
-  var tmplFS embed.FS
-
-  func main() {
-      tmpl := template.Must(template.ParseFS(tmplFS, "templates/*.html"))
-
-      http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-          tmpl.ExecuteTemplate(w, "index.html", nil)
-      })
-
-      // Serve embedded static files
-      http.Handle("/static/", http.FileServer(http.FS(tmplFS)))
-      log.Fatal(http.ListenAndServe(":8080", nil))
-  }
-  ```
-
-  Embedding produces a single self-contained binary — no file dependencies at runtime, simpler deployment, and consistent behavior across environments.
+        // Serve embedded static files
+        http.Handle("/static/", http.FileServer(http.FS(tmplFS)))
+        log.Fatal(http.ListenAndServe(":8080", nil))
+    }
+    ```
+summary: Embedding produces a single self-contained binary — no file dependencies at runtime, simpler deployment, and consistent behavior across environments.
 tags:
   - go
   - embed

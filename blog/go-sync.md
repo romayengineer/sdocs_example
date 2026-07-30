@@ -22,9 +22,14 @@
 - Goroutines and Channels
 - Basic concurrency understanding
 
+
+## Overview
+
 While channels are Go's high-level concurrency primitive, the `sync` package provides lower-level synchronization tools.
 
-## Mutex
+## Basic Usage
+
+### Mutex
 
 Protects shared state from concurrent access:
 
@@ -49,7 +54,7 @@ func safeWrite(data map[string]int, key string, val int) {
 }
 ```
 
-## RWMutex
+### RWMutex
 
 Allows multiple concurrent readers but exclusive writers:
 
@@ -71,7 +76,7 @@ func write(key string, val int) {
 
 Use `RLock`/`RUnlock` for read-only operations to avoid contention.
 
-## WaitGroup
+### WaitGroup
 
 Waits for a collection of goroutines to finish:
 
@@ -91,7 +96,7 @@ wg.Wait() // blocks until all 10 finish
 
 `wg.Add` should be called outside the goroutine to avoid race conditions with `Wait`.
 
-## Once
+### Once
 
 Ensures a function is executed only once, regardless of how many goroutines call it:
 
@@ -109,7 +114,10 @@ func getConfig() *Config {
 
 Perfect for lazy initialization and singleton patterns.
 
-## Pool
+
+## Advanced Topics
+
+### Pool
 
 A scalable pool of reusable objects, useful for reducing allocations:
 
@@ -130,7 +138,7 @@ func handle() {
 
 Objects in the pool may be garbage collected. Pool is best for temporary, expensive-to-allocate objects.
 
-## Map (sync.Map)
+### Map (sync.Map)
 
 A concurrent-safe map optimized for:
 
@@ -152,7 +160,7 @@ m.Range(func(k, v any) bool {
 
 For most use cases, a regular `map` with `sync.Mutex` is simpler and faster. Use `sync.Map` only when profiling shows contention.
 
-## Cond
+### Cond
 
 A condition variable for goroutines waiting on an event:
 
@@ -177,8 +185,10 @@ cond.Broadcast() // or cond.Signal() for one
 mu.Unlock()
 ```
 
-`Cond` is rarely needed — channels usually cover the same patterns more clearly.
 
+## Summary
+
+`Cond` is rarely needed — channels usually cover the same patterns more clearly.
 
 ## Related Posts
 

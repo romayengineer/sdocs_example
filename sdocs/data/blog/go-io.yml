@@ -2,105 +2,99 @@ type: tech-post
 title: File I/O in Go
 date: 2026-07-30
 difficulty: intermediate
-body: |
-  Go's `io` and `os` packages provide a clean interface for reading and writing data, whether from files, network connections, or in-memory buffers.
+introduction: Go's `io` and `os` packages provide a clean interface for reading and writing data, whether from files, network connections, or in-memory buffers.
+basic_usage: |
+    The entire I/O system is built on two interfaces:
 
-  ## The io.Reader and io.Writer Interfaces
+    ```go
+    type Reader interface {
+        Read(p []byte) (n int, err error)
+    }
+    type Writer interface {
+        Write(p []byte) (n int, err error)
+    }
+    ```
 
-  The entire I/O system is built on two interfaces:
+    Any type that implements these interfaces can be used with the standard I/O utilities.
 
-  ```go
-  type Reader interface {
-      Read(p []byte) (n int, err error)
-  }
-  type Writer interface {
-      Write(p []byte) (n int, err error)
-  }
-  ```
+    ### Reading Files
 
-  Any type that implements these interfaces can be used with the standard I/O utilities.
+    ```go
+    // Entire file
+    data, err := os.ReadFile("data.txt")
+    fmt.Println(string(data))
 
-  ## Reading Files
+    // Line by line
+    file, err := os.Open("data.txt")
+    defer file.Close()
+    scanner := bufio.NewScanner(file)
+    for scanner.Scan() {
+        fmt.Println(scanner.Text())
+    }
+    ```
 
-  ```go
-  // Entire file
-  data, err := os.ReadFile("data.txt")
-  fmt.Println(string(data))
+    ### Writing Files
 
-  // Line by line
-  file, err := os.Open("data.txt")
-  defer file.Close()
-  scanner := bufio.NewScanner(file)
-  for scanner.Scan() {
-      fmt.Println(scanner.Text())
-  }
-  ```
+    ```go
+    // Write entire file
+    err := os.WriteFile("output.txt", []byte("Hello"), 0644)
 
-  ## Writing Files
+    // Buffered writing
+    file, err := os.Create("output.txt")
+    defer file.Close()
+    writer := bufio.NewWriter(file)
+    writer.WriteString("line 1\n")
+    writer.WriteString("line 2\n")
+    writer.Flush() // ensure data is written to disk
+    ```
+examples: |
+    ### Working with io.Reader/io.Writer
 
-  ```go
-  // Write entire file
-  err := os.WriteFile("output.txt", []byte("Hello"), 0644)
+    The power of the interface is composability:
 
-  // Buffered writing
-  file, err := os.Create("output.txt")
-  defer file.Close()
-  writer := bufio.NewWriter(file)
-  writer.WriteString("line 1\n")
-  writer.WriteString("line 2\n")
-  writer.Flush() // ensure data is written to disk
-  ```
+    ```go
+    // Copy from reader to writer
+    io.Copy(os.Stdout, strings.NewReader("Hello\n"))
 
-  ## Working with io.Reader/io.Writer
+    // TeeReader: read and write simultaneously
+    var buf bytes.Buffer
+    reader := io.TeeReader(strings.NewReader("data"), &buf)
+    io.ReadAll(reader)
+    fmt.Println(buf.String()) // "data"
+    ```
 
-  The power of the interface is composability:
+    ### File System Operations
 
-  ```go
-  // Copy from reader to writer
-  io.Copy(os.Stdout, strings.NewReader("Hello\n"))
+    ```go
+    os.Stat("file.txt")              // file info
+    os.Rename("old.txt", "new.txt")  // rename/move
+    os.Remove("file.txt")            // delete
+    os.MkdirAll("a/b/c", 0755)      // create directories
+    os.ReadDir(".")                  // list directory
+    ```
 
-  // TeeReader: read and write simultaneously
-  var buf bytes.Buffer
-  reader := io.TeeReader(strings.NewReader("data"), &buf)
-  io.ReadAll(reader)
-  fmt.Println(buf.String()) // "data"
-  ```
+    ### Temporary Files
 
-  ## File System Operations
+    ```go
+    tmpFile, _ := os.CreateTemp("", "prefix-*.txt")
+    defer os.Remove(tmpFile.Name())
+    tmpFile.WriteString("temporary data")
+    tmpFile.Close()
 
-  ```go
-  os.Stat("file.txt")              // file info
-  os.Rename("old.txt", "new.txt")  // rename/move
-  os.Remove("file.txt")            // delete
-  os.MkdirAll("a/b/c", 0755)      // create directories
-  os.ReadDir(".")                  // list directory
-  ```
+    tmpDir, _ := os.MkdirTemp("", "mydir-*")
+    defer os.RemoveAll(tmpDir)
+    ```
+advanced: |
+    The `io/fs` package (Go 1.16) abstracts file systems:
 
-  ## Temporary Files
+    ```go
+    type FS interface {
+        Open(name string) (File, error)
+    }
+    ```
 
-  ```go
-  tmpFile, _ := os.CreateTemp("", "prefix-*.txt")
-  defer os.Remove(tmpFile.Name())
-  tmpFile.WriteString("temporary data")
-  tmpFile.Close()
-
-  tmpDir, _ := os.MkdirTemp("", "mydir-*")
-  defer os.RemoveAll(tmpDir)
-  ```
-
-  ## The io/fs Interface (Go 1.16)
-
-  The `io/fs` package abstracts file systems:
-
-  ```go
-  type FS interface {
-      Open(name string) (File, error)
-  }
-  ```
-
-  This allows the same code to work with `os.DirFS`, `embed.FS`, `testing/fstest.MapFS`, or custom implementations.
-
-  Go's I/O interfaces make it easy to write composable, testable code that works across files, networks, and in-memory sources.
+    This allows the same code to work with `os.DirFS`, `embed.FS`, `testing/fstest.MapFS`, or custom implementations.
+summary: Go's I/O interfaces make it easy to write composable, testable code that works across files, networks, and in-memory sources.
 tags:
   - go
   - io

@@ -21,11 +21,14 @@
 
 - Basic Go syntax and project setup
 
+
+## Overview
+
 Go modules are the built-in dependency management system introduced in Go 1.11 and made default in Go 1.16.
 
-## Initializing a Module
+## Basic Usage
 
-```go
+```sh
 go mod init github.com/user/myproject
 ```
 
@@ -37,15 +40,15 @@ module github.com/user/myproject
 go 1.22
 ```
 
-## Adding Dependencies
+### Adding Dependencies
 
-```go
+```sh
 go get github.com/gorilla/mux@v1.8.1
 ```
 
 This updates `go.mod` and creates `go.sum` with checksums for reproducible builds.
 
-## go.mod Structure
+### go.mod Structure
 
 ```
 module github.com/user/myproject
@@ -66,7 +69,7 @@ replace github.com/original => ./local/fork
 - `exclude` — versions to skip
 - `replace` — substitute a module (useful for local development)
 
-## go mod tidy
+### go mod tidy
 
 ```sh
 go mod tidy
@@ -74,17 +77,7 @@ go mod tidy
 
 Cleans up dependencies — adds missing ones, removes unused ones.
 
-## Module Workspaces (Go 1.18+)
-
-Workspaces let you work on multiple modules simultaneously:
-
-```sh
-go work init ./module1 ./module2
-```
-
-Creates a `go.work` file that overrides individual `go.mod` files during development — no need for `replace` directives.
-
-## Packages
+### Packages
 
 A package is a directory of Go files with the same `package` declaration:
 
@@ -100,7 +93,7 @@ myproject/
         └── auth.go      # package auth (internal — only accessible within myproject)
 ```
 
-## Import Paths
+### Import Paths
 
 ```go
 import (
@@ -110,13 +103,26 @@ import (
 )
 ```
 
-## Naming Conventions
+### Naming Conventions
 
 - Package names are lowercase, single word preferred
 - No underscores or mixedCaps — use `httputil` not `http_util`
 - The package name should match the directory name
 
-## Internal Packages
+
+## Advanced Topics
+
+### Module Workspaces (Go 1.18+)
+
+Workspaces let you work on multiple modules simultaneously:
+
+```sh
+go work init ./module1 ./module2
+```
+
+Creates a `go.work` file that overrides individual `go.mod` files during development — no need for `replace` directives.
+
+### Internal Packages
 
 Packages under `internal/` are only importable by code rooted at the parent:
 
@@ -127,7 +133,7 @@ myproject/
 
 This enforces encapsulation boundaries.
 
-## Vendoring
+### Vendoring
 
 Save exact copies of dependencies:
 

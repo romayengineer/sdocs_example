@@ -21,9 +21,35 @@
 - Error Handling in Go
 - Defer in Go
 
+
+## Overview
+
 Go uses `panic` and `recover` for exceptional situations. Unlike exceptions in other languages, they are reserved for truly unrecoverable errors.
 
-## Panic
+## Best Practices
+
+- **Don't panic for regular errors** — use `error` return values
+- **Don't recover blindly** — recovering from nil pointer dereferences hides bugs
+- **Do recover at goroutine boundaries** — prevent one panic from crashing the whole program
+- **Do log the stack trace** — use `debug.Stack()` when recovering
+- **Do let the program crash** when in an unrecoverable state (e.g., corrupted data)
+
+```go
+// Good: recover at package boundary
+func (s *Server) handle(conn net.Conn) {
+    defer func() {
+        if r := recover(); r != nil {
+            s.log.Printf("recovered: %v", r)
+        }
+    }()
+    s.serve(conn)
+}
+```
+
+
+## Advanced Topics
+
+### Panic
 
 A panic stops normal execution and begins unwinding the stack:
 
@@ -42,7 +68,7 @@ Panics occur automatically on:
 - Type assertion failure
 - Writing to a nil map
 
-## Recover
+### Recover
 
 `recover` regains control of a panicking goroutine. It only works inside a deferred function:
 
@@ -58,7 +84,7 @@ func safeCall() {
 // safeCall returns normally
 ```
 
-## Deferred Recovery Pattern
+### Deferred Recovery Pattern
 
 ```go
 func handleRequest() {
@@ -73,7 +99,7 @@ func handleRequest() {
 }
 ```
 
-## Use Cases
+### Use Cases
 
 Recover is appropriate in:
 - HTTP middleware (prevent a single handler crash from taking down the server)
@@ -96,7 +122,7 @@ func serve() {
 }
 ```
 
-## Re-panicking
+### Re-panicking
 
 Sometimes you want to log and re-throw:
 
@@ -109,28 +135,10 @@ defer func() {
 }()
 ```
 
-## Best Practices
 
-- **Don't panic for regular errors** — use `error` return values
-- **Don't recover blindly** — recovering from nil pointer dereferences hides bugs
-- **Do recover at goroutine boundaries** — prevent one panic from crashing the whole program
-- **Do log the stack trace** — use `debug.Stack()` when recovering
-- **Do let the program crash** when in an unrecoverable state (e.g., corrupted data)
-
-```go
-// Good: recover at package boundary
-func (s *Server) handle(conn net.Conn) {
-    defer func() {
-        if r := recover(); r != nil {
-            s.log.Printf("recovered: %v", r)
-        }
-    }()
-    s.serve(conn)
-}
-```
+## Summary
 
 The standard library uses panic internally for things like `json.Marshal` with cyclic data, but these are always caught internally. Your application code should rarely call `panic` directly.
-
 
 ## Related Posts
 

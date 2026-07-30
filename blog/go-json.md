@@ -21,9 +21,14 @@
 - Structs and Methods in Go
 - Interfaces in Go
 
+
+## Overview
+
 Go provides robust JSON encoding and decoding through the `encoding/json` standard library package.
 
-## Marshaling (Encoding)
+## Examples
+
+### Marshaling (Encoding)
 
 Convert Go values to JSON using `json.Marshal`:
 
@@ -40,7 +45,7 @@ fmt.Println(string(data))
 // {"name":"Alice","email":"alice@example.com","age":30}
 ```
 
-## Unmarshaling (Decoding)
+### Unmarshaling (Decoding)
 
 Parse JSON into Go structs:
 
@@ -54,7 +59,7 @@ if err != nil {
 fmt.Println(u.Name) // Bob
 ```
 
-## Struct Tags
+### Struct Tags
 
 Tags control the JSON field name and behavior:
 
@@ -67,30 +72,7 @@ type Config struct {
 }
 ```
 
-## Streaming with Encoder and Decoder
-
-For large payloads or HTTP streams:
-
-```go
-// Encoding to a writer
-json.NewEncoder(w).Encode(users)
-
-// Decoding from a reader
-var u User
-json.NewDecoder(r.Body).Decode(&u)
-```
-
-## Unstructured JSON
-
-Use `map[string]any` and `[]any` for dynamic data:
-
-```go
-var data map[string]any
-json.Unmarshal([]byte(jsonStr), &data)
-name := data["name"].(string)
-```
-
-## Custom Marshaling
+### Custom Marshaling
 
 Implement `json.Marshaler` and `json.Unmarshaler` for custom types:
 
@@ -111,15 +93,44 @@ func (c *Color) UnmarshalJSON(data []byte) error {
 }
 ```
 
-## Performance Tips
+
+## Best Practices
 
 - Reuse buffers and encoders in hot paths
 - Use `json.RawMessage` for deferring decoding or partial parsing
 - Prefer streaming (`Encoder`/`Decoder`) over marshaling for large data
 - Use `strings.Builder` or `bytes.Buffer` for intermediate output
 
-`encoding/json` is the most commonly used package in Go after `fmt`. For performance-critical applications, alternatives like `json-iterator/go` or `segmentio/encoding/json` offer significant speedups.
 
+## Advanced Topics
+
+### Streaming with Encoder and Decoder
+
+For large payloads or HTTP streams:
+
+```go
+// Encoding to a writer
+json.NewEncoder(w).Encode(users)
+
+// Decoding from a reader
+var u User
+json.NewDecoder(r.Body).Decode(&u)
+```
+
+### Unstructured JSON
+
+Use `map[string]any` and `[]any` for dynamic data:
+
+```go
+var data map[string]any
+json.Unmarshal([]byte(jsonStr), &data)
+name := data["name"].(string)
+```
+
+
+## Summary
+
+`encoding/json` is the most commonly used package in Go after `fmt`. For performance-critical applications, alternatives like `json-iterator/go` or `segmentio/encoding/json` offer significant speedups.
 
 ## Related Posts
 

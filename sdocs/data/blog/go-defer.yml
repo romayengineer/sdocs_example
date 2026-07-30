@@ -2,144 +2,135 @@ type: tech-post
 title: Defer, Panic, and Recover
 date: 2026-07-30
 difficulty: intermediate
-body: |
-  `defer`, `panic`, and `recover` form Go's mechanism for cleanup and exceptional control flow.
+introduction: "`defer`, `panic`, and `recover` form Go's mechanism for cleanup and exceptional control flow."
+basic_usage: |
+    `defer` schedules a function call to run when the enclosing function returns:
 
-  ## Defer
+    ```go
+    func readFile(path string) ([]byte, error) {
+        f, err := os.Open(path)
+        if err != nil {
+            return nil, err
+        }
+        defer f.Close()
+        return io.ReadAll(f)
+    }
+    ```
 
-  `defer` schedules a function call to run when the enclosing function returns:
+    `f.Close()` runs when `readFile` returns, regardless of the return path.
 
-  ```go
-  func readFile(path string) ([]byte, error) {
-      f, err := os.Open(path)
-      if err != nil {
-          return nil, err
-      }
-      defer f.Close()
-      return io.ReadAll(f)
-  }
-  ```
+    ### Defer Semantics
 
-  `f.Close()` runs when `readFile` returns, regardless of the return path.
+    - Arguments are **evaluated immediately**, not at defer time:
 
-  ## Defer Semantics
+    ```go
+    func example() {
+        x := 1
+        defer fmt.Println(x) // prints "1", not "2"
+        x = 2
+    }
+    ```
 
-  - Arguments are **evaluated immediately**, not at defer time:
+    - Deferred calls execute in **LIFO order** (last in, first out):
 
-  ```go
-  func example() {
-      x := 1
-      defer fmt.Println(x) // prints "1", not "2"
-      x = 2
-  }
-  ```
+    ```go
+    defer fmt.Println("first")  // prints second
+    defer fmt.Println("second") // prints first
+    ```
 
-  - Deferred calls execute in **LIFO order** (last in, first out):
+    ### Common Use Cases
 
-  ```go
-  defer fmt.Println("first")  // prints second
-  defer fmt.Println("second") // prints first
-  ```
+    - Closing files, connections, or other resources
+    - Unlocking mutexes:
 
-  ## Common Use Cases
+    ```go
+    mu.Lock()
+    defer mu.Unlock()
+    ```
 
-  - Closing files, connections, or other resources
-  - Unlocking mutexes:
+    - Timing functions:
 
-  ```go
-  mu.Lock()
-  defer mu.Unlock()
-  ```
+    ```go
+    func timed() {
+        defer log.Printf("took %v", time.Since(time.Now()))
+        // ...
+    }
+    ```
 
-  - Timing functions:
+    Wait — arguments are evaluated immediately, so `time.Now()` is captured at the call site. To defer a time measurement:
 
-  ```go
-  func timed() {
-      defer log.Printf("took %v", time.Since(time.Now()))
-      // ...
-  }
-  ```
+    ```go
+    func timed() {
+        start := time.Now()
+        defer func() {
+            log.Printf("took %v", time.Since(start))
+        }()
+        // ...
+    }
+    ```
 
-  Wait — arguments are evaluated immediately, so `time.Now()` is captured at the call site. To defer a time measurement:
+    - Recovering from panics (see below)
+advanced: |
+    `panic` stops the normal flow and begins unwinding the stack:
 
-  ```go
-  func timed() {
-      start := time.Now()
-      defer func() {
-          log.Printf("took %v", time.Since(start))
-      }()
-      // ...
-  }
-  ```
+    ```go
+    func must(err error) {
+        if err != nil {
+            panic(err)
+        }
+    }
+    ```
 
-  - Recovering from panics (see below)
+    As the stack unwinds, deferred functions execute. If no `recover` catches the panic, the program crashes with a stack trace.
 
-  ## Panic
+    **When to use panic:**
+    - Truly unrecoverable states (nil dereference, impossible invariants)
+    - Developer mistakes during early development
+    - Initialization failures in `init` functions
 
-  `panic` stops the normal flow and begins unwinding the stack:
+    **When NOT to use panic:**
+    - Expected errors (use `error` return values instead)
+    - In library code intended for general consumption
 
-  ```go
-  func must(err error) {
-      if err != nil {
-          panic(err)
-      }
-  }
-  ```
+    `recover` regains control of a panicking goroutine:
 
-  As the stack unwinds, deferred functions execute. If no `recover` catches the panic, the program crashes with a stack trace.
+    ```go
+    func safeCall(fn func()) (err error) {
+        defer func() {
+            if r := recover(); r != nil {
+                err = fmt.Errorf("panic: %v", r)
+            }
+        }()
+        fn()
+        return nil
+    }
+    ```
 
-  **When to use panic:**
-  - Truly unrecoverable states (nil dereference, impossible invariants)
-  - Developer mistakes during early development
-  - Initialization failures in `init` functions
+    `recover` only works inside a deferred function. It returns the panic value, or `nil` if no panic is in progress.
 
-  **When NOT to use panic:**
-  - Expected errors (use `error` return values instead)
-  - In library code intended for general consumption
+    ### Named Return Values and Defer
 
-  ## Recover
+    Deferred functions can read and modify named return values:
 
-  `recover` regains control of a panicking goroutine:
+    ```go
+    func get() (result string, err error) {
+        defer func() {
+            if err != nil {
+                result = ""
+            }
+        }()
+        result = doSomething()
+        return
+    }
+    ```
 
-  ```go
-  func safeCall(fn func()) (err error) {
-      defer func() {
-          if r := recover(); r != nil {
-              err = fmt.Errorf("panic: %v", r)
-          }
-      }()
-      fn()
-      return nil
-  }
-  ```
-
-  `recover` only works inside a deferred function. It returns the panic value, or `nil` if no panic is in progress.
-
-  ## Named Return Values and Defer
-
-  Deferred functions can read and modify named return values:
-
-  ```go
-  func get() (result string, err error) {
-      defer func() {
-          if err != nil {
-              result = ""
-          }
-      }()
-      result = doSomething()
-      return
-  }
-  ```
-
-  This pattern is useful for error wrapping or cleanup.
-
-  ## Best Practices
-
-  - Always pair `Lock`/`Unlock`, `Open`/`Close` with `defer`
-  - Keep deferred functions small and simple
-  - Don't `defer` inside loops — resources accumulate until the function returns
-  - Use `recover` sparingly, mainly to prevent server crashes in HTTP handlers
-  - Never `panic` in library code unless you document it explicitly
+    This pattern is useful for error wrapping or cleanup.
+best_practices: |
+    - Always pair `Lock`/`Unlock`, `Open`/`Close` with `defer`
+    - Keep deferred functions small and simple
+    - Don't `defer` inside loops — resources accumulate until the function returns
+    - Use `recover` sparingly, mainly to prevent server crashes in HTTP handlers
+    - Never `panic` in library code unless you document it explicitly
 tags:
   - go
   - defer

@@ -21,9 +21,12 @@
 - Interfaces in Go
 - Structs and Methods in Go
 
+
+## Overview
+
 Reflection is the ability for a program to inspect and modify its own structure at runtime. Go's `reflect` package provides this capability.
 
-## Type and Value
+## Basic Usage
 
 Every reflection operation begins with `reflect.TypeOf` and `reflect.ValueOf`:
 
@@ -38,7 +41,7 @@ fmt.Println(v.Float())   // 3.14
 fmt.Println(t.Kind())    // float64
 ```
 
-## Inspecting Structs
+### Inspecting Structs
 
 Reflection is most commonly used to work with struct fields and tags:
 
@@ -60,7 +63,7 @@ for i := 0; i < t.NumField(); i++ {
 }
 ```
 
-## Modifying Values
+### Modifying Values
 
 To modify a value via reflection, you need a pointer:
 
@@ -71,7 +74,27 @@ v.SetFloat(2.71)
 fmt.Println(x) // 2.71
 ```
 
-## Calling Methods by Name
+
+## Best Practices
+
+- Serialization frameworks (JSON, YAML, XML)
+- Validation libraries
+- Testing tools that inspect or compare values
+- Building generic utilities when generics aren't sufficient
+
+
+## Common Pitfalls
+
+- In hot paths where performance matters
+- When generics or interfaces solve the problem
+- When you can write concrete code — reflection sacrifices compile-time type safety
+
+"Clear is better than clever." Reflection is powerful but should be used sparingly and with care.
+
+
+## Advanced Topics
+
+### Calling Methods by Name
 
 ```go
 type Calculator struct{}
@@ -88,7 +111,7 @@ result := method.Call([]reflect.Value{
 fmt.Println(result[0].Int()) // 7
 ```
 
-## Creating Values Dynamically
+### Creating Values Dynamically
 
 ```go
 t := reflect.TypeOf((*int)(nil)).Elem()
@@ -97,24 +120,9 @@ v.Elem().SetInt(42)
 fmt.Println(v.Elem().Int()) // 42
 ```
 
-## Performance Considerations
+### Performance Considerations
 
 Reflection is significantly slower than direct code — typically 10-100x slower for method calls and field access. Libraries like `encoding/json`, `fmt`, and ORMs use reflection, but it's often cached after initial setup.
-
-## When to Use
-
-- Serialization frameworks (JSON, YAML, XML)
-- Validation libraries
-- Testing tools that inspect or compare values
-- Building generic utilities when generics aren't sufficient
-
-## When NOT to Use
-
-- In hot paths where performance matters
-- When generics or interfaces solve the problem
-- When you can write concrete code — reflection sacrifices compile-time type safety
-
-"Clear is better than clever." Reflection is powerful but should be used sparingly and with care.
 
 
 ## Related Posts
