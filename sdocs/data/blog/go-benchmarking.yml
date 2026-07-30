@@ -2,7 +2,8 @@ type: tech-post
 title: Benchmarking and Profiling in Go
 date: 2026-07-30
 difficulty: intermediate
-introduction: Go includes built-in support for benchmarking, profiling, and testing through the `testing` package and the `go test` command.
+introduction: |
+    Go includes built-in support for benchmarking, profiling, and testing through the `testing` package and the `go test` command.
 basic_usage: |
     ### Writing Benchmarks
 
@@ -118,7 +119,8 @@ best_practices: |
         Result = r // prevent dead code elimination
     }
     ```
-summary: Go's built-in benchmarking and profiling tools make performance analysis a first-class part of the development workflow — no external tools required.
+summary: |
+    Go's built-in benchmarking and profiling tools make performance analysis a first-class part of the development workflow — no external tools required.
 tags:
   - go
   - benchmarks

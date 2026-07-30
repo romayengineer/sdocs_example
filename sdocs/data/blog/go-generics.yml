@@ -2,7 +2,8 @@ type: tech-post
 title: Generics in Go
 date: 2026-07-30
 difficulty: advanced
-introduction: Generics were added in Go 1.18, introducing type parameters for functions and types.
+introduction: |
+    Generics were added in Go 1.18, introducing type parameters for functions and types.
 basic_usage: |
     ```go
     func Reverse[T any](s []T) []T {
@@ -84,7 +85,8 @@ pitfalls: |
     - When `any` and type assertions suffice
     - For simple functions where readability suffers
     - In API surfaces meant for wide consumption (adds complexity)
-summary: Generics make Go more expressive without sacrificing its simplicity or performance.
+summary: |
+    Generics make Go more expressive without sacrificing its simplicity or performance.
 tags:
   - go
   - generics

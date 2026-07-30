@@ -1,6 +1,7 @@
 # Panic and Recover in Go
 
-📌 **Status: published**
+
+📌 **Status: published`
 
 | | |
 |---|---|
@@ -15,12 +16,10 @@
 | **Version** | Go 1.21 |
 | **License** | CC-BY-4.0 |
 
-
 ## Prerequisites
 
 - Error Handling in Go
 - Defer in Go
-
 
 ## Overview
 
@@ -45,7 +44,6 @@ func (s *Server) handle(conn net.Conn) {
     s.serve(conn)
 }
 ```
-
 
 ## Advanced Topics
 
@@ -135,7 +133,6 @@ defer func() {
 }()
 ```
 
-
 ## Summary
 
 The standard library uses panic internally for things like `json.Marshal` with cyclic data, but these are always caught internally. Your application code should rarely call `panic` directly.
@@ -144,7 +141,6 @@ The standard library uses panic internally for things like `json.Marshal` with c
 
 - Error Handling in Go
 - Defer in Go
-
 
 **Tags:** `go` `panic` `recover` `error-handling` 
 

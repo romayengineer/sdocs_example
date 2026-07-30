@@ -1,6 +1,7 @@
 # Error Handling in Go
 
-📌 **Status: published**
+
+📌 **Status: published`
 
 | | |
 |---|---|
@@ -15,11 +16,9 @@
 | **Version** | Go 1.20 |
 | **License** | CC-BY-4.0 |
 
-
 ## Prerequisites
 
 - Interfaces in Go
-
 
 ## Overview
 
@@ -90,7 +89,6 @@ err2 := errors.New("second")
 joined := errors.Join(err1, err2)
 ```
 
-
 ## Best Practices
 
 - Always check errors — unhandled errors are silent bugs
@@ -101,12 +99,10 @@ joined := errors.Join(err1, err2)
 
 Go's error handling forces you to think about failure modes explicitly, leading to more robust software.
 
-
 ## Related Posts
 
 - Generics in Go
 - Interfaces in Go
-
 
 **Tags:** `go` `errors` `error-handling` `best-practices` 
 

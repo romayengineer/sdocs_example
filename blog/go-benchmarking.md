@@ -1,6 +1,7 @@
 # Benchmarking and Profiling in Go
 
-📌 **Status: published**
+
+📌 **Status: published`
 
 | | |
 |---|---|
@@ -15,12 +16,10 @@
 | **Version** | Go 1.21 |
 | **License** | CC-BY-4.0 |
 
-
 ## Prerequisites
 
 - Testing in Go
 - Slices and Arrays in Go
-
 
 ## Overview
 
@@ -105,7 +104,6 @@ func BenchmarkConcat(b *testing.B) {
 }
 ```
 
-
 ## Best Practices
 
 - Disable CPU scaling: `sudo cpupower frequency-set --governor performance`
@@ -125,7 +123,6 @@ func BenchmarkSum(b *testing.B) {
     Result = r // prevent dead code elimination
 }
 ```
-
 
 ## Advanced Topics
 
@@ -149,7 +146,6 @@ list Sum # show line-by-line breakdown
 go test -bench=. -benchmem -gcflags="-m -m" 2>&1 | grep "escapes"
 ```
 
-
 ## Summary
 
 Go's built-in benchmarking and profiling tools make performance analysis a first-class part of the development workflow — no external tools required.
@@ -158,7 +154,6 @@ Go's built-in benchmarking and profiling tools make performance analysis a first
 
 - Testing in Go
 - Race Detector in Go
-
 
 **Tags:** `go` `benchmarks` `profiling` `performance` 
 

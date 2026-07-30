@@ -2,7 +2,8 @@ type: tech-post
 title: Slices and Arrays in Go
 date: 2026-07-30
 difficulty: beginner
-introduction: Arrays and slices are fundamental data structures in Go. Arrays have a fixed size, while slices are dynamically-sized views into arrays.
+introduction: |
+    Arrays and slices are fundamental data structures in Go. Arrays have a fixed size, while slices are dynamically-sized views into arrays.
 basic_usage: |
     ## Arrays
 

@@ -1,6 +1,7 @@
 # The sync Package
 
-📌 **Status: published**
+
+📌 **Status: published`
 
 | | |
 |---|---|
@@ -16,12 +17,10 @@
 | **License** | CC-BY-4.0 |
 | **Series** | Go Concurrency (Part 2) |
 
-
 ## Prerequisites
 
 - Goroutines and Channels
 - Basic concurrency understanding
-
 
 ## Overview
 
@@ -114,7 +113,6 @@ func getConfig() *Config {
 
 Perfect for lazy initialization and singleton patterns.
 
-
 ## Advanced Topics
 
 ### Pool
@@ -185,7 +183,6 @@ cond.Broadcast() // or cond.Signal() for one
 mu.Unlock()
 ```
 
-
 ## Summary
 
 `Cond` is rarely needed — channels usually cover the same patterns more clearly.
@@ -194,7 +191,6 @@ mu.Unlock()
 
 - Goroutines and Channels
 - Testing in Go
-
 
 **Tags:** `go` `concurrency` `sync` `synchronization` 
 

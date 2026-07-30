@@ -1,6 +1,7 @@
 # Fuzz Testing in Go
 
-📌 **Status: published**
+
+📌 **Status: published`
 
 | | |
 |---|---|
@@ -15,12 +16,10 @@
 | **Version** | Go 1.18+ |
 | **License** | CC-BY-4.0 |
 
-
 ## Prerequisites
 
 - Testing in Go
 - Error Handling in Go
-
 
 ## Overview
 
@@ -103,7 +102,6 @@ Fuzzing supports: `string`, `[]byte`, `int`, `int8/16/32/64`, `uint`, `uint8/16/
 
 For complex types, encode them as `[]byte` and decode in the fuzz function.
 
-
 ## Best Practices
 
 - **Test invariants** — properties that must always hold (e.g., decode(encode(x)) == x)
@@ -116,13 +114,11 @@ For complex types, encode them as `[]byte` and decode in the fuzz function.
 go test -fuzz=FuzzReverse -fuzztime=5m -race
 ```
 
-
 ## Common Pitfalls
 
 - Fuzzing cannot prove correctness — only find bugs
 - Coverage-guided, but may miss deeply nested conditions
 - No structured fuzzing for complex types without manual encoding
-
 
 ## Summary
 
@@ -132,7 +128,6 @@ Fuzz testing has found hundreds of bugs in the Go standard library and ecosystem
 
 - Testing in Go
 - Error Handling in Go
-
 
 **Tags:** `go` `fuzz` `testing` `security` 
 

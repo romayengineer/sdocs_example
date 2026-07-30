@@ -1,6 +1,7 @@
 # Working with Time in Go
 
-📌 **Status: published**
+
+📌 **Status: published`
 
 | | |
 |---|---|
@@ -15,11 +16,9 @@
 | **Version** | Go 1.21 |
 | **License** | CC-BY-4.0 |
 
-
 ## Prerequisites
 
 - Basic Go syntax
-
 
 ## Overview
 
@@ -91,13 +90,11 @@ fmt.Println(a.After(b))  // false
 fmt.Println(a.Equal(b))  // false
 ```
 
-
 ## Common Pitfalls
 
 - **MST vs UTC**: Always be explicit about time zones — use `time.UTC` or `time.LoadLocation`
 - **Monotonic clock**: `time.Now()` includes monotonic readings for duration measurement; strip with `t.Round(0)` for serialization
 - **Parse format vs reference time**: Forgot the reference time? `Format` and `Parse` use `2006-01-02`, not `YYYY-MM-DD`
-
 
 ## Advanced Topics
 
@@ -140,7 +137,6 @@ defer cancel()
 // Use ctx for HTTP calls, DB queries, etc.
 ```
 
-
 ## Summary
 
 The `time` package is one of Go's best-designed standard libraries — expressive, correct, and hard to misuse when you know the reference time convention.
@@ -149,7 +145,6 @@ The `time` package is one of Go's best-designed standard libraries — expressiv
 
 - Context in Go
 - Building HTTP Servers and Clients in Go
-
 
 **Tags:** `go` `time` `dates` `scheduling` 
 

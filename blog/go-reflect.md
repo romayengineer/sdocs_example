@@ -1,6 +1,7 @@
 # Reflection in Go
 
-📌 **Status: published**
+
+📌 **Status: published`
 
 | | |
 |---|---|
@@ -15,12 +16,10 @@
 | **Version** | Go 1.21 |
 | **License** | CC-BY-4.0 |
 
-
 ## Prerequisites
 
 - Interfaces in Go
 - Structs and Methods in Go
-
 
 ## Overview
 
@@ -74,14 +73,12 @@ v.SetFloat(2.71)
 fmt.Println(x) // 2.71
 ```
 
-
 ## Best Practices
 
 - Serialization frameworks (JSON, YAML, XML)
 - Validation libraries
 - Testing tools that inspect or compare values
 - Building generic utilities when generics aren't sufficient
-
 
 ## Common Pitfalls
 
@@ -90,7 +87,6 @@ fmt.Println(x) // 2.71
 - When you can write concrete code — reflection sacrifices compile-time type safety
 
 "Clear is better than clever." Reflection is powerful but should be used sparingly and with care.
-
 
 ## Advanced Topics
 
@@ -124,12 +120,10 @@ fmt.Println(v.Elem().Int()) // 42
 
 Reflection is significantly slower than direct code — typically 10-100x slower for method calls and field access. Libraries like `encoding/json`, `fmt`, and ORMs use reflection, but it's often cached after initial setup.
 
-
 ## Related Posts
 
 - JSON in Go
 - Interfaces in Go
-
 
 **Tags:** `go` `reflect` `runtime` `metaprogramming` 
 

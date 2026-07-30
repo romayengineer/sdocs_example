@@ -2,7 +2,8 @@ type: tech-post
 title: Reflection in Go
 date: 2026-07-30
 difficulty: advanced
-introduction: Reflection is the ability for a program to inspect and modify its own structure at runtime. Go's `reflect` package provides this capability.
+introduction: |
+    Reflection is the ability for a program to inspect and modify its own structure at runtime. Go's `reflect` package provides this capability.
 basic_usage: |
     Every reflection operation begins with `reflect.TypeOf` and `reflect.ValueOf`:
 

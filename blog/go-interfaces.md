@@ -1,6 +1,7 @@
 # Interfaces in Go
 
-📌 **Status: published**
+
+📌 **Status: published`
 
 | | |
 |---|---|
@@ -16,11 +17,9 @@
 | **License** | CC-BY-4.0 |
 | **Series** | Go Fundamentals (Part 1) |
 
-
 ## Prerequisites
 
 - Basic Go types and functions
-
 
 ## Overview
 
@@ -58,7 +57,6 @@ var x any = 42
 x = "hello"
 x = Book{"The Go Programming Language", "Donovan & Kernighan"}
 ```
-
 
 ## Examples
 
@@ -101,7 +99,6 @@ type Writer interface {
 
 Any type with a `Read([]byte) (int, error)` method is an `io.Reader` — `os.File`, `strings.Reader`, `bytes.Buffer`, and more.
 
-
 ## Advanced Topics
 
 Interfaces can embed other interfaces:
@@ -113,7 +110,6 @@ type ReadWriter interface {
 }
 ```
 
-
 ## Summary
 
 Go's interface system encourages small, composable abstractions. The rule of thumb: *accept interfaces, return concrete types.*
@@ -122,7 +118,6 @@ Go's interface system encourages small, composable abstractions. The rule of thu
 
 - Structs and Methods in Go
 - Goroutines and Channels
-
 
 **Tags:** `go` `interfaces` `types` `design` 
 

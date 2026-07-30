@@ -1,6 +1,7 @@
 # Generics in Go
 
-📌 **Status: published**
+
+📌 **Status: published`
 
 | | |
 |---|---|
@@ -15,12 +16,10 @@
 | **Version** | Go 1.18 |
 | **License** | CC-BY-4.0 |
 
-
 ## Prerequisites
 
 - Interfaces in Go
 - Structs and Methods in Go
-
 
 ## Overview
 
@@ -43,20 +42,17 @@ ints := Reverse([]int{1, 2, 3})
 strs := Reverse([]string{"a", "b", "c"})
 ```
 
-
 ## Best Practices
 
 - Functions that operate on slices, maps, or channels of any type
 - Data structures (stacks, trees, graphs) that hold any type
 - Eliminating duplicated code for different types
 
-
 ## Common Pitfalls
 
 - When `any` and type assertions suffice
 - For simple functions where readability suffers
 - In API surfaces meant for wide consumption (adds complexity)
-
 
 ## Advanced Topics
 
@@ -118,7 +114,6 @@ func (s *Stack[T]) Pop() (T, bool) {
 }
 ```
 
-
 ## Summary
 
 Generics make Go more expressive without sacrificing its simplicity or performance.
@@ -127,7 +122,6 @@ Generics make Go more expressive without sacrificing its simplicity or performan
 
 - Error Handling in Go
 - Structs and Methods in Go
-
 
 **Tags:** `go` `generics` `type-parameters` `constraints` 
 

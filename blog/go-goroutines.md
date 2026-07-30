@@ -1,6 +1,7 @@
 # Goroutines and Channels
 
-📌 **Status: published**
+
+📌 **Status: published`
 
 | | |
 |---|---|
@@ -16,7 +17,6 @@
 | **License** | CC-BY-4.0 |
 | **Series** | Go Concurrency (Part 1) |
 
-
 ## Overview
 
 Goroutines are lightweight threads managed by the Go runtime. They are the foundation of concurrency in Go.
@@ -30,7 +30,6 @@ go myFunction()
 ```
 
 A goroutine runs concurrently with the caller. The program does not wait for it unless synchronized.
-
 
 ## Examples
 
@@ -57,7 +56,6 @@ ch <- "a"
 ch <- "b"
 fmt.Println(<-ch) // "a"
 ```
-
 
 ## Best Practices
 
@@ -95,7 +93,6 @@ for n := range sq(gen(2, 3, 4)) {
 }
 ```
 
-
 ## Advanced Topics
 
 `select` waits on multiple channel operations:
@@ -109,7 +106,6 @@ case <-time.After(1 * time.Second):
 }
 ```
 
-
 ## Summary
 
 Goroutines are cheap (a few KB each), making it practical to start thousands of them. With channels, Go offers a safe, composable concurrency model built on the mantra: *"Do not communicate by sharing memory; instead, share memory by communicating."*
@@ -118,7 +114,6 @@ Goroutines are cheap (a few KB each), making it practical to start thousands of 
 
 - Interfaces in Go
 - Error Handling in Go
-
 
 **Tags:** `go` `concurrency` `goroutines` `channels` 
 

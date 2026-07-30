@@ -2,7 +2,8 @@ type: tech-post
 title: Building HTTP Servers and Clients in Go
 date: 2026-07-30
 difficulty: intermediate
-introduction: Go's standard library `net/http` provides a powerful HTTP client and server with no external dependencies.
+introduction: |
+    Go's standard library `net/http` provides a powerful HTTP client and server with no external dependencies.
 basic_usage: |
     ### Basic Handler
 
@@ -110,7 +111,8 @@ advanced: |
     defer cancel()
     srv.Shutdown(ctx)
     ```
-summary: Go's `net/http` is production-ready and used by major projects. For complex routing, packages like `gorilla/mux` or `chi` add path parameters and middleware chaining on top of the standard `http.Handler`.
+summary: |
+    Go's `net/http` is production-ready and used by major projects. For complex routing, packages like `gorilla/mux` or `chi` add path parameters and middleware chaining on top of the standard `http.Handler`.
 tags:
   - go
   - http

@@ -2,7 +2,8 @@ type: tech-post
 title: JSON in Go
 date: 2026-07-30
 difficulty: intermediate
-introduction: Go provides robust JSON encoding and decoding through the `encoding/json` standard library package.
+introduction: |
+    Go provides robust JSON encoding and decoding through the `encoding/json` standard library package.
 examples: |
     ### Marshaling (Encoding)
 
@@ -96,7 +97,8 @@ best_practices: |
     - Use `json.RawMessage` for deferring decoding or partial parsing
     - Prefer streaming (`Encoder`/`Decoder`) over marshaling for large data
     - Use `strings.Builder` or `bytes.Buffer` for intermediate output
-summary: "`encoding/json` is the most commonly used package in Go after `fmt`. For performance-critical applications, alternatives like `json-iterator/go` or `segmentio/encoding/json` offer significant speedups."
+summary: |
+    "`encoding/json` is the most commonly used package in Go after `fmt`. For performance-critical applications, alternatives like `json-iterator/go` or `segmentio/encoding/json` offer significant speedups."
 tags:
   - go
   - json

@@ -1,6 +1,7 @@
 # Maps in Go
 
-📌 **Status: published**
+
+📌 **Status: published`
 
 | | |
 |---|---|
@@ -15,12 +16,10 @@
 | **Version** | Go 1.21 |
 | **License** | CC-BY-4.0 |
 
-
 ## Prerequisites
 
 - Basic Go syntax
 - Slices in Go
-
 
 ## Overview
 
@@ -41,7 +40,6 @@ m := map[string]int{
     "bob":   25,
 }
 ```
-
 
 ## Examples
 
@@ -85,7 +83,6 @@ scores := map[string]map[string]int{
 }
 ```
 
-
 ## Common Pitfalls
 
 - Writing to a nil map causes a panic — always initialize with `make` or a literal
@@ -93,11 +90,9 @@ scores := map[string]map[string]int{
 - Maps are reference types — assigning or passing a map shares the underlying data
 - Not safe for concurrent use without synchronization
 
-
 ## Advanced Topics
 
 Maps are implemented as hash tables. Key types must be comparable (using `==`). Slices, maps, and functions cannot be used as keys.
-
 
 ## Summary
 
@@ -107,7 +102,6 @@ Maps are efficient, flexible, and widely used across Go programs for lookups, ca
 
 - Slices and Arrays in Go
 - Structs and Methods in Go
-
 
 **Tags:** `go` `maps` `data-structures` 
 

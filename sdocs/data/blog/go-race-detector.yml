@@ -141,7 +141,8 @@ pitfalls: |
     - Incorrect synchronization (e.g., wrong mutex usage that happens to work)
     - Races in cgo or assembly code
     - Races on non-standard memory (mmap, shared memory)
-summary: The race detector is one of Go's killer features. Running it regularly catches real bugs that are notoriously difficult to find through testing alone.
+summary: |
+    The race detector is one of Go's killer features. Running it regularly catches real bugs that are notoriously difficult to find through testing alone.
 tags:
   - go
   - race-detector

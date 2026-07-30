@@ -2,7 +2,8 @@ type: tech-post
 title: Working with Time in Go
 date: 2026-07-30
 difficulty: beginner
-introduction: Go's `time` package provides a comprehensive API for working with dates, times, durations, and scheduling.
+introduction: |
+    Go's `time` package provides a comprehensive API for working with dates, times, durations, and scheduling.
 basic_usage: |
     ```go
     now := time.Now()
@@ -110,7 +111,8 @@ pitfalls: |
     - **MST vs UTC**: Always be explicit about time zones — use `time.UTC` or `time.LoadLocation`
     - **Monotonic clock**: `time.Now()` includes monotonic readings for duration measurement; strip with `t.Round(0)` for serialization
     - **Parse format vs reference time**: Forgot the reference time? `Format` and `Parse` use `2006-01-02`, not `YYYY-MM-DD`
-summary: The `time` package is one of Go's best-designed standard libraries — expressive, correct, and hard to misuse when you know the reference time convention.
+summary: |
+    The `time` package is one of Go's best-designed standard libraries — expressive, correct, and hard to misuse when you know the reference time convention.
 tags:
   - go
   - time

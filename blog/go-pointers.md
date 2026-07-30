@@ -1,6 +1,7 @@
 # Pointers in Go
 
-📌 **Status: published**
+
+📌 **Status: published`
 
 | | |
 |---|---|
@@ -15,12 +16,10 @@
 | **Version** | Go 1.21 |
 | **License** | CC-BY-4.0 |
 
-
 ## Prerequisites
 
 - Structs and Methods in Go
 - Basic Go syntax
-
 
 ## Overview
 
@@ -72,14 +71,12 @@ u.Name = "Bob" // implicit dereference
 
 The dot notation works automatically with pointers to structs (no `->` needed).
 
-
 ## Best Practices
 
 - Modifying a receiver in a method
 - Avoiding large struct copies
 - Indicating optional fields (nil means absent)
 - Sharing state (use channels for concurrency)
-
 
 ## Common Pitfalls
 
@@ -88,7 +85,6 @@ The dot notation works automatically with pointers to structs (no `->` needed).
 - In maps and slices — they already reference underlying data
 
 Go's pointers are simple and safe — no pointer arithmetic, no dangling references, and a garbage collector handles cleanup.
-
 
 ## Advanced Topics
 
@@ -103,12 +99,10 @@ func newUser() *User {
 
 This is determined by escape analysis, not by the programmer.
 
-
 ## Related Posts
 
 - Structs and Methods in Go
 - Slices and Arrays in Go
-
 
 **Tags:** `go` `pointers` `memory` 
 

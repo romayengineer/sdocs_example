@@ -2,7 +2,8 @@ type: tech-post
 title: WebAssembly with Go
 date: 2026-07-30
 difficulty: advanced
-introduction: Go can compile to WebAssembly (Wasm), allowing Go programs to run in the browser at near-native speed.
+introduction: |
+    Go can compile to WebAssembly (Wasm), allowing Go programs to run in the browser at near-native speed.
 basic_usage: |
     ### Hello World in Wasm
 
@@ -106,7 +107,8 @@ best_practices: |
     - CPU-intensive computation (image processing, parsing, game logic)
     - Sharing code between backend (Go) and frontend (Wasm)
     - When you prefer Go's type safety and tooling over JavaScript
-summary: Wasm support in Go is mature but niche. For most web development, JavaScript/TypeScript remains the practical choice. Go+Wasm excels for specific use cases where code reuse or performance matters.
+summary: |
+    Wasm support in Go is mature but niche. For most web development, JavaScript/TypeScript remains the practical choice. Go+Wasm excels for specific use cases where code reuse or performance matters.
 tags:
   - go
   - wasm

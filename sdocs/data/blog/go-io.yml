@@ -2,7 +2,8 @@ type: tech-post
 title: File I/O in Go
 date: 2026-07-30
 difficulty: intermediate
-introduction: Go's `io` and `os` packages provide a clean interface for reading and writing data, whether from files, network connections, or in-memory buffers.
+introduction: |
+    Go's `io` and `os` packages provide a clean interface for reading and writing data, whether from files, network connections, or in-memory buffers.
 basic_usage: |
     The entire I/O system is built on two interfaces:
 
@@ -94,7 +95,8 @@ advanced: |
     ```
 
     This allows the same code to work with `os.DirFS`, `embed.FS`, `testing/fstest.MapFS`, or custom implementations.
-summary: Go's I/O interfaces make it easy to write composable, testable code that works across files, networks, and in-memory sources.
+summary: |
+    Go's I/O interfaces make it easy to write composable, testable code that works across files, networks, and in-memory sources.
 tags:
   - go
   - io

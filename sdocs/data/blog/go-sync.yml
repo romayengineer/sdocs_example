@@ -2,7 +2,8 @@ type: tech-post
 title: The sync Package
 date: 2026-07-30
 difficulty: intermediate
-introduction: While channels are Go's high-level concurrency primitive, the `sync` package provides lower-level synchronization tools.
+introduction: |
+    While channels are Go's high-level concurrency primitive, the `sync` package provides lower-level synchronization tools.
 basic_usage: |
     ### Mutex
 
@@ -156,7 +157,8 @@ advanced: |
     cond.Broadcast() // or cond.Signal() for one
     mu.Unlock()
     ```
-summary: "`Cond` is rarely needed — channels usually cover the same patterns more clearly."
+summary: |
+    `Cond` is rarely needed — channels usually cover the same patterns more clearly.
 tags:
   - go
   - concurrency

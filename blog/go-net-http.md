@@ -1,6 +1,7 @@
 # Building HTTP Servers and Clients in Go
 
-📌 **Status: published**
+
+📌 **Status: published`
 
 | | |
 |---|---|
@@ -15,12 +16,10 @@
 | **Version** | Go 1.22 |
 | **License** | CC-BY-4.0 |
 
-
 ## Prerequisites
 
 - Interfaces in Go
 - Error Handling in Go
-
 
 ## Overview
 
@@ -82,7 +81,6 @@ func userHandler(w http.ResponseWriter, r *http.Request) {
 }
 ```
 
-
 ## Examples
 
 ```go
@@ -96,7 +94,6 @@ func loggingMiddleware(next http.Handler) http.Handler {
 // Use it
 handler = loggingMiddleware(handler)
 ```
-
 
 ## Advanced Topics
 
@@ -141,7 +138,6 @@ defer cancel()
 srv.Shutdown(ctx)
 ```
 
-
 ## Summary
 
 Go's `net/http` is production-ready and used by major projects. For complex routing, packages like `gorilla/mux` or `chi` add path parameters and middleware chaining on top of the standard `http.Handler`.
@@ -150,7 +146,6 @@ Go's `net/http` is production-ready and used by major projects. For complex rout
 
 - JSON in Go
 - Context in Go
-
 
 **Tags:** `go` `http` `server` `client` `web` 
 

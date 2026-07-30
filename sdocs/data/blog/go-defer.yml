@@ -2,7 +2,8 @@ type: tech-post
 title: Defer, Panic, and Recover
 date: 2026-07-30
 difficulty: intermediate
-introduction: "`defer`, `panic`, and `recover` form Go's mechanism for cleanup and exceptional control flow."
+introduction: |
+    `defer`, `panic`, and `recover` form Go's mechanism for cleanup and exceptional control flow.
 basic_usage: |
     `defer` schedules a function call to run when the enclosing function returns:
 

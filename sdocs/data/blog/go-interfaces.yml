@@ -2,7 +2,8 @@ type: tech-post
 title: Interfaces in Go
 date: 2026-07-30
 difficulty: intermediate
-introduction: Interfaces in Go define behavior through method sets. Unlike many languages, interface satisfaction is implicit — no `implements` keyword needed.
+introduction: |
+    Interfaces in Go define behavior through method sets. Unlike many languages, interface satisfaction is implicit — no `implements` keyword needed.
 basic_usage: |
     ```go
     type Stringer interface {
@@ -82,7 +83,8 @@ advanced: |
         Writer
     }
     ```
-summary: "Go's interface system encourages small, composable abstractions. The rule of thumb: *accept interfaces, return concrete types.*"
+summary: |
+    Go's interface system encourages small, composable abstractions. The rule of thumb: *accept interfaces, return concrete types.*
 tags:
   - go
   - interfaces

@@ -2,7 +2,8 @@ type: tech-post
 title: Go Modules and Packages
 date: 2026-07-30
 difficulty: beginner
-introduction: Go modules are the built-in dependency management system introduced in Go 1.11 and made default in Go 1.16.
+introduction: |
+    Go modules are the built-in dependency management system introduced in Go 1.11 and made default in Go 1.16.
 basic_usage: |
     ```sh
     go mod init github.com/user/myproject

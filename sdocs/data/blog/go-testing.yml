@@ -2,7 +2,8 @@ type: tech-post
 title: Testing in Go
 date: 2026-07-30
 difficulty: intermediate
-introduction: Go has a built-in testing framework in the standard library — no external dependencies needed.
+introduction: |
+    Go has a built-in testing framework in the standard library — no external dependencies needed.
 basic_usage: |
     ```go
     // math.go

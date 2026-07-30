@@ -2,7 +2,8 @@ type: tech-post
 title: Maps in Go
 date: 2026-07-30
 difficulty: beginner
-introduction: Maps are Go's built-in associative data type, mapping keys to values.
+introduction: |
+    Maps are Go's built-in associative data type, mapping keys to values.
 basic_usage: |
     ```go
     // Nil map (cannot write to it)
@@ -64,7 +65,8 @@ pitfalls: |
     - Not safe for concurrent use without synchronization
 advanced: |
     Maps are implemented as hash tables. Key types must be comparable (using `==`). Slices, maps, and functions cannot be used as keys.
-summary: Maps are efficient, flexible, and widely used across Go programs for lookups, caches, and grouping data.
+summary: |
+    Maps are efficient, flexible, and widely used across Go programs for lookups, caches, and grouping data.
 tags:
   - go
   - maps

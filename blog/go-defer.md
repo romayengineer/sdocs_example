@@ -1,6 +1,7 @@
 # Defer, Panic, and Recover
 
-📌 **Status: published**
+
+📌 **Status: published`
 
 | | |
 |---|---|
@@ -15,11 +16,9 @@
 | **Version** | Go 1.22 |
 | **License** | CC-BY-4.0 |
 
-
 ## Prerequisites
 
 - Basic Go functions and control flow
-
 
 ## Overview
 
@@ -94,7 +93,6 @@ func timed() {
 
 - Recovering from panics (see below)
 
-
 ## Best Practices
 
 - Always pair `Lock`/`Unlock`, `Open`/`Close` with `defer`
@@ -102,7 +100,6 @@ func timed() {
 - Don't `defer` inside loops — resources accumulate until the function returns
 - Use `recover` sparingly, mainly to prevent server crashes in HTTP handlers
 - Never `panic` in library code unless you document it explicitly
-
 
 ## Advanced Topics
 
@@ -161,12 +158,10 @@ func get() (result string, err error) {
 
 This pattern is useful for error wrapping or cleanup.
 
-
 ## Related Posts
 
 - Error Handling in Go
 - Goroutines and Channels
-
 
 **Tags:** `go` `defer` `panic` `recover` `cleanup` 
 

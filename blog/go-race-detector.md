@@ -1,6 +1,7 @@
 # The Race Detector in Go
 
-📌 **Status: published**
+
+📌 **Status: published`
 
 | | |
 |---|---|
@@ -15,12 +16,10 @@
 | **Version** | Go 1.21 |
 | **License** | CC-BY-4.0 |
 
-
 ## Prerequisites
 
 - Goroutines and Channels
 - Sync Package in Go
-
 
 ## Overview
 
@@ -46,7 +45,6 @@ func main() {
     fmt.Println(counter) // likely not 2000
 }
 ```
-
 
 ## Basic Usage
 
@@ -112,7 +110,6 @@ go func() {
 val := <-ch
 ```
 
-
 ## Examples
 
 ### Common Race Patterns
@@ -146,7 +143,6 @@ wg.Wait()
 
 Fix: preallocate or use channel.
 
-
 ## Common Pitfalls
 
 - Deadlocks
@@ -154,7 +150,6 @@ Fix: preallocate or use channel.
 - Incorrect synchronization (e.g., wrong mutex usage that happens to work)
 - Races in cgo or assembly code
 - Races on non-standard memory (mmap, shared memory)
-
 
 ## Advanced Topics
 
@@ -175,7 +170,6 @@ test:
 
 The `-count=1` flag disables test caching to ensure fresh runs.
 
-
 ## Summary
 
 The race detector is one of Go's killer features. Running it regularly catches real bugs that are notoriously difficult to find through testing alone.
@@ -184,7 +178,6 @@ The race detector is one of Go's killer features. Running it regularly catches r
 
 - Goroutines and Channels
 - Sync Package in Go
-
 
 **Tags:** `go` `race-detector` `concurrency` `debugging` 
 

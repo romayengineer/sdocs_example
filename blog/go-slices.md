@@ -1,6 +1,7 @@
 # Slices and Arrays in Go
 
-📌 **Status: published**
+
+📌 **Status: published`
 
 | | |
 |---|---|
@@ -15,11 +16,9 @@
 | **Version** | Go 1.21 |
 | **License** | CC-BY-4.0 |
 
-
 ## Prerequisites
 
 - Basic Go syntax
-
 
 ## Overview
 
@@ -99,7 +98,6 @@ s = append(s, 2) // cap=2
 s = append(s, 3) // cap=4 (doubled)
 ```
 
-
 ## Common Pitfalls
 
 - **Aliasing**: Two slices may share the same backing array — modifying one affects the other
@@ -108,12 +106,10 @@ s = append(s, 3) // cap=4 (doubled)
 
 Slices are the idiomatic choice in Go — arrays are rarely used directly.
 
-
 ## Related Posts
 
 - Maps in Go
 - Pointers in Go
-
 
 **Tags:** `go` `slices` `arrays` `data-structures` 
 

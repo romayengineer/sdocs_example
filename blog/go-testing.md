@@ -1,6 +1,7 @@
 # Testing in Go
 
-📌 **Status: published**
+
+📌 **Status: published`
 
 | | |
 |---|---|
@@ -16,12 +17,10 @@
 | **License** | CC-BY-4.0 |
 | **Series** | Go Fundamentals (Part 4) |
 
-
 ## Prerequisites
 
 - Go Modules and Packages
 - Basic Go syntax
-
 
 ## Overview
 
@@ -137,7 +136,6 @@ Go caches test results when neither code nor tests changed. Skip with:
 go test -count=1
 ```
 
-
 ## Best Practices
 
 - One test file per package: `*_test.go`
@@ -147,12 +145,10 @@ go test -count=1
 - Run `go test -race` to detect data races
 - Keep tests deterministic and fast
 
-
 ## Related Posts
 
 - Go Modules and Packages
 - Error Handling in Go
-
 
 **Tags:** `go` `testing` `fuzzing` `quality` 
 

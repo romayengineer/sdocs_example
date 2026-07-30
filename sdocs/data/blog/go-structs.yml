@@ -2,7 +2,8 @@ type: tech-post
 title: Structs and Methods in Go
 date: 2026-07-30
 difficulty: beginner
-introduction: Structs are Go's way of grouping related data. Methods add behavior to structs.
+introduction: |
+    Structs are Go's way of grouping related data. Methods add behavior to structs.
 basic_usage: |
     ```go
     type User struct {
@@ -88,7 +89,8 @@ advanced: |
     field, _ := t.FieldByName("Host")
     fmt.Println(field.Tag.Get("json")) // "host"
     ```
-summary: Structs and methods form the backbone of Go's type system, offering a simple but powerful model for organizing data and behavior.
+summary: |
+    Structs and methods form the backbone of Go's type system, offering a simple but powerful model for organizing data and behavior.
 tags:
   - go
   - structs

@@ -1,6 +1,7 @@
 # Structs and Methods in Go
 
-📌 **Status: published**
+
+📌 **Status: published`
 
 | | |
 |---|---|
@@ -16,11 +17,9 @@
 | **License** | CC-BY-4.0 |
 | **Series** | Go Fundamentals (Part 2) |
 
-
 ## Prerequisites
 
 - Basic Go syntax and functions
-
 
 ## Overview
 
@@ -79,7 +78,6 @@ func (u *User) Birthday() {
 
 Rule of thumb: be consistent. If any method needs a pointer receiver, use pointer receivers for all methods on that type.
 
-
 ## Advanced Topics
 
 Go has composition over inheritance through embedding:
@@ -116,7 +114,6 @@ field, _ := t.FieldByName("Host")
 fmt.Println(field.Tag.Get("json")) // "host"
 ```
 
-
 ## Summary
 
 Structs and methods form the backbone of Go's type system, offering a simple but powerful model for organizing data and behavior.
@@ -125,7 +122,6 @@ Structs and methods form the backbone of Go's type system, offering a simple but
 
 - Interfaces in Go
 - Goroutines and Channels
-
 
 **Tags:** `go` `structs` `methods` `types` 
 

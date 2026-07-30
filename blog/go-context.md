@@ -1,8 +1,11 @@
 # Mastering Go's Context Package
 
+
 ⭐ **Featured Post**
 
-📌 **Status: published**
+
+📌 **Status: published`
+
 
 ![Cover](https://images.unsplash.com/photo-1555066931-4365d14bab8c)
 
@@ -21,7 +24,6 @@
 | **License** | CC-BY-4.0 |
 | **Series** | Go Standard Library Deep Dive (Part 2) |
 
-
 *Originally published at: [https://example.com/blog/go-context](https://example.com/blog/go-context)*
 
 🔗 **Source code:** [https://github.com/example/go-context](https://github.com/example/go-context)
@@ -30,7 +32,6 @@
 
 - Goroutines and channels
 - Basic Go syntax
-
 
 ## Overview
 
@@ -44,7 +45,6 @@ In any nontrivial Go program — especially HTTP servers, RPC handlers, and CLI 
 
 Context makes all of this explicit and composable.
 
-
 ## Basic Usage
 
 The root of any context chain is `context.Background()`:
@@ -54,7 +54,6 @@ ctx := context.Background()
 ```
 
 For test or ad-hoc use, there is `context.TODO()` — same thing, but signals intent.
-
 
 ## Examples
 
@@ -110,7 +109,6 @@ func TraceIDFromContext(ctx context.Context) (string, bool) {
 
 Use unexported struct keys to avoid collisions between packages.
 
-
 ## Best Practices
 
 - Context is the first parameter of any function that may need cancellation
@@ -118,7 +116,6 @@ Use unexported struct keys to avoid collisions between packages.
 - Always call the cancel function returned by `WithCancel` / `WithTimeout`
 - Use context values only for request-scoped data, not optional parameters
 - `context.Background()` is the root — use it in `main()` and top-level handlers
-
 
 ## Advanced Topics
 
@@ -145,7 +142,6 @@ if deadline, ok := ctx.Deadline(); ok && time.Now().After(deadline) {
 }
 ```
 
-
 ## Summary
 
 The context package is small but essential. Mastering it means writing Go programs that are safe, composable, and responsive to cancellation.
@@ -154,7 +150,6 @@ The context package is small but essential. Mastering it means writing Go progra
 
 - Goroutines and Channels
 - Error Handling in Go
-
 
 **Tags:** `go` `context` `concurrency` `best-practices` 
 

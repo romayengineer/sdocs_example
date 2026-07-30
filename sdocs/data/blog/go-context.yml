@@ -101,7 +101,8 @@ best_practices: |
     - Always call the cancel function returned by `WithCancel` / `WithTimeout`
     - Use context values only for request-scoped data, not optional parameters
     - `context.Background()` is the root — use it in `main()` and top-level handlers
-summary: The context package is small but essential. Mastering it means writing Go programs that are safe, composable, and responsive to cancellation.
+summary: |
+    The context package is small but essential. Mastering it means writing Go programs that are safe, composable, and responsive to cancellation.
 tags:
   - go
   - context

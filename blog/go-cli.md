@@ -1,6 +1,7 @@
 # Building CLI Applications in Go
 
-📌 **Status: published**
+
+📌 **Status: published`
 
 | | |
 |---|---|
@@ -15,12 +16,10 @@
 | **Version** | Go 1.21 |
 | **License** | CC-BY-4.0 |
 
-
 ## Prerequisites
 
 - Modules and Packages in Go
 - Error Handling in Go
-
 
 ## Overview
 
@@ -94,7 +93,6 @@ func getConfig() {
 }
 ```
 
-
 ## Best Practices
 
 - **Use `os.Exit` appropriately** — exit code 0 for success, non-zero for errors
@@ -102,7 +100,6 @@ func getConfig() {
 - **Support `-h`/`--help`** — the `flag` package does this automatically
 - **Support `--version`** — use `ldflags` to inject version at build time: `go build -ldflags="-X main.version=$(git describe)"`
 - **Color output sparingly** — use `autocorrection` or check for terminal capability
-
 
 ## Advanced Topics
 
@@ -146,7 +143,6 @@ for i := 0; i < 100; i++ {
 }
 ```
 
-
 ## Summary
 
 Go's compiled binaries, fast startup, and cross-platform support make it the language of choice for modern CLI tools.
@@ -155,7 +151,6 @@ Go's compiled binaries, fast startup, and cross-platform support make it the lan
 
 - Modules and Packages in Go
 - Building HTTP Servers and Clients in Go
-
 
 **Tags:** `go` `cli` `command-line` `tools` 
 

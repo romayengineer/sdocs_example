@@ -2,7 +2,8 @@ type: tech-post
 title: Fuzz Testing in Go
 date: 2026-07-30
 difficulty: advanced
-introduction: Fuzz testing (or fuzzing) automatically generates random inputs to find bugs, crashes, and edge cases. Go 1.18 added native fuzzing support to the `testing` package.
+introduction: |
+    Fuzz testing (or fuzzing) automatically generates random inputs to find bugs, crashes, and edge cases. Go 1.18 added native fuzzing support to the `testing` package.
 basic_usage: |
     ### Writing a Fuzz Target
 
@@ -92,7 +93,8 @@ pitfalls: |
     - Fuzzing cannot prove correctness — only find bugs
     - Coverage-guided, but may miss deeply nested conditions
     - No structured fuzzing for complex types without manual encoding
-summary: Fuzz testing has found hundreds of bugs in the Go standard library and ecosystem. Adding fuzz targets to critical parsing or encoding functions is a high-ROI investment in reliability.
+summary: |
+    Fuzz testing has found hundreds of bugs in the Go standard library and ecosystem. Adding fuzz targets to critical parsing or encoding functions is a high-ROI investment in reliability.
 tags:
   - go
   - fuzz

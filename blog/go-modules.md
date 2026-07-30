@@ -1,6 +1,7 @@
 # Go Modules and Packages
 
-📌 **Status: published**
+
+📌 **Status: published`
 
 | | |
 |---|---|
@@ -16,11 +17,9 @@
 | **License** | CC-BY-4.0 |
 | **Series** | Go Fundamentals (Part 3) |
 
-
 ## Prerequisites
 
 - Basic Go syntax and project setup
-
 
 ## Overview
 
@@ -109,7 +108,6 @@ import (
 - No underscores or mixedCaps — use `httputil` not `http_util`
 - The package name should match the directory name
 
-
 ## Advanced Topics
 
 ### Module Workspaces (Go 1.18+)
@@ -143,12 +141,10 @@ go mod vendor
 
 Useful for CI reproducibility or air-gapped environments.
 
-
 ## Related Posts
 
 - Structs and Methods in Go
 - Testing in Go
-
 
 **Tags:** `go` `modules` `packages` `dependencies` 
 

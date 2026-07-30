@@ -2,7 +2,8 @@ type: tech-post
 title: Panic and Recover in Go
 date: 2026-07-30
 difficulty: advanced
-introduction: Go uses `panic` and `recover` for exceptional situations. Unlike exceptions in other languages, they are reserved for truly unrecoverable errors.
+introduction: |
+    Go uses `panic` and `recover` for exceptional situations. Unlike exceptions in other languages, they are reserved for truly unrecoverable errors.
 advanced: |
     ### Panic
 
@@ -107,7 +108,8 @@ best_practices: |
         s.serve(conn)
     }
     ```
-summary: The standard library uses panic internally for things like `json.Marshal` with cyclic data, but these are always caught internally. Your application code should rarely call `panic` directly.
+summary: |
+    The standard library uses panic internally for things like `json.Marshal` with cyclic data, but these are always caught internally. Your application code should rarely call `panic` directly.
 tags:
   - go
   - panic

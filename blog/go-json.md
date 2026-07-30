@@ -1,6 +1,7 @@
 # JSON in Go
 
-📌 **Status: published**
+
+📌 **Status: published`
 
 | | |
 |---|---|
@@ -15,12 +16,10 @@
 | **Version** | Go 1.21 |
 | **License** | CC-BY-4.0 |
 
-
 ## Prerequisites
 
 - Structs and Methods in Go
 - Interfaces in Go
-
 
 ## Overview
 
@@ -93,14 +92,12 @@ func (c *Color) UnmarshalJSON(data []byte) error {
 }
 ```
 
-
 ## Best Practices
 
 - Reuse buffers and encoders in hot paths
 - Use `json.RawMessage` for deferring decoding or partial parsing
 - Prefer streaming (`Encoder`/`Decoder`) over marshaling for large data
 - Use `strings.Builder` or `bytes.Buffer` for intermediate output
-
 
 ## Advanced Topics
 
@@ -127,16 +124,14 @@ json.Unmarshal([]byte(jsonStr), &data)
 name := data["name"].(string)
 ```
 
-
 ## Summary
 
-`encoding/json` is the most commonly used package in Go after `fmt`. For performance-critical applications, alternatives like `json-iterator/go` or `segmentio/encoding/json` offer significant speedups.
+"`encoding/json` is the most commonly used package in Go after `fmt`. For performance-critical applications, alternatives like `json-iterator/go` or `segmentio/encoding/json` offer significant speedups."
 
 ## Related Posts
 
 - Building HTTP Servers and Clients in Go
 - Structs and Methods in Go
-
 
 **Tags:** `go` `json` `serialization` `encoding` 
 

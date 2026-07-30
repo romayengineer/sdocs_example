@@ -1,6 +1,7 @@
 # File I/O in Go
 
-📌 **Status: published**
+
+📌 **Status: published`
 
 | | |
 |---|---|
@@ -15,12 +16,10 @@
 | **Version** | Go 1.21 |
 | **License** | CC-BY-4.0 |
 
-
 ## Prerequisites
 
 - Error Handling in Go
 - Interfaces in Go
-
 
 ## Overview
 
@@ -72,7 +71,6 @@ writer.WriteString("line 2\n")
 writer.Flush() // ensure data is written to disk
 ```
 
-
 ## Examples
 
 ### Working with io.Reader/io.Writer
@@ -112,7 +110,6 @@ tmpDir, _ := os.MkdirTemp("", "mydir-*")
 defer os.RemoveAll(tmpDir)
 ```
 
-
 ## Advanced Topics
 
 The `io/fs` package (Go 1.16) abstracts file systems:
@@ -125,7 +122,6 @@ type FS interface {
 
 This allows the same code to work with `os.DirFS`, `embed.FS`, `testing/fstest.MapFS`, or custom implementations.
 
-
 ## Summary
 
 Go's I/O interfaces make it easy to write composable, testable code that works across files, networks, and in-memory sources.
@@ -134,7 +130,6 @@ Go's I/O interfaces make it easy to write composable, testable code that works a
 
 - Embedding Files in Go
 - JSON in Go
-
 
 **Tags:** `go` `io` `filesystem` `reader` `writer` 
 

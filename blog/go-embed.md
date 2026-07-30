@@ -1,6 +1,7 @@
 # Embedding Files in Go
 
-📌 **Status: published**
+
+📌 **Status: published`
 
 | | |
 |---|---|
@@ -15,12 +16,10 @@
 | **Version** | Go 1.16+ |
 | **License** | CC-BY-4.0 |
 
-
 ## Prerequisites
 
 - Basic Go syntax
 - File I/O in Go
-
 
 ## Overview
 
@@ -95,7 +94,6 @@ Patterns cannot use `..` or absolute paths. They are relative to the source file
 - **Static analysis**: embed rulesets, pattern files
 - **Testing**: embed test fixtures
 
-
 ## Examples
 
 ```go
@@ -115,7 +113,6 @@ func main() {
 }
 ```
 
-
 ## Summary
 
 Embedding produces a single self-contained binary — no file dependencies at runtime, simpler deployment, and consistent behavior across environments.
@@ -124,7 +121,6 @@ Embedding produces a single self-contained binary — no file dependencies at ru
 
 - File I/O in Go
 - Building HTTP Servers and Clients in Go
-
 
 **Tags:** `go` `embed` `files` `binary` 
 

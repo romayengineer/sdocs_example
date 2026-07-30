@@ -2,7 +2,8 @@ type: tech-post
 title: Building CLI Applications in Go
 date: 2026-07-30
 difficulty: intermediate
-introduction: Go is an excellent language for building command-line tools. The standard library's `flag` package handles basic CLI needs, while third-party libraries offer more advanced features.
+introduction: |
+    Go is an excellent language for building command-line tools. The standard library's `flag` package handles basic CLI needs, while third-party libraries offer more advanced features.
 basic_usage: |
     ### Using the flag Package
 
@@ -115,7 +116,8 @@ best_practices: |
     - **Support `-h`/`--help`** — the `flag` package does this automatically
     - **Support `--version`** — use `ldflags` to inject version at build time: `go build -ldflags="-X main.version=$(git describe)"`
     - **Color output sparingly** — use `autocorrection` or check for terminal capability
-summary: Go's compiled binaries, fast startup, and cross-platform support make it the language of choice for modern CLI tools.
+summary: |
+    Go's compiled binaries, fast startup, and cross-platform support make it the language of choice for modern CLI tools.
 tags:
   - go
   - cli

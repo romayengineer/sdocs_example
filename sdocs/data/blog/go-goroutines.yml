@@ -2,7 +2,8 @@ type: tech-post
 title: Goroutines and Channels
 date: 2026-07-30
 difficulty: intermediate
-introduction: Goroutines are lightweight threads managed by the Go runtime. They are the foundation of concurrency in Go.
+introduction: |
+    Goroutines are lightweight threads managed by the Go runtime. They are the foundation of concurrency in Go.
 basic_usage: |
     Prefix any function call with the `go` keyword:
 
@@ -80,7 +81,8 @@ best_practices: |
         fmt.Println(n) // 4, 9, 16
     }
     ```
-summary: "Goroutines are cheap (a few KB each), making it practical to start thousands of them. With channels, Go offers a safe, composable concurrency model built on the mantra: *\"Do not communicate by sharing memory; instead, share memory by communicating.\"*"
+summary: |
+    Goroutines are cheap (a few KB each), making it practical to start thousands of them. With channels, Go offers a safe, composable concurrency model built on the mantra: *"Do not communicate by sharing memory; instead, share memory by communicating."*
 tags:
   - go
   - concurrency

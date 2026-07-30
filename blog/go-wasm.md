@@ -1,6 +1,7 @@
 # WebAssembly with Go
 
-📌 **Status: published**
+
+📌 **Status: published`
 
 | | |
 |---|---|
@@ -15,12 +16,10 @@
 | **Version** | Go 1.21 |
 | **License** | CC-BY-4.0 |
 
-
 ## Prerequisites
 
 - Basic Go syntax
 - Building HTTP Servers and Clients in Go
-
 
 ## Overview
 
@@ -96,7 +95,6 @@ fmt.Println(result.Get("key").String())
 js.Global().Get("Math").Call("random")
 ```
 
-
 ## Best Practices
 
 - Porting existing Go libraries to the browser
@@ -104,14 +102,12 @@ js.Global().Get("Math").Call("random")
 - Sharing code between backend (Go) and frontend (Wasm)
 - When you prefer Go's type safety and tooling over JavaScript
 
-
 ## Common Pitfalls
 
 - No `os` package (no file system, network in browser)
 - No `net/http` server (client works with browser's fetch API)
 - Single-threaded (no goroutine parallelism, though concurrency works)
 - `syscall/js` is verbose and not idiomatic Go
-
 
 ## Advanced Topics
 
@@ -140,7 +136,6 @@ Then call from JS: `add(3, 4)` returns `7`.
 - `tinygo` produces much smaller Wasm binaries for simple programs
 - No direct DOM access — all DOM manipulation goes through `syscall/js` which is slow
 
-
 ## Summary
 
 Wasm support in Go is mature but niche. For most web development, JavaScript/TypeScript remains the practical choice. Go+Wasm excels for specific use cases where code reuse or performance matters.
@@ -149,7 +144,6 @@ Wasm support in Go is mature but niche. For most web development, JavaScript/Typ
 
 - Building HTTP Servers and Clients in Go
 - Modules and Packages in Go
-
 
 **Tags:** `go` `wasm` `webassembly` `browser` 
 
