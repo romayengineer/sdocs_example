@@ -1,5 +1,7 @@
 # AGENTS.md — Structured Docs Guide
 
+> **Agent instruction:** Whenever you interact with this project, you MUST ALWAYS communicate in English — both in responses and in any generated/written content.
+
 ## Overview
 
 This project uses [`sd`](https://github.com/romayengineer/structured-docs) to generate Markdown documentation from structured YAML data and Go templates.
