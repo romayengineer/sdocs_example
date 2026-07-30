@@ -1,7 +1,7 @@
 schema_dir: schema
 data_dir: data
 template_dir: templates
-output_dir: ../docs
+output_dir: ../
 template_order:
   - tech-post.template.md
   - post.template.md
